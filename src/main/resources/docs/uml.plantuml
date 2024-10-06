@@ -1,0 +1,186 @@
+  @startuml uml_ecommerce_livro
+
+  class Usuario {
+    - id: Long
+    - nome: String
+    - username: String
+    - senha: String
+    - email: String
+    - sexo: Sexo
+    - cpf: String
+
+  }
+
+  class Cliente{
+    - id: Long
+    - cep: String
+    - endereco: String
+    - estado: String
+    - cidade: String
+  }
+
+  class Funcionario {
+    - id: Long
+    - cargo: String
+    - salario: Double
+  }
+
+  enum Sexo{
+    + FEMININO: int
+    + MASCULINO: int
+  }
+
+  class Livro {
+    - id: Long
+    - titulo: String
+    - preco: Double
+    - quantEstoque: Integer
+    - isbn: String
+    - dataLancamento: LocalDate
+    - descricao: String
+  }
+
+  class Genero{
+    - id: Long
+    - nome: String
+    - descricao: String
+  }
+
+  class Autor{
+    - id: Long
+    - nome: String
+    - biografia: String
+  }
+
+  class Fornecedor{
+    - id: Long
+    - nome: String
+    - cnpj: String
+    - inscricaoEstadual: String
+    - email: String
+    - endereco: String
+    - cep: String
+    - cidade: String
+    - estado: String
+    - quantLivrosFornecido : Integer
+  }
+
+  enum Classificacao{
+    + LIVRE: int
+    + DEZANOS: int
+    + DOZEANOS: int
+    + QUATORZEANOS: int
+    + DEZESSEISANOS: int
+    + DEZOITOANOS: int
+  }
+
+  class Editora {
+    - id: Long
+    - nome: String
+    - endereco: String
+    - estado: String
+    - email: String
+  }
+
+  class Telefone{
+    - codigoArea: String
+    - numero: String
+  }
+
+  class Pedido{
+    - id: Long
+    - valorTotal: Double
+    - dataPedido: LocalDateTime
+    - ifPedidoFeito: Boolean
+  }
+
+  class ItemPedido{
+    - id: Long
+    - subTotal: Double
+    - quantidade: Integer
+    - desconto: Double
+  }
+
+  abstract class FormaPagamento{
+    - id: Long
+    - valor: preco
+    - parcela: int
+    - dataPagamento: LocalDateTime
+    - status: StatusPagamento
+    - confirmacaoPagamento : Boolean
+  }
+
+  class Boleto {
+    - nome: String
+    - cpf: String
+    - dataGeracaoBoleto: LocalDate
+    - dataVencimento: LocalDate
+  }
+
+  class Pix {
+    - nome: String
+    - cpf: String
+  }
+
+  class CartaoCredito {
+    - numeroCartao: String
+    - nomeImpressoTitular: String
+    - cvc: Integer
+    - cpfTitular: String
+    - validade: LocalDate
+
+  }
+
+  enum BandeiraCartao {
+    + VISA: int
+    + MASTERCARD: int
+    + ELO: int
+  }
+
+  class Avaliacao {
+    - id: Long
+    - comentario: String
+    - data: LocalDate
+ }
+
+  enum Estrela {
+    + ESTRELA1: int
+    + ESTRELA2: int
+    + ESTRELA3: int
+    + ESTRELA4: int
+    + ESTRELA5: int
+  }
+
+  Usuario "1" <-- "1" Cliente
+  Usuario "1" <-- "1" Funcionario
+  Usuario "*" -- "1" Sexo
+  Usuario "1" *--> "1" Telefone
+
+  Livro "*" o--> "*" Genero
+  Livro "*" --> "*" Autor
+  Livro "*" --> "1" Fornecedor
+  Livro "*" --> "1" Editora
+  Livro "*" --> "1" Classificacao
+
+  Editora "1" *--> "1" Telefone
+  Fornecedor "1" *--> "1" Telefone
+
+  Pedido "*" --> "1" Cliente
+  Pedido "1" *--> "*" ItemPedido
+
+  ItemPedido "*" --> "1" Livro
+
+  Pedido "1" --> "1" FormaPagamento
+
+  Boleto -up-|> FormaPagamento
+
+  Pix -up-|> FormaPagamento
+
+  CartaoCredito -up-|> FormaPagamento
+  CartaoCredito "*" --> "1" BandeiraCartao
+
+  Avaliacao "*" --> "1" Estrela
+  Avaliacao "*" o--> "1" Usuario
+  Avaliacao "*" --> "1" Livro
+
+  @enduml
