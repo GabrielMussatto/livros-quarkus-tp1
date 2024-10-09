@@ -132,15 +132,11 @@ INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 1
 
 INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
 VALUES ('Senhor dos Anéis', 'Contem a saga inteira de senhor dos aneis', 10, 1, 1, 1);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 1);
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (1, 1);
+
 
 INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
 VALUES ('dos', ' a saga or dos aneis', 22, 2, 2, 2);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (2, 2);
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (2, 2);
+
 
 INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
 VALUES ('Anéis', ' de senhor dos aneis', 33, 3, 3, 3);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 3);
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (3, 3);

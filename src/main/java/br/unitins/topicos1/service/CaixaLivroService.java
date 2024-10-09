@@ -15,7 +15,7 @@ public interface CaixaLivroService {
     public List<CaixaLivroResponseDTO> findAll();
     public List<CaixaLivroResponseDTO> findByNome(String nome);
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao);
-    public List<CaixaLivroResponseDTO> findByAutor(String autor);
+    //public List<CaixaLivroResponseDTO> findByAutor(String autor);
 
     
 }

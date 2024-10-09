@@ -26,10 +26,10 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
 
     @Inject
     public EditoraRepository editoraRepository;
-    
+
     @Inject
     public FornecedorRepository fornecedorRepository;
-    
+
     @Inject
     public GeneroRepository generoRepository;
 
@@ -39,13 +39,17 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     @Transactional
     public CaixaLivroResponseDTO create(@Valid CaixaLivroDTO dto) {
+        validarNomeCaixaLivro(dto.nome());
+
         CaixaLivro caixaLivro = new CaixaLivro();
         caixaLivro.setNome(dto.nome());
         caixaLivro.setDescricao(dto.descricao());
         caixaLivro.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
         caixaLivro.setEditora(editoraRepository.findById(dto.editora()));
-        caixaLivro.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
-        caixaLivro.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
+        // caixaLivro.setListaAutores((dto.autores()).stream().map(a ->
+        // autorRepository.findById(a)).toList());
+        // caixaLivro.setListaGeneros((dto.generos()).stream().map(g ->
+        // generoRepository.findById(g)).toList());
         caixaLivro.setQuantidadeEstoque(dto.quantidadeEstoque());
         caixaLivro.setClassificacao(Classificacao.valueOf(dto.classificacao()));
 
@@ -53,10 +57,10 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         return CaixaLivroResponseDTO.valueOf(caixaLivro);
     }
 
-    public void validarNomeCaixaLivro(String nome){
+    public void validarNomeCaixaLivro(String nome) {
         CaixaLivro caixaLivro = caixaLivroRepository.findByNomeCaixaLivro(nome);
-        if(caixaLivro != null){
-            throw new ValidationException("Nome", "O nome '"+nome+"' de Caixa de Livro já existe");
+        if (caixaLivro != null) {
+            throw new ValidationException("Nome", "O nome '" + nome + "' de Caixa de Livro já existe");
         }
     }
 
@@ -67,20 +71,22 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         if (caixaLivroBanco == null)
             throw new ValidationException("id", "Caixa de livro não encontrada");
 
-            caixaLivroBanco.setNome(dto.nome());
-            caixaLivroBanco.setDescricao(dto.descricao());
-            caixaLivroBanco.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
-            caixaLivroBanco.setEditora(editoraRepository.findById(dto.editora()));
-            caixaLivroBanco.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
-            caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
-            caixaLivroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
-            caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        caixaLivroBanco.setNome(dto.nome());
+        caixaLivroBanco.setDescricao(dto.descricao());
+        caixaLivroBanco.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
+        caixaLivroBanco.setEditora(editoraRepository.findById(dto.editora()));
+        // caixaLivroBanco.setListaAutores((dto.autores()).stream().map(a ->
+        // autorRepository.findById(a)).toList());
+        // caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g ->
+        // generoRepository.findById(g)).toList());
+        caixaLivroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
+        caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        if (id == null) 
+        if (id == null)
             throw new ValidationException("id", "Id não pode ser nulo.");
 
         caixaLivroRepository.deleteById(id);
@@ -99,19 +105,19 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByNome(String nome) {
         return caixaLivroRepository.findByNome(nome).stream()
-        .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
     }
 
     @Override
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao) {
         return caixaLivroRepository.findByDescricao(descricao).stream()
-        .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
     }
-
-    @Override
-    public List<CaixaLivroResponseDTO> findByAutor(String autor) {
-        return caixaLivroRepository.findByAutor(autor).stream()
-        .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
-    }
-    
+    /*
+     * @Override
+     * public List<CaixaLivroResponseDTO> findByAutor(String autor) {
+     * return caixaLivroRepository.findByAutor(autor).stream()
+     * .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+     * }
+     */
 }

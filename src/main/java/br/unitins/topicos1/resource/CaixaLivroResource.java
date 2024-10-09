@@ -66,7 +66,7 @@ public class CaixaLivroResource {
         LOG.info("Buscando caixas de livros por descrição - Executando CaixaLivroResource_findByDescricao");
         return Response.ok(caixaLivroService.findByDescricao(descricao)).build();
     }
-
+/* 
     @GET
     @Path("/search/autor/{autor}")
     //@RolesAllowed({"Funcionario", "Cliente"})
@@ -74,7 +74,7 @@ public class CaixaLivroResource {
         LOG.info("Buscando caixas de livros por autor - Executando CaixaLivroResource_findByAutor");
         return Response.ok(caixaLivroService.findByAutor(autor)).build();
     }
-
+*/
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (CaixaLivroDTO dto){

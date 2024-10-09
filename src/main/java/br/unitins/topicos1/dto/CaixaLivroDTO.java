@@ -7,9 +7,9 @@ public record CaixaLivroDTO(
     String descricao,
     Long fornecedor,
     Long editora,
-    List<Long> generos,
-    List<Long> autores,
+    //List<Long> generos,
+    //List<Long> autores,
     //Double preco,
     Integer quantidadeEstoque,
-    int classificacao
+    Integer classificacao
 ) { }
