@@ -3,7 +3,8 @@ package br.unitins.topicos1.dto;
 import java.time.LocalDate;
 import java.util.List;
 
-public record LivroDTO(String titulo,
+public record LivroDTO(
+        String titulo,
         List<Long> autores,
         Long editora,
         List<Long> generos,

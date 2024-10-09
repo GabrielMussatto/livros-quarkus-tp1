@@ -37,7 +37,7 @@ public class Livro extends DefaultEntity{
     @Temporal(TemporalType.DATE)
     private LocalDate datalancamento;
 
-    @Column(length = 5000, nullable = false)
+    @Column(length = 999999, nullable = false)
     private String descricao;
 
     private Classificacao classificacao;

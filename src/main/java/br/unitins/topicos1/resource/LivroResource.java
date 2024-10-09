@@ -134,7 +134,7 @@ public class LivroResource {
             LOG.infof("Imagem salva com sucesso - Executando LivroResource_upload");
             return Response.noContent().build();
         } catch (Exception e) {
-            LOG.error("Erro ao salvar imagem do livro - Executando LivroResource_uploar", e);
+            LOG.error("Erro ao salvar imagem do livro - Executando LivroResource_upload", e);
             return Response.status(Status.CONFLICT).entity("Erro ao salvar imagem do livro - Executando LivroResource_upload").build();
         }
     }

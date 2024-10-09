@@ -2,7 +2,7 @@ package br.unitins.topicos1.model.Enum;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@JsonFormat( shape = JsonFormat.Shape.OBJECT)
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Classificacao {
     
     LIVRE(1, "Livre"),
@@ -23,21 +23,41 @@ public enum Classificacao {
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getDescricao() {
         return descricao;
     }
+
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
-    public static Classificacao valueOf(Integer id) throws IllegalArgumentException{
-        for (Classificacao classificacao : Classificacao.values()){
+    // Método que converte o ID numérico para o enum correspondente
+    public static Classificacao valueOf(Integer id) throws IllegalArgumentException {
+        for (Classificacao classificacao : Classificacao.values()) {
             if (classificacao.id == id)
                 return classificacao;
         }
         throw new IllegalArgumentException("id de classificação inválido.");
     }
+    
+    /* 
+    public static Classificacao valueOf (Integer id) throws IllegalArgumentException {
+        
+    if (id == null)
+    return null;
+    
+        for (Classificacao classificacao : Classificacao.values()) {
+
+            if (id == classificacao.id)
+                return classificacao;
+        }
+
+        throw new IllegalArgumentException("Número fora das opções disponíveis");
+    }
+    */
 }

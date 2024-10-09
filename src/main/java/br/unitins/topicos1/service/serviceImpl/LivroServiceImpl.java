@@ -39,6 +39,8 @@ public class LivroServiceImpl implements LivroService{
     @Override
     @Transactional
     public LivroResponseDTO create(@Valid LivroDTO dto){
+        validarTituloLivro(dto.titulo());
+        
         Livro livro = new Livro();
         livro.setTitulo(dto.titulo());
         livro.setQuantidadeEstoque(dto.quantidadeEstoque());
