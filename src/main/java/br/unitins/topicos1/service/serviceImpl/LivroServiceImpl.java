@@ -43,25 +43,25 @@ public class LivroServiceImpl implements LivroService{
         
         Livro livro = new Livro();
         livro.setTitulo(dto.titulo());
+        livro.setDescricao(dto.descricao());
         livro.setQuantidadeEstoque(dto.quantidadeEstoque());
         livro.setIsbn(dto.isbn());
-        livro.setDescricao(dto.descricao());
-        livro.setDatalancamento(dto.datalancamento());
         livro.setPreco(dto.preco());
-        livro.setClassificacao(Classificacao.valueOf(dto.id_classificacao()));
+        livro.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        livro.setDatalancamento(dto.datalancamento());
         livro.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
+        livro.setEditora(editoraRepository.findById(dto.editora()));
         livro.setListaAutor((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
         livro.setListaGenero(dto.generos().stream().map(g -> generoRepository.findById(g)).toList());
-        livro.setEditora(editoraRepository.findById(dto.editora()));
 
         livroRepository.persist(livro);
         return LivroResponseDTO.valueOf(livro);
     }
     
-    public void validarTituloLivro(String nome) {
-        Livro livro = livroRepository.findByTituloLivro(nome);
+    public void validarTituloLivro(String titulo) {
+        Livro livro = livroRepository.findByTituloLivro(titulo);
         if (livro != null)
-            throw  new ValidationException("nome", "O nome '"+nome+"' já existe.");
+            throw  new ValidationException("titulo", "O titulo '"+titulo+"' já existe.");
     }
 
     @Override
@@ -73,16 +73,16 @@ public class LivroServiceImpl implements LivroService{
             throw new ValidationException("id", "Livro não encontrado.");
 
         livroBanco.setTitulo(dto.titulo());
+        livroBanco.setDescricao(dto.descricao());
         livroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
         livroBanco.setIsbn(dto.isbn());
-        livroBanco.setDescricao(dto.descricao());
+        livroBanco.setPreco(dto.preco());
+        livroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
         livroBanco.setDatalancamento(dto.datalancamento());
         livroBanco.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
-        livroBanco.setClassificacao(Classificacao.valueOf(dto.id_classificacao()));
-        livroBanco.setPreco(dto.preco());
+        livroBanco.setEditora(editoraRepository.findById(dto.editora()));
         livroBanco.setListaAutor((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
         livroBanco.setListaGenero(dto.generos().stream().map(g -> generoRepository.findById(g)).toList());
-        livroBanco.setEditora(editoraRepository.findById(dto.editora()));
     }
 
     @Override

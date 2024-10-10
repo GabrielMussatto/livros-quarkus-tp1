@@ -7,7 +7,7 @@ import br.unitins.topicos1.dto.LivroDTO;
 import br.unitins.topicos1.form.ImageForm;
 import br.unitins.topicos1.service.LivroService;
 import br.unitins.topicos1.service.file.LivroFileServiceImpl;
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;

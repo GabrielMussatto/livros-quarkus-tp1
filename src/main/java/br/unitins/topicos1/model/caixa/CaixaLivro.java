@@ -34,7 +34,7 @@ public class CaixaLivro extends DefaultEntity {
     @ManyToOne
     @JoinColumn(name = "id_editora", nullable = false)
     private Editora editora;
-    /* 
+    
     @ManyToMany
     @JoinTable(name = "caixa_genero", 
     joinColumns = @JoinColumn(name = "idcaixa"), 
@@ -47,14 +47,14 @@ public class CaixaLivro extends DefaultEntity {
     joinColumns = @JoinColumn(name = "idcaixa"), 
     inverseJoinColumns = @JoinColumn(name = "idautor")
     )
-    */
-    //private List<Autor> listaAutores;
+
+    private List<Autor> listaAutores;
 
     private Classificacao classificacao;
 
     private String nomeImagem;
 
-    // private Double preco; //(por dps)
+    private Double preco;
 
     public String getNome() {
         return nome;
@@ -95,7 +95,7 @@ public class CaixaLivro extends DefaultEntity {
     public void setEditora(Editora editora) {
         this.editora = editora;
     }
-/* 
+ 
     public List<Genero> getListaGeneros() {
         return listaGeneros;
     }
@@ -111,7 +111,7 @@ public class CaixaLivro extends DefaultEntity {
     public void setListaAutores(List<Autor> listaAutores) {
         this.listaAutores = listaAutores;
     }
-*/
+
     public Classificacao getClassificacao() {
         return classificacao;
     }
@@ -126,6 +126,14 @@ public class CaixaLivro extends DefaultEntity {
 
     public void setNomeImagem(String nomeImagem) {
         this.nomeImagem = nomeImagem;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
 }

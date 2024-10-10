@@ -5,14 +5,14 @@ import java.util.List;
 
 public record LivroDTO(
         String titulo,
-        List<Long> autores,
-        Long editora,
-        List<Long> generos,
-        Double preco,
+        String descricao,
         Integer quantidadeEstoque,
         String isbn,
+        Double preco,
+        Integer classificacao,
         LocalDate datalancamento,
-        Integer id_classificacao,
-        String descricao,
-        Long fornecedor
+        Long fornecedor,
+        Long editora,
+        List<Long> autores,
+        List<Long> generos
 ) { }

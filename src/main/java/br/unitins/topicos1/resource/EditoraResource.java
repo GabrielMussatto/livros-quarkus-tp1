@@ -4,7 +4,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.EditoraDTO;
 import br.unitins.topicos1.service.EditoraService;
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;

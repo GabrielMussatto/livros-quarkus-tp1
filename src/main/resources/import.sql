@@ -70,18 +70,32 @@ INSERT INTO editora (nome, email, endereco, estado, id_telefone) VALUES ('Intrí
 INSERT INTO editora (nome, email, endereco, estado, id_telefone) VALUES ('Editora Rocco', 'rocco@gmail.com', 'Rua Argentina, 171 - São Cristóvão', 'Rio de Janeiro', 21);
 
 -- Inserir livro
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('Confess', 39.90, 50, '9781501176838', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1);
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('A Hipotese do Amor', 29.99, 100, '9780593336823', 'The Love Hypothesis é um romance contemporâneo escrito por Ali Hazelwood. O livro narra a história de Olive Smith, uma estudante de pós-graduação determinada a provar uma teoria científica sobre o amor. Com a ajuda de seu charmoso professor, eles embarcam em uma jornada de descoberta científica e pessoal.', 5, 2, 2);
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('O Vendedor de Sonhos', 34.90, 80, '9788575429039', 'O Vendedor de Sonhos é um romance psicológico escrito por Augusto Cury. O livro conta a história de um homem misterioso que salva a vida de um suicida e o convence a acompanhar em uma jornada para mudar a sociedade através de sonhos e reflexões profundas sobre a vida.', 1, 1, 2);
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('Harry Potter e a Pedra Filosofal', 49.90, 100, '9788532530802', 'Harry Potter é uma série de sete romances de fantasia escrita pela autora britânica J.K. Rowling. Os livros narram as aventuras de um jovem bruxo, Harry Potter, e seus amigos Hermione Granger e Ron Weasley, todos estudantes na Escola de Magia e Bruxaria de Hogwarts.', 4, 4, 4);
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('1984', 35.00, 80, '9788532530803', '1984 é um romance distópico escrito por George Orwell em 1948 e publicado em 1949. A obra é um dos maiores clássicos da literatura mundial e uma das mais influentes e importantes do século XX.', 4, 6, 3);
+-- INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, descricao, classificacao, id_fornecedor, id_editora) 
+-- VALUES ('O Diário da Nossa Paixão', 29.90, 70, '9788532511666', 'O Diário da Nossa Paixão é um romance do escritor norte-americano Nicholas Sparks, que relata a história de amor entre Noah Calhoun e Allie Nelson, que se conhecem e se apaixonam durante um verão.', 3, 5, 2);
+
+
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('Confess', 39.90, 50, '9781501176838', '2015-03-10', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1);
+VALUES ('Confess', 39.90, 50, '9781501176838', '10-03-2015', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1);
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('A Hipotese do Amor', 29.99, 100, '9780593336823', '2021-09-14', 'The Love Hypothesis é um romance contemporâneo escrito por Ali Hazelwood. O livro narra a história de Olive Smith, uma estudante de pós-graduação determinada a provar uma teoria científica sobre o amor. Com a ajuda de seu charmoso professor, eles embarcam em uma jornada de descoberta científica e pessoal.', 5, 2, 2);
+VALUES ('A Hipotese do Amor', 29.99, 100, '9780593336823', '14-09-2021', 'The Love Hypothesis é um romance contemporâneo escrito por Ali Hazelwood. O livro narra a história de Olive Smith, uma estudante de pós-graduação determinada a provar uma teoria científica sobre o amor. Com a ajuda de seu charmoso professor, eles embarcam em uma jornada de descoberta científica e pessoal.', 5, 2, 2);
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('O Vendedor de Sonhos', 34.90, 80, '9788575429039', '2008-09-01', 'O Vendedor de Sonhos é um romance psicológico escrito por Augusto Cury. O livro conta a história de um homem misterioso que salva a vida de um suicida e o convence a acompanhar em uma jornada para mudar a sociedade através de sonhos e reflexões profundas sobre a vida.', 1, 1, 2);
+VALUES ('O Vendedor de Sonhos', 34.90, 80, '9788575429039', '01-09-2008', 'O Vendedor de Sonhos é um romance psicológico escrito por Augusto Cury. O livro conta a história de um homem misterioso que salva a vida de um suicida e o convence a acompanhar em uma jornada para mudar a sociedade através de sonhos e reflexões profundas sobre a vida.', 1, 1, 2);
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('Harry Potter e a Pedra Filosofal', 49.90, 100, '9788532530802', '1997-06-26', 'Harry Potter é uma série de sete romances de fantasia escrita pela autora britânica J.K. Rowling. Os livros narram as aventuras de um jovem bruxo, Harry Potter, e seus amigos Hermione Granger e Ron Weasley, todos estudantes na Escola de Magia e Bruxaria de Hogwarts.', 4, 4, 4);
+VALUES ('Harry Potter e a Pedra Filosofal', 49.90, 100, '9788532530802', '26-06-1997', 'Harry Potter é uma série de sete romances de fantasia escrita pela autora britânica J.K. Rowling. Os livros narram as aventuras de um jovem bruxo, Harry Potter, e seus amigos Hermione Granger e Ron Weasley, todos estudantes na Escola de Magia e Bruxaria de Hogwarts.', 4, 4, 4);
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('1984', 35.00, 80, '9788532530803', '1949-06-08', '1984 é um romance distópico escrito por George Orwell em 1948 e publicado em 1949. A obra é um dos maiores clássicos da literatura mundial e uma das mais influentes e importantes do século XX.', 4, 6, 3);
+VALUES ('1984', 35.00, 80, '9788532530803', '08-06-1949', '1984 é um romance distópico escrito por George Orwell em 1948 e publicado em 1949. A obra é um dos maiores clássicos da literatura mundial e uma das mais influentes e importantes do século XX.', 4, 6, 3);
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora) 
-VALUES ('O Diário da Nossa Paixão', 29.90, 70, '9788532511666', '1996-10-01', 'O Diário da Nossa Paixão é um romance do escritor norte-americano Nicholas Sparks, que relata a história de amor entre Noah Calhoun e Allie Nelson, que se conhecem e se apaixonam durante um verão.', 3, 5, 2);
+VALUES ('O Diário da Nossa Paixão', 29.90, 70, '9788532511666', '01-10-1996', 'O Diário da Nossa Paixão é um romance do escritor norte-americano Nicholas Sparks, que relata a história de amor entre Noah Calhoun e Allie Nelson, que se conhecem e se apaixonam durante um verão.', 3, 5, 2);
 
 -- Inserir relacionamento entre livro e autor
 INSERT INTO livro_autor (idlivro, idautor) VALUES (1, 1);
@@ -130,13 +144,23 @@ INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.90, 
 INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 2, 511, 3);
 INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 1, 140.25, 2);
 
-INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Senhor dos Anéis', 'Contem a saga inteira de senhor dos aneis', 10, 1, 1, 1);
+INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, preco, id_fornecedor, id_editora, classificacao)
+VALUES ('Senhor dos Anéis', 'Contem a saga inteira de senhor dos aneis', 79.90, 10, 1, 1, 1);
 
 
-INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('dos', ' a saga or dos aneis', 22, 2, 2, 2);
+INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, preco, id_fornecedor, id_editora, classificacao)
+VALUES ('dos', ' a saga or dos aneis', 57.99, 22, 2, 2, 2);
 
 
-INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Anéis', ' de senhor dos aneis', 33, 3, 3, 3);
+INSERT INTO caixaLivro (nome, descricao, quantidadeEstoque, preco, id_fornecedor, id_editora, classificacao)
+VALUES ('Anéis', ' de senhor dos aneis', 80.80, 33, 3, 3, 3);
+
+-- Inserir relacionamento entre livro e autor
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (1, 1);
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (2, 2);
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (3, 3);
+
+-- -- Inserir relacionamento entre livro e gênero
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 1);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (2, 2);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 3);

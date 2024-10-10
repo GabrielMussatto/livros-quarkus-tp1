@@ -7,7 +7,7 @@ import br.unitins.topicos1.dto.AutorDTO;
 import br.unitins.topicos1.form.ImageForm;
 import br.unitins.topicos1.service.AutorService;
 import br.unitins.topicos1.service.file.AutorFileServiceImpl;
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;

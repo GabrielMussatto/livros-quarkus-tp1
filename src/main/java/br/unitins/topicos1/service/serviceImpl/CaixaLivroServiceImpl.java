@@ -46,10 +46,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivro.setDescricao(dto.descricao());
         caixaLivro.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
         caixaLivro.setEditora(editoraRepository.findById(dto.editora()));
-        // caixaLivro.setListaAutores((dto.autores()).stream().map(a ->
-        // autorRepository.findById(a)).toList());
-        // caixaLivro.setListaGeneros((dto.generos()).stream().map(g ->
-        // generoRepository.findById(g)).toList());
+        caixaLivro.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
+        caixaLivro.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
+        caixaLivro.setPreco(dto.preco());
         caixaLivro.setQuantidadeEstoque(dto.quantidadeEstoque());
         caixaLivro.setClassificacao(Classificacao.valueOf(dto.classificacao()));
 
@@ -75,10 +74,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivroBanco.setDescricao(dto.descricao());
         caixaLivroBanco.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
         caixaLivroBanco.setEditora(editoraRepository.findById(dto.editora()));
-        // caixaLivroBanco.setListaAutores((dto.autores()).stream().map(a ->
-        // autorRepository.findById(a)).toList());
-        // caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g ->
-        // generoRepository.findById(g)).toList());
+        caixaLivroBanco.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
+        caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
+        caixaLivroBanco.setPreco(dto.preco());
         caixaLivroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
         caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
     }
@@ -113,11 +111,11 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         return caixaLivroRepository.findByDescricao(descricao).stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
     }
-    /*
-     * @Override
-     * public List<CaixaLivroResponseDTO> findByAutor(String autor) {
-     * return caixaLivroRepository.findByAutor(autor).stream()
-     * .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
-     * }
-     */
+
+    @Override
+    public List<CaixaLivroResponseDTO> findByAutor(String autor) {
+        return caixaLivroRepository.findByAutor(autor).stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+    }
+
 }

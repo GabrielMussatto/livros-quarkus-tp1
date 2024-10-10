@@ -19,28 +19,28 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
-public class Livro extends DefaultEntity{
+public class Livro extends DefaultEntity {
 
     @Column(length = 60, nullable = false)
     private String titulo;
 
-    @Column(length = 60, nullable = false)
-    private Double preco;
+    @Column(length = 999999, nullable = false)
+    private String descricao;
 
     @Column(nullable = false)
     private Integer quantidadeEstoque;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 13)
     private String isbn;
+
+    @Column(length = 60, nullable = false)
+    private Double preco;
+
+    private Classificacao classificacao;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private LocalDate datalancamento;
-
-    @Column(length = 999999, nullable = false)
-    private String descricao;
-
-    private Classificacao classificacao;
 
     @ManyToOne
     @JoinColumn(name = "id_fornecedor", nullable = false)
@@ -51,22 +51,20 @@ public class Livro extends DefaultEntity{
     private Editora Editora;
 
     @ManyToMany
-    @JoinTable(
-        name = "livro_autor",
-        joinColumns = @JoinColumn(name = "idlivro"),
+    @JoinTable(name = "livro_autor", 
+        joinColumns = @JoinColumn(name = "idlivro"), 
         inverseJoinColumns = @JoinColumn(name = "idautor")
-    )
+        )
     private List<Autor> listaAutor;
 
-    private String nomeImagem;
-
     @ManyToMany
-    @JoinTable(
-        name = "livro_genero",
-        joinColumns = @JoinColumn(name = "idlivro"),
+    @JoinTable(name = "livro_genero", 
+        joinColumns = @JoinColumn(name = "idlivro"), 
         inverseJoinColumns = @JoinColumn(name = "idgenero")
-    )
+        )
     private List<Genero> listaGenero;
+
+    private String nomeImagem;
 
     public void diminuindoEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque -= quantidadeEstoque;
@@ -84,71 +82,57 @@ public class Livro extends DefaultEntity{
         return preco;
     }
 
-
     public void setPreco(Double preco) {
         this.preco = preco;
     }
-
 
     public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
-
 
     public String getIsbn() {
         return isbn;
     }
 
-
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-
 
     public LocalDate getDatalancamento() {
         return datalancamento;
     }
 
-
     public void setDatalancamento(LocalDate datalancamento) {
         this.datalancamento = datalancamento;
     }
-
 
     public String getDescricao() {
         return descricao;
     }
 
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
 
     public Classificacao getClassificacao() {
         return classificacao;
     }
 
-
     public void setClassificacao(Classificacao classificacao) {
         this.classificacao = classificacao;
     }
-
 
     public List<Autor> getListaAutor() {
         return listaAutor;
     }
 
-
     public void setListaAutor(List<Autor> listaAutor) {
         this.listaAutor = listaAutor;
     }
-
 
     public List<Genero> getListaGenero() {
         return listaGenero;
@@ -162,16 +146,13 @@ public class Livro extends DefaultEntity{
         return Editora;
     }
 
-
     public void setEditora(Editora editora) {
         Editora = editora;
     }
 
-
     public Fornecedor getFornecedor() {
         return fornecedor;
     }
-
 
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;

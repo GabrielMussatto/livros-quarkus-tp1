@@ -10,7 +10,7 @@ import br.unitins.topicos1.repository.pessoa.ClienteRepository;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.PedidoService;
 import br.unitins.topicos1.validation.ValidationException;
-import jakarta.annotation.security.RolesAllowed;
+//import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
