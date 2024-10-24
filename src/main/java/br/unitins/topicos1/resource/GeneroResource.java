@@ -8,12 +8,14 @@ import br.unitins.topicos1.service.GeneroService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -39,25 +41,39 @@ public class GeneroResource {
 
     @GET
     //@RolesAllowed({"Funcionario"})
-    public Response findAll(){
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todos os generos - Executando GeneroResource_FindAll");
-        return Response.ok(generoService.findAll()).build();
+        return Response.ok(generoService.findAll(page, pageSize)).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByNome(@PathParam("nome") String nome){
+    public Response findByNome(
+        @PathParam("nome") String nome,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando os generos pelo nome - Executando GeneroResource_FindByNome");
-        return Response.ok(generoService.findByNome(nome)).build();
+        return Response.ok(generoService.findByNome(page, pageSize, nome)).build();
     }
 
     @GET
     @Path("/search/descricao/{descricao}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByDescricao(@PathParam("descricao") String descricao){
+    public Response findByDescricao(
+        @PathParam("descricao") String descricao,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando os generos pela descricao - Executando GeneroResource_FindByDescricao");
-        return Response.ok(generoService.findByDescricao(descricao)).build();
+        return Response.ok(generoService.findByDescricao(page, pageSize, descricao)).build();
+    }
+    
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(generoService.count()).build();
     }
 
     @POST

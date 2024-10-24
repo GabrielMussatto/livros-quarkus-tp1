@@ -35,7 +35,7 @@ public class AutorServiceImpl implements AutorService{
     public void validarNomeCompletoAutor(String nome) {
         Autor autor = autorRepository.findByNomeCompleto(nome);
         if (autor != null)
-            throw  new ValidationException("nome", "O nome '"+nome+"' já existe.");
+            throw  new ValidationException("nome", "O nome "+nome+" já existe.");
     }
 
     @Override
@@ -69,8 +69,16 @@ public class AutorServiceImpl implements AutorService{
     }
 
     @Override
-    public List<AutorResponseDTO> findAll(){
-        return autorRepository.listAll().stream().map(autor -> AutorResponseDTO.valueOf(autor)).toList();
+    public List<AutorResponseDTO> findAll(int page, int pageSize){
+        List<Autor> listAutor = autorRepository
+                                    .findAll()
+                                    .page(page, pageSize)
+                                    .list();
+
+        return listAutor
+                .stream()
+                .map(autor -> AutorResponseDTO.valueOf(autor))
+                .toList();
     }
 
     @Override
@@ -78,15 +86,67 @@ public class AutorServiceImpl implements AutorService{
         if (nome == null) {
             throw new ValidationException("nome", "Nenhum autor encontrado");            
         }
-        return autorRepository.findByNome(nome).stream().map(autor -> AutorResponseDTO.valueOf(autor)).toList();
+        List<Autor> listAutor = autorRepository
+                                    .findByNome(nome)
+                                    .list();
+
+        return listAutor
+                .stream()
+                .map(autor -> AutorResponseDTO.valueOf(autor))
+                .toList(); 
+    }
+
+    @Override
+    public List<AutorResponseDTO> findByNome(int page, int pageSize, String nome){
+        if (nome == null) {
+            throw new ValidationException("nome", "Nenhum autor encontrado");            
+        }
+
+        List<Autor> listAutor = autorRepository
+                                    .findByNome(nome)
+                                    .page(page, pageSize)
+                                    .list();
+
+        return listAutor
+                .stream()
+                .map(autor -> AutorResponseDTO.valueOf(autor))
+                .toList();    
     }
 
     @Override
     public List<AutorResponseDTO> findByBiografia(String biografia){
         if (biografia == null) {
-            throw new ValidationException("biografia", "Nenhum biografia encontrada");
+            throw new ValidationException("biografia", "Nenhuma biografia encontrada");
         }
-        return autorRepository.findByBiografia(biografia).stream().map(autor -> AutorResponseDTO.valueOf(autor)).toList();
+        List<Autor> listAutor = autorRepository
+                                    .findByBiografia(biografia)
+                                    .list();
+
+        return listAutor
+                .stream()
+                .map(autor -> AutorResponseDTO.valueOf(autor))
+                .toList(); 
     }
 
+    @Override
+    public List<AutorResponseDTO> findByBiografia(int page, int pageSize, String biografia){
+        if (biografia == null) {
+            throw new ValidationException("biografia", "Nenhuma biografia encontrada");
+        }
+
+        List<Autor> listAutor = autorRepository
+                                    .findByBiografia(biografia)
+                                    .page(page, pageSize)
+                                    .list();
+
+        return listAutor
+                .stream()
+                .map(autor -> AutorResponseDTO.valueOf(autor))
+                .toList(); 
+    }
+
+    @Override
+    public long count(){
+        return autorRepository.count();
+    }
 }

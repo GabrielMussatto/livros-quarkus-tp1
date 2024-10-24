@@ -9,12 +9,14 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -40,41 +42,61 @@ public class FornecedorResource {
 
     @GET
     //@RolesAllowed({"Funcionario"})
-    public Response findAll(){
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todos os fornecedores - Executando FornecedorResource_FindAll");
-        return Response.ok(fornecedorService.findAll()).build();
+        return Response.ok(fornecedorService.findAll(page, pageSize)).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByNome(@PathParam("nome") String nome){
+    public Response findByNome(
+        @PathParam("nome") String nome,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando fornecedor por nome: - Executando FornecedorResource_FindByNome " + nome);
-        return Response.ok(fornecedorService.findByNome(nome)).build();
+        return Response.ok(fornecedorService.findByNome(page, pageSize, nome)).build();
     }
 
     @GET
     @Path("/search/estado/{estado}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByEstado(@PathParam("estado") String estado){
+    public Response findByEstado(
+        @PathParam("estado") String estado,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todos os fornecedores por estado: - Executando FornecedorResource_FindByEstado" + estado);
-        return Response.ok(fornecedorService.findByEstado(estado)).build();
+        return Response.ok(fornecedorService.findByEstado(page, pageSize, estado)).build();
     }
 
     @GET
     @Path("/search/cidade/{cidade}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByCidade(@PathParam("cidade") String cidade){
+    public Response findByCidade(
+        @PathParam("cidade") String cidade,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todos os fornecedores por cidade: - Executando FornecedorResource_FindByCidade" + cidade);
-        return Response.ok(fornecedorService.findByCidade(cidade)).build();
+        return Response.ok(fornecedorService.findByCidade(page, pageSize, cidade)).build();
     }
 
     @GET
     @Path("/search/cnpj/{cnpj}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByCnpj(@PathParam("cnpj") String cnpj){
+    public Response findByCnpj(
+        @PathParam("cnpj") String cnpj,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando fornecedor por cnpj: - Executando FornecedorResource_FindByCnpj" + cnpj);
-        return Response.ok(fornecedorService.findByCnpj(cnpj)).build();
+        return Response.ok(fornecedorService.findByCnpj(page, pageSize, cnpj)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(fornecedorService.count()).build();
     }
 
     @POST

@@ -12,10 +12,14 @@ public interface CaixaLivroService {
     public void update(Long id, CaixaLivroDTO dto);
     public void delete(Long id);
     public CaixaLivroResponseDTO findById(Long id);
-    public List<CaixaLivroResponseDTO> findAll();
+    public List<CaixaLivroResponseDTO> findAll(int page, int pageSize);
     public List<CaixaLivroResponseDTO> findByNome(String nome);
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao);
     public List<CaixaLivroResponseDTO> findByAutor(String autor);
 
+    public List<CaixaLivroResponseDTO> findByNome(int page, int pageSize, String nome);
+    public List<CaixaLivroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
+    public List<CaixaLivroResponseDTO> findByAutor(int page, int pageSize, String autor);
+    public long count();
     
 }

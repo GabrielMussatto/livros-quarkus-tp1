@@ -42,16 +42,17 @@ public class FornecedorServiceImpl implements FornecedorService {
         fornecedorRepository.persist(fornecedor);
         return FornecedorResponseDTO.valueOf(fornecedor);
     }
+
     public void validarNomeFornecedor(String nome) {
         Fornecedor fornecedor = fornecedorRepository.findByNomeFornecedor(nome);
         if (fornecedor != null)
-            throw  new ValidationException("nome", "O fornecedor '"+nome+"' já existe.");
+            throw new ValidationException("nome", "O fornecedor '" + nome + "' já existe.");
     }
 
     public void validarCnpjFornecedor(String cnpj) {
         Fornecedor cnpjfornecedor = fornecedorRepository.findByNomeFornecedor(cnpj);
         if (cnpjfornecedor != null)
-            throw  new ValidationException("cnpj", "O CNPJ: '"+cnpj+"' já existe.");
+            throw new ValidationException("cnpj", "O CNPJ: '" + cnpj + "' já existe.");
     }
 
     @Override
@@ -86,26 +87,111 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
-    public List<FornecedorResponseDTO> findAll() {
-        return fornecedorRepository.listAll().stream().map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores)).toList();
+    public List<FornecedorResponseDTO> findAll(int page, int pageSize) {
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findAll()
+                .page(page, pageSize)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
     }
 
     @Override
     public List<FornecedorResponseDTO> findByNome(String nome) {
-        return fornecedorRepository.findByNome(nome).stream().map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores)).toList();
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByNome(nome)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
     }
 
     @Override
     public List<FornecedorResponseDTO> findByCidade(String cidade) {
-        return fornecedorRepository.findByCidade(cidade).stream().map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores)).toList();
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByCidade(cidade)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
     }
 
     @Override
     public List<FornecedorResponseDTO> findByEstado(String estado) {
-        return fornecedorRepository.findByEstado(estado).stream().map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores)).toList();
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByEstado(estado)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
     }
+
     @Override
     public List<FornecedorResponseDTO> findByCnpj(String cnpj) {
-        return fornecedorRepository.findByCnpj(cnpj).stream().map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores)).toList();
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByCnpj(cnpj)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
+    }
+
+    @Override
+    public List<FornecedorResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByNome(nome)
+                .page(page, pageSize)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
+    }
+
+    @Override
+    public List<FornecedorResponseDTO> findByCidade(int page, int pageSize, String cidade) {
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByCidade(cidade)
+                .page(page, pageSize)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
+    }
+
+    @Override
+    public List<FornecedorResponseDTO> findByEstado(int page, int pageSize, String estado) {
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByEstado(estado)
+                .page(page, pageSize)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
+    }
+
+    @Override
+    public List<FornecedorResponseDTO> findByCnpj(int page, int pageSize, String cnpj) {
+        List<Fornecedor> listFornecedor = fornecedorRepository
+                .findByCnpj(cnpj)
+                .page(page, pageSize)
+                .list();
+        return listFornecedor
+                .stream()
+                .map(fornecedores -> FornecedorResponseDTO.valueOf(fornecedores))
+                .toList();
+    }
+
+    @Override
+    public long count() {
+        return fornecedorRepository.count();
     }
 }

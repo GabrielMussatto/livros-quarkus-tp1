@@ -11,6 +11,7 @@ import br.unitins.topicos1.service.file.LivroFileServiceImpl;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
@@ -18,6 +19,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.ResponseBuilder;
@@ -47,41 +49,61 @@ public class LivroResource {
 
     @GET
     //@RolesAllowed({"Funcionario", "Cliente"})
-    public Response findAll(){
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todos os livros - Executando LivroResource_FindAll");
-        return Response.ok(livroService.findAll()).build();
+        return Response.ok(livroService.findAll(page, pageSize)).build();
     }
 
     @GET
     @Path("/search/titulo/{titulo}")
     //@RolesAllowed({"Funcionario", "Cliente"})
-    public Response findByTitulo(@PathParam("titulo") String titulo){
+    public Response findByTitulo(
+        @PathParam("titulo") String titulo,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando livros por título - Executando LivroResource_FindByTitulo");
-        return Response.ok(livroService.findByTitulo(titulo)).build();
+        return Response.ok(livroService.findByTitulo(page, pageSize, titulo)).build();
     }
 
     @GET
     @Path("/search/isbn/{isbn}")
     //@RolesAllowed({"Funcionario","Cliente"})
-    public Response findByIsbn(@PathParam("isbn") String isbn){
+    public Response findByIsbn(
+        @PathParam("isbn") String isbn,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando livros por ISBN - Executando LivroResource_findByIsbn");
-        return Response.ok(livroService.findByIsbn(isbn)).build();
+        return Response.ok(livroService.findByIsbn(page, pageSize, isbn)).build();
     }
 
     @GET
     @Path("/search/descricao/{descricao}")
     //@RolesAllowed({"Funcionario", "Cliente"})
-    public Response findByDescricao(@PathParam("descricao") String descricao){
+    public Response findByDescricao(
+        @PathParam("descricao") String descricao,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando livros por descrição - Executando LivroResource_findByDescricao");
-        return Response.ok(livroService.findByDescricao(descricao)).build();
+        return Response.ok(livroService.findByDescricao(page, pageSize, descricao)).build();
     }
     
     @GET
     @Path("/search/autor/{autor}")
     //@RolesAllowed({"Funcionario", "Cliente"})
-    public Response findByAutor(@PathParam("autor") String autor){
+    public Response findByAutor(
+        @PathParam("autor") String autor,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando livros por autor - Executando LivroResource_findByAutor");
-        return Response.ok(livroService.findByAutor(autor)).build();
+        return Response.ok(livroService.findByAutor(page, pageSize, autor)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(livroService.count()).build();
     }
 
     @POST

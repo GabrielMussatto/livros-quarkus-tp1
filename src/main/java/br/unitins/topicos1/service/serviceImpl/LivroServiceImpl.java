@@ -99,32 +99,111 @@ public class LivroServiceImpl implements LivroService{
     }
 
     @Override
-    public List<LivroResponseDTO> findAll(){
-        return livroRepository.listAll().stream().map(livro -> LivroResponseDTO.valueOf(livro)).toList();
+    public List<LivroResponseDTO> findAll(int page, int pageSize){
+        List<Livro> listLivro = livroRepository
+                                    .findAll()
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
     }
 
     @Override
     public List<LivroResponseDTO> findByTitulo(String titulo) {
-        return livroRepository.findByTitulo(titulo).stream()
-        .map(e -> LivroResponseDTO.valueOf(e)).toList();
+        List<Livro> listLivro = livroRepository
+                                    .findByTitulo(titulo)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
     }
 
     @Override
     public List<LivroResponseDTO> findByIsbn(String isbn) {
-        return livroRepository.findByIsbn(isbn).stream()
-        .map(e -> LivroResponseDTO.valueOf(e)).toList();
+        List<Livro> listLivro = livroRepository
+                                    .findByIsbn(isbn)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
     }
 
     @Override
     public List<LivroResponseDTO> findByDescricao(String descricao) {
-        return livroRepository.findByDescricao(descricao).stream()
-        .map(e -> LivroResponseDTO.valueOf(e)).toList();
+        List<Livro> listLivro = livroRepository
+                                    .findByDescricao(descricao)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
     }
 
     @Override
     public List<LivroResponseDTO> findByAutor(String autor) {
-        return livroRepository.findByAutor(autor).stream()
-        .map(e -> LivroResponseDTO.valueOf(e)).toList();
+        List<Livro> listLivro = livroRepository
+                                    .findByAutor(autor)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
     }
 
+    @Override
+    public List<LivroResponseDTO> findByTitulo(int page, int pageSize, String titulo) {
+        List<Livro> listLivro = livroRepository
+                                    .findByTitulo(titulo)
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
+    public List<LivroResponseDTO> findByIsbn(int page, int pageSize, String isbn) {
+        List<Livro> listLivro = livroRepository
+                                    .findByIsbn(isbn)
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
+    public List<LivroResponseDTO> findByDescricao(int page, int pageSize, String descricao) {
+        List<Livro> listLivro = livroRepository
+                                    .findByDescricao(descricao)
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
+    public List<LivroResponseDTO> findByAutor(int page, int pageSize, String autor) {
+        List<Livro> listLivro = livroRepository
+                                    .findByAutor(autor)
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
+    public long count(){
+        return livroRepository.count();
+    }
 }

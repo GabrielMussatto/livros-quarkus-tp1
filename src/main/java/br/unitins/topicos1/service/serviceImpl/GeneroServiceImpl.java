@@ -14,20 +14,19 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @ApplicationScoped
-public class GeneroServiceImpl implements GeneroService{
+public class GeneroServiceImpl implements GeneroService {
 
     @Inject
     public GeneroRepository generoRepository;
 
     @Override
     @Transactional
-    public GeneroResponseDTO create(@Valid GeneroDTO dto){
+    public GeneroResponseDTO create(@Valid GeneroDTO dto) {
         validarNomeGenero(dto.nome());
 
         Genero genero = new Genero();
         genero.setNome(dto.nome());
         genero.setDescricao(dto.descricao());
-      
 
         generoRepository.persist(genero);
         return GeneroResponseDTO.valueOf(genero);
@@ -36,12 +35,12 @@ public class GeneroServiceImpl implements GeneroService{
     public void validarNomeGenero(String nome) {
         Genero genero = generoRepository.findByNomeGenero(nome);
         if (genero != null)
-            throw  new ValidationException("nome", "O Genero '"+nome+"' já existe.");
+            throw new ValidationException("nome", "O Genero '" + nome + "' já existe.");
     }
 
     @Override
     @Transactional
-    public void update(Long id, GeneroDTO dto){
+    public void update(Long id, GeneroDTO dto) {
         Genero generoBanco = generoRepository.findById(id);
 
         generoBanco.setNome(dto.nome());
@@ -50,31 +49,76 @@ public class GeneroServiceImpl implements GeneroService{
 
     @Override
     @Transactional
-    public void delete(Long id){
+    public void delete(Long id) {
         generoRepository.deleteById(id);
     }
 
     @Override
-    public GeneroResponseDTO findById(Long id){
+    public GeneroResponseDTO findById(Long id) {
         return GeneroResponseDTO.valueOf(generoRepository.findById(id));
     }
 
     @Override
-    public List<GeneroResponseDTO> findAll(){
-        return generoRepository.listAll().stream().map(genero -> GeneroResponseDTO.valueOf(genero)).toList();
+    public List<GeneroResponseDTO> findAll(int page, int pageSize) {
+        List<Genero> listGenero = generoRepository
+                                    .findAll()
+                                    .page(page, pageSize)
+                                    .list();
+        return listGenero
+                .stream()
+                .map(genero -> GeneroResponseDTO.valueOf(genero))
+                .toList();
     }
 
     @Override
     public List<GeneroResponseDTO> findByNome(String nome) {
-        return generoRepository.findByNome(nome).stream()
-        .map(e -> GeneroResponseDTO.valueOf(e)).toList();
+        List<Genero> listGenero = generoRepository
+                                    .findByNome(nome)
+                                    .list();
+        return listGenero
+                .stream()
+                .map(genero -> GeneroResponseDTO.valueOf(genero))
+                .toList();
     }
 
     @Override
     public List<GeneroResponseDTO> findByDescricao(String descricao) {
-        return generoRepository.findByDescricao(descricao).stream()
-        .map(e -> GeneroResponseDTO.valueOf(e)).toList();
+        List<Genero> listGenero = generoRepository
+                                    .findByDescricao(descricao)
+                                    .list();
+        return listGenero
+                .stream()
+                .map(genero -> GeneroResponseDTO.valueOf(genero))
+                .toList();
     }
 
+    @Override
+    public List<GeneroResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Genero> listGenero = generoRepository
+                                    .findByNome(nome)
+                                    .page(page, pageSize)
+                                    .list();
+        return listGenero
+                .stream()
+                .map(genero -> GeneroResponseDTO.valueOf(genero))
+                .toList();
+    }
+
+    @Override
+    public List<GeneroResponseDTO> findByDescricao(int page, int pageSize, String descricao) {
+        List<Genero> listGenero = generoRepository
+                                    .findByDescricao(descricao)
+                                    .page(page, pageSize)
+                                    .list();
+        return listGenero
+                .stream()
+                .map(genero -> GeneroResponseDTO.valueOf(genero))
+                .toList();
+    }
+
+    @Override
+    public long count() {
+        return generoRepository.count();
+    }
 
 }

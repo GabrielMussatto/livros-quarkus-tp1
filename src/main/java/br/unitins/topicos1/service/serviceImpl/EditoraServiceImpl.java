@@ -32,7 +32,7 @@ public class EditoraServiceImpl implements EditoraService {
         editora.setEndereco(dto.endereco());
         editora.setEstado(dto.estado());
         editora.setTelefone(TelefoneDTO.convertToTelefone(dto.telefone()));
- 
+
         editoraRepository.persist(editora);
         return EditoraResponseDTO.valueOf(editora);
     }
@@ -40,7 +40,7 @@ public class EditoraServiceImpl implements EditoraService {
     public void validarNomeEditora(String nome) {
         Editora editora = editoraRepository.findByNomeEditora(nome);
         if (editora != null)
-            throw  new ValidationException("nome", "O editora '"+nome+"' já existe.");
+            throw new ValidationException("nome", "O editora '" + nome + "' já existe.");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class EditoraServiceImpl implements EditoraService {
     public void update(Long id, EditoraDTO dto) {
         Editora editoraBanco = editoraRepository.findById(id);
 
-        if(editoraBanco != null ){
+        if (editoraBanco != null) {
             editoraBanco.setNome(dto.nome());
             editoraBanco.setEmail(dto.email());
             editoraBanco.setEndereco(dto.endereco());
@@ -57,7 +57,7 @@ public class EditoraServiceImpl implements EditoraService {
             Telefone telefone = editoraBanco.getTelefone();
             telefone.setCodigoArea(dto.telefone().codigoArea());
             telefone.setNumero(dto.telefone().numero());
-        } else{
+        } else {
             throw new ValidationException("id", "Editora não encontrado.");
         }
     }
@@ -67,7 +67,7 @@ public class EditoraServiceImpl implements EditoraService {
     public void delete(Long id) {
         if (id == null)
             throw new ValidationException("id", "Editora não encontrado.");
-            
+
         editoraRepository.deleteById(id);
     }
 
@@ -77,18 +77,65 @@ public class EditoraServiceImpl implements EditoraService {
     }
 
     @Override
-    public List<EditoraResponseDTO> findAll() {
-        return editoraRepository.listAll().stream().map(editoraes -> EditoraResponseDTO.valueOf(editoraes)).toList();
+    public List<EditoraResponseDTO> findAll(int page, int pageSize) {
+        List<Editora> listEditora = editoraRepository
+                                        .findAll()
+                                        .page(page, pageSize)
+                                        .list();
+        return listEditora
+                .stream()
+                .map(editoras -> EditoraResponseDTO.valueOf(editoras))
+                .toList();
     }
 
     @Override
     public List<EditoraResponseDTO> findByNome(String nome) {
-        return editoraRepository.findByNome(nome).stream().map(editoras -> EditoraResponseDTO.valueOf(editoras)).toList();
+        List<Editora> listEditora = editoraRepository
+                                        .findByNome(nome)
+                                        .list();
+        return listEditora
+                .stream()
+                .map(editoras -> EditoraResponseDTO.valueOf(editoras))
+                .toList();
     }
 
     @Override
     public List<EditoraResponseDTO> findByEstado(String estado) {
-        return editoraRepository.findByEstado(estado).stream().map(editoraes -> EditoraResponseDTO.valueOf(editoraes)).toList();
+        List<Editora> listEditora = editoraRepository
+                                        .findByEstado(estado)
+                                        .list();
+        return listEditora
+                .stream()
+                .map(editoras -> EditoraResponseDTO.valueOf(editoras))
+                .toList();
     }
 
+    @Override
+    public List<EditoraResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Editora> listEditora = editoraRepository
+                                        .findByNome(nome)
+                                        .page(page, pageSize)
+                                        .list();
+        return listEditora
+                .stream()
+                .map(editoras -> EditoraResponseDTO.valueOf(editoras))
+                .toList();
+    }
+
+    @Override
+    public List<EditoraResponseDTO> findByEstado(int page, int pageSize, String estado) {
+        List<Editora> listEditora = editoraRepository
+                                        .findByEstado(estado)
+                                        .page(page, pageSize)
+                                        .list();
+        return listEditora
+                .stream()
+                .map(editoras -> EditoraResponseDTO.valueOf(editoras))
+                .toList();
+    }
+
+    @Override
+    public long count() {
+        return editoraRepository.count();
+    }
 }

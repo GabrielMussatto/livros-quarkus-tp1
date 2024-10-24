@@ -8,12 +8,14 @@ import br.unitins.topicos1.service.EditoraService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -38,25 +40,39 @@ public class EditoraResource {
 
     @GET
     //@RolesAllowed({"Funcionario"})
-    public Response findAll(){
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todas as editoras - Executando EditoraResource_Findall");
-        return Response.ok(editoraService.findAll()).build();
+        return Response.ok(editoraService.findAll(page, pageSize)).build();
     }
 
     @GET
     @Path("/search/nome/{nome}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByNome(@PathParam("nome") String nome){
+    public Response findByNome(
+        @PathParam("nome") String nome,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando editora por nome: - Executando EditoraResource_FindByNome" + nome);
-        return Response.ok(editoraService.findByNome(nome)).build();
+        return Response.ok(editoraService.findByNome(page, pageSize, nome)).build();
     }
 
     @GET
     @Path("/search/estado/{estado}")
     //@RolesAllowed({"Funcionario"})
-    public Response findByEstado(@PathParam("estado") String estado){
+    public Response findByEstado(
+        @PathParam("estado") String estado,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando todas as editora por estado: - Executando EditoraResource_FindByEstado" + estado);
-        return Response.ok(editoraService.findByEstado(estado)).build();
+        return Response.ok(editoraService.findByEstado(page, pageSize, estado)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(editoraService.count()).build();
     }
 
     @POST

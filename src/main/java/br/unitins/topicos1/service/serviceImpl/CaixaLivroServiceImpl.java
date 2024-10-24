@@ -96,26 +96,89 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     }
 
     @Override
-    public List<CaixaLivroResponseDTO> findAll() {
-        return caixaLivroRepository.listAll().stream().map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+    public List<CaixaLivroResponseDTO> findAll(int page, int pageSize) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findAll()
+                                            .page(page, pageSize)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
     }
 
     @Override
     public List<CaixaLivroResponseDTO> findByNome(String nome) {
-        return caixaLivroRepository.findByNome(nome).stream()
-                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByNome(nome)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
     }
 
     @Override
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao) {
-        return caixaLivroRepository.findByDescricao(descricao).stream()
-                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByDescricao(descricao)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
     }
 
     @Override
     public List<CaixaLivroResponseDTO> findByAutor(String autor) {
-        return caixaLivroRepository.findByAutor(autor).stream()
-                .map(cl -> CaixaLivroResponseDTO.valueOf(cl)).toList();
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByAutor(autor)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public List<CaixaLivroResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByNome(nome)
+                                            .page(page, pageSize)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public List<CaixaLivroResponseDTO> findByDescricao(int page, int pageSize, String descricao) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByDescricao(descricao)
+                                            .page(page, pageSize)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public List<CaixaLivroResponseDTO> findByAutor(int page, int pageSize, String autor) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                                            .findByAutor(autor)
+                                            .page(page, pageSize)
+                                            .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public long count(){
+        return caixaLivroRepository.count();
     }
 
 }

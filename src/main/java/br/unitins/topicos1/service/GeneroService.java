@@ -12,8 +12,12 @@ public interface GeneroService {
     public void update(Long id, GeneroDTO dto);
     public void delete(Long id);
     public GeneroResponseDTO findById(Long id);
-    public List<GeneroResponseDTO> findAll();
+    public List<GeneroResponseDTO> findAll(int page, int pageSize);
     public List<GeneroResponseDTO> findByNome(String nome);
     public List<GeneroResponseDTO> findByDescricao(String descricao);
+
+    public List<GeneroResponseDTO> findByNome(int page, int pageSize, String nome);
+    public List<GeneroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
+    public long count();
 
 }
