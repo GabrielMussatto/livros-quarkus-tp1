@@ -94,6 +94,12 @@ public class CaixaLivroResource {
         return Response.ok(caixaLivroService.count()).build();
     }
 
+    @GET
+    @Path("/count/search/{nome}")
+    public Response countByNome(@PathParam("nome") String nome) {
+        return Response.ok(caixaLivroService.countByNome(nome)).build();
+    }
+
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (CaixaLivroDTO dto){

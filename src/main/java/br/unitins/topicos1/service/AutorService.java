@@ -19,4 +19,5 @@ public interface AutorService {
     public List<AutorResponseDTO> findByNome(int page, int pageSize, String nome);
     public List<AutorResponseDTO> findByBiografia(int page, int pageSize, String biografia);
     public long count();
+    public long countByNome(String nome);
 }

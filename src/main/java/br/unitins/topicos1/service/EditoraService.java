@@ -18,4 +18,5 @@ public interface EditoraService {
    public List<EditoraResponseDTO> findByNome(int page, int pageSize, String nome);
    public List<EditoraResponseDTO> findByEstado(int page, int pageSize, String estado);
    public long count();
+   public long countByNome(String nome);
 }

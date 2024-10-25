@@ -194,4 +194,9 @@ public class FornecedorServiceImpl implements FornecedorService {
     public long count() {
         return fornecedorRepository.count();
     }
+
+    @Override
+    public long countByNome(String nome){
+        return fornecedorRepository.findByNome(nome).count();
+    }
 }

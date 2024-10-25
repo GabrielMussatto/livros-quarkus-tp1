@@ -76,6 +76,12 @@ public class GeneroResource {
         return Response.ok(generoService.count()).build();
     }
 
+    @GET
+    @Path("/count/search/{nome}")
+    public Response countByNome(@PathParam("nome") String nome) {
+        return Response.ok(generoService.countByNome(nome)).build();
+    }
+
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (GeneroDTO dto){

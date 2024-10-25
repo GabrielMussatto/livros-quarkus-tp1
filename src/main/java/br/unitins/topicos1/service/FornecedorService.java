@@ -23,5 +23,6 @@ public interface FornecedorService {
    public List<FornecedorResponseDTO> findByEstado(int page, int pageSize, String estado);
    public List<FornecedorResponseDTO> findByCnpj(int page, int pageSize, String cnpj);
    public long count();
+   public long countByNome(String nome);
 
 }

@@ -121,4 +121,9 @@ public class GeneroServiceImpl implements GeneroService {
         return generoRepository.count();
     }
 
+    @Override
+    public long countByNome(String nome){
+        return generoRepository.findByNome(nome).count();
+    }
+
 }

@@ -181,4 +181,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         return caixaLivroRepository.count();
     }
 
+    @Override
+    public long countByNome(String nome){
+        return caixaLivroRepository.findByNome(nome).count();
+    }
+
 }

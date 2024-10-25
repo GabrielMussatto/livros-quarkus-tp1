@@ -99,6 +99,12 @@ public class FornecedorResource {
         return Response.ok(fornecedorService.count()).build();
     }
 
+    @GET
+    @Path("/count/search/{nome}")
+    public Response countByNome(@PathParam("nome") String nome) {
+        return Response.ok(fornecedorService.countByNome(nome)).build();
+    }
+
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create(@Valid FornecedorDTO dto){

@@ -23,4 +23,5 @@ public interface LivroService {
     public List<LivroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
     public List<LivroResponseDTO> findByAutor(int page, int pageSize, String autor);
     public long count();
+    public long countByTitulo(String titulo);
 }

@@ -21,5 +21,6 @@ public interface CaixaLivroService {
     public List<CaixaLivroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
     public List<CaixaLivroResponseDTO> findByAutor(int page, int pageSize, String autor);
     public long count();
+    public long countByNome(String nome);
     
 }

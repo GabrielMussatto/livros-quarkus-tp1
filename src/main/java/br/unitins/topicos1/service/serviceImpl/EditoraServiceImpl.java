@@ -138,4 +138,9 @@ public class EditoraServiceImpl implements EditoraService {
     public long count() {
         return editoraRepository.count();
     }
+
+    @Override
+    public long countByNome(String nome){
+        return editoraRepository.findByNome(nome).count();
+    }
 }

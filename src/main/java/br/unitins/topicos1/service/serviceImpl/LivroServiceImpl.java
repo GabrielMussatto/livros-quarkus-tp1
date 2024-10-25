@@ -206,4 +206,9 @@ public class LivroServiceImpl implements LivroService{
     public long count(){
         return livroRepository.count();
     }
+
+    @Override
+    public long countByTitulo(String titulo){
+        return livroRepository.findByTitulo(titulo).count();
+    }
 }

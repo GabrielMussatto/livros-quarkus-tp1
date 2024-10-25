@@ -84,6 +84,11 @@ public class AutorResource {
         return Response.ok(autorService.count()).build();
     }
 
+    @GET
+    @Path("/count/search/{nome}")
+    public long countByNome(@PathParam("nome") String nome) {
+        return autorService.countByNome(nome);
+    }
 
     @POST
     //@RolesAllowed({"Funcionario"}) 

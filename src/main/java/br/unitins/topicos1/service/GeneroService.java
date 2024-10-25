@@ -19,5 +19,6 @@ public interface GeneroService {
     public List<GeneroResponseDTO> findByNome(int page, int pageSize, String nome);
     public List<GeneroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
     public long count();
+    public long countByNome(String nome);
 
 }
