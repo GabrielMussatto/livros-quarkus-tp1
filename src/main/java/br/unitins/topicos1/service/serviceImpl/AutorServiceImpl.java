@@ -35,7 +35,7 @@ public class AutorServiceImpl implements AutorService{
     public void validarNomeCompletoAutor(String nome) {
         Autor autor = autorRepository.findByNomeCompleto(nome);
         if (autor != null)
-            throw  new ValidationException("nome", "O nome "+nome+" já existe.");
+            throw  new ValidationException("nome", "O nome '"+nome+"'' já existe.");
     }
 
     @Override

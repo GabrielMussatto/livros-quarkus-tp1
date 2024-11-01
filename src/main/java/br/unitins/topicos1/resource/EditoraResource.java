@@ -84,27 +84,27 @@ public class EditoraResource {
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (EditoraDTO dto){
-        try {
-            LOG.info("Editora criado com sucesso - Executando EditoraResource_create");
+        // try {
+        //     LOG.info("Editora criado com sucesso - Executando EditoraResource_create");
             return Response.status(Status.CREATED).entity(editoraService.create(dto)).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao cadastrar editora - Executando EditoraResource_create", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao cadastrar editora - Executando EditoraResource_create").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao cadastrar editora - Executando EditoraResource_create", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao cadastrar editora - Executando EditoraResource_create").build();
+        // }
     }
 
     @PUT
     @Path("/{id}")
     //@RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, EditoraDTO dto){
-        try {
-            LOG.info("Editora atualizado com sucesso - Executando EditoraResource_update");
+        // try {
+        //     LOG.info("Editora atualizado com sucesso - Executando EditoraResource_update");
             editoraService.update(id, dto);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao atualizar editora - Executando EditoraResource_update", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar editora - Executando EditoraResource_update").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao atualizar editora - Executando EditoraResource_update", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar editora - Executando EditoraResource_update").build();
+        // }
     }
 
     @DELETE

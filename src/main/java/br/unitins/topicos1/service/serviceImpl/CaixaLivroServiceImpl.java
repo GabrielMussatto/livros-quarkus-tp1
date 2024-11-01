@@ -59,7 +59,7 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     public void validarNomeCaixaLivro(String nome) {
         CaixaLivro caixaLivro = caixaLivroRepository.findByNomeCaixaLivro(nome);
         if (caixaLivro != null) {
-            throw new ValidationException("Nome", "O nome '" + nome + "' de Caixa de Livro já existe");
+            throw new ValidationException("nome", "O nome '" + nome + "' de Caixa de Livro já existe");
         }
     }
 

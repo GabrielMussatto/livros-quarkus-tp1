@@ -103,27 +103,27 @@ public class CaixaLivroResource {
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (CaixaLivroDTO dto){
-        try {
-            LOG.info("Criando uma nova caixa livro - Executando CaixaLivroResource_create");
+        // try {
+        //     LOG.info("Criando uma nova caixa livro - Executando CaixaLivroResource_create");
             return Response.status(Status.CREATED).entity(caixaLivroService.create(dto)).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao criar uma nova caixa livro - Executando CaixaLivroResource_create", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao criar uma nova caixa livro - Executando CaixaLivroResource_create").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao criar uma nova caixa livro - Executando CaixaLivroResource_create", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao criar uma nova caixa livro - Executando CaixaLivroResource_create").build();
+        // }
     }
 
     @PUT
     @Path("/{id}")
     //@RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, CaixaLivroDTO dto){
-        try {
-            LOG.info("Atualizando uma caixa livro- Executando CaixaLivroResource_update");
+        // try {
+        //     LOG.info("Atualizando uma caixa livro- Executando CaixaLivroResource_update");
             caixaLivroService.update(id, dto);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao atualizar uma caixa livro - Executando CaixaLivroResource_update", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar uma caixa livro - Executando CaixaLivroResource_update").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao atualizar uma caixa livro - Executando CaixaLivroResource_update", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar uma caixa livro - Executando CaixaLivroResource_update").build();
+        // }
     }
 
     @DELETE

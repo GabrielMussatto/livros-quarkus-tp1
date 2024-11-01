@@ -33,6 +33,7 @@ public class Fornecedor extends DefaultEntity {
     private String estado;
     private String cidade;
 
+    @Column(nullable = false)
     private Integer quantLivrosFornecido;
 
     @OneToOne(cascade = CascadeType.PERSIST)

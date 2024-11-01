@@ -108,27 +108,27 @@ public class FornecedorResource {
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create(@Valid FornecedorDTO dto){
-        try {
-            LOG.info("Criando novo fornecedor: - Executando FornecedorResource_create");
+        // try {
+        //     LOG.info("Criando novo fornecedor: - Executando FornecedorResource_create");
             return Response.status(Status.CREATED).entity(fornecedorService.create(dto)).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao criar fornecedor: " + e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao criar fornecedor - Executando FornecedorResource_create").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao criar fornecedor: " + e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao criar fornecedor - Executando FornecedorResource_create").build();
+        // }
     }
 
     @PUT
     @Path("/{id}")
     //@RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, FornecedorDTO dto){
-        try {
-            LOG.info("Fornecedor atualizado com sucesso - Executando FornecedorResource_update");
+        // try {
+        //     LOG.info("Fornecedor atualizado com sucesso - Executando FornecedorResource_update");
             fornecedorService.update(id, dto);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao atualizar fornecedor: - Executando FornecedorResource_update" + e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar fornecedor - Executando FornecedorResource_update").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao atualizar fornecedor: - Executando FornecedorResource_update" + e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar fornecedor - Executando FornecedorResource_update").build();
+        // }
     }
 
     @DELETE

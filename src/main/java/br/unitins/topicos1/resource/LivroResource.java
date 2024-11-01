@@ -115,27 +115,27 @@ public class LivroResource {
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (LivroDTO dto){
-        try {
-            LOG.info("Criando um novo livro - Executando LivroResource_create");
+        // try {
+        //     LOG.info("Criando um novo livro - Executando LivroResource_create");
             return Response.status(Status.CREATED).entity(livroService.create(dto)).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao criar um novo livro - Executando LivroResource_create", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao criar um novo livro - Executando LivroResource_create").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao criar um novo livro - Executando LivroResource_create", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao criar um novo livro - Executando LivroResource_create").build();
+        // }
     }
 
     @PUT
     @Path("/{id}")
     //@RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, LivroDTO dto){
-        try {
-            LOG.info("Atualizando um livro- Executando LivroResource_update");
+        // try {
+        //     LOG.info("Atualizando um livro- Executando LivroResource_update");
             livroService.update(id, dto);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (Exception e) {
-            LOG.error("Erro ao atualizar um livro - Executando LivroResource_update", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar um livro - Executando LivroResource_update").build();
-        }
+        // } catch (Exception e) {
+        //     LOG.error("Erro ao atualizar um livro - Executando LivroResource_update", e);
+        //     return Response.status(Status.NOT_FOUND).entity("Erro ao atualizar um livro - Executando LivroResource_update").build();
+        // }
     }
 
     @DELETE
