@@ -112,6 +112,12 @@ public class LivroResource {
         return Response.ok(livroService.countByTitulo(titulo)).build();
     }
 
+    @GET
+    @Path("/count/search/{autor}")
+    public Response countByAutor(@PathParam("autor") String autor) {
+        return Response.ok(livroService.countByAutor(autor)).build();
+    }
+
     @POST
     //@RolesAllowed({"Funcionario"})
     public Response create (LivroDTO dto){
