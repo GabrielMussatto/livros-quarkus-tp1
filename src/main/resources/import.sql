@@ -499,40 +499,40 @@ INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 2
 INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 1, 140.25, 2);
 
 -- Inserindo dados corretos na tabela caixaLivro
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('O Senhor dos Anéis - A Trilogia Completa', 
 'Contém a saga inteira de O Senhor dos Anéis, incluindo A Sociedade do Anel, As Duas Torres, e O Retorno do Rei.', 
-79.90, 10, 1, 1, 1);
+79.90, 10, 1, 1, 1, 'o_iluminado.jpg');
 
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('O Hobbit', 'Aventuras de Bilbo Bolseiro em busca do tesouro guardado por Smaug, o dragão.', 57.99, 22, 2, 2, 2);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('O Hobbit', 'Aventuras de Bilbo Bolseiro em busca do tesouro guardado por Smaug, o dragão.', 57.99, 22, 2, 2, 2, 'o_iluminado.jpg');
 
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('O Silmarillion', 'A história do mundo criado por J.R.R. Tolkien antes dos eventos de O Senhor dos Anéis.', 80.80, 33, 3, 3, 3);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('O Silmarillion', 'A história do mundo criado por J.R.R. Tolkien antes dos eventos de O Senhor dos Anéis.', 80.80, 33, 3, 3, 3, 'o_iluminado.jpg');
 
 -- Colleen Hoover - Romance
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção Colleen Hoover - Romance', 'Esta caixa contém os livros "É Assim que Acaba", "Verity" e "Um Caso Perdido", abordando temas profundos de amor, trauma e superação.', 129.90, 15, 2, 1, 1);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção Colleen Hoover - Romance', 'Esta caixa contém os livros "É Assim que Acaba", "Verity" e "Um Caso Perdido", abordando temas profundos de amor, trauma e superação.', 129.90, 15, 2, 1, 1, 'o_iluminado.jpg');
 
 -- Ali Hazelwood - Romance / Ficção Científica
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção Ali Hazelwood - Romance e Ficção Científica', 'Esta caixa inclui os livros "A Hipótese do Amor", "A Equação do Amor" e "Um Amor Científico", combinando romance com temas de ficção científica e acadêmicos.', 149.99, 18, 3, 2, 2);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção Ali Hazelwood - Romance e Ficção Científica', 'Esta caixa inclui os livros "A Hipótese do Amor", "A Equação do Amor" e "Um Amor Científico", combinando romance com temas de ficção científica e acadêmicos.', 149.99, 18, 3, 2, 2, 'o_iluminado.jpg');
 
 -- Augusto Cury - Desenvolvimento Pessoal / Ficção
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção Augusto Cury - Desenvolvimento Pessoal', 'Esta caixa contém os livros "O Vendedor de Sonhos", "Ansiedade - Como Enfrentar o Mal do Século" e "O Futuro da Humanidade", explorando temas de psicologia e superação pessoal.', 119.99, 25, 4, 3, 3);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção Augusto Cury - Desenvolvimento Pessoal', 'Esta caixa contém os livros "O Vendedor de Sonhos", "Ansiedade - Como Enfrentar o Mal do Século" e "O Futuro da Humanidade", explorando temas de psicologia e superação pessoal.', 119.99, 25, 4, 3, 3, 'o_iluminado.jpg');
 
 -- Nicholas Sparks - Romance
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção Nicholas Sparks - Romance', 'Esta caixa inclui os livros "O Diário de Uma Paixão", "Um Amor para Recordar" e "Querido John", histórias emocionantes de amor e perda.', 139.90, 12, 1, 2, 1);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção Nicholas Sparks - Romance', 'Esta caixa inclui os livros "O Diário de Uma Paixão", "Um Amor para Recordar" e "Querido John", histórias emocionantes de amor e perda.', 139.90, 12, 1, 2, 1, 'o_iluminado.jpg');
 
 -- J.K. Rowling - Fantasia
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção Harry Potter - J.K. Rowling', 'Esta caixa inclui os três primeiros livros da série: "Harry Potter e a Pedra Filosofal", "Harry Potter e a Câmara Secreta" e "Harry Potter e o Prisioneiro de Azkaban".', 199.90, 30, 1, 1, 4);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção Harry Potter - J.K. Rowling', 'Esta caixa inclui os três primeiros livros da série: "Harry Potter e a Pedra Filosofal", "Harry Potter e a Câmara Secreta" e "Harry Potter e o Prisioneiro de Azkaban".', 199.90, 30, 1, 1, 4, 'o_iluminado.jpg');
 
 -- George Orwell - Distopia / Ficção Científica
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao)
-VALUES ('Coleção George Orwell - Distopia', 'Esta caixa contém os livros "1984", "A Revolução dos Bichos" e "Dias na Birmânia", obras clássicas de Orwell que exploram temas de poder, controle e injustiça social.', 89.99, 20, 5, 3, 2);
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+VALUES ('Coleção George Orwell - Distopia', 'Esta caixa contém os livros "1984", "A Revolução dos Bichos" e "Dias na Birmânia", obras clássicas de Orwell que exploram temas de poder, controle e injustiça social.', 89.99, 20, 5, 3, 2, 'o_iluminado.jpg');
 
 -- Inserir relacionamento entre livro e autor
 INSERT INTO caixa_autor (idcaixa, idautor) VALUES (1, 1);

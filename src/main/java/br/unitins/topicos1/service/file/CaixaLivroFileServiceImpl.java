@@ -24,7 +24,7 @@ public class CaixaLivroFileServiceImpl implements FileService{
     private final String PATH_USER = System.getProperty("user.home")
         + File.separator + "quarkus"
         + File.separator + "images"
-        + File.separator + "caixalivros" + File.separator;
+        + File.separator + "caixaLivros" + File.separator;
 
  
     @Override
