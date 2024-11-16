@@ -43,20 +43,20 @@ VALUES ('Analista de Sistemas', 6000.00, 6),
 
 
 -- Inserir autores
-INSERT INTO autor (nome, biografia) VALUES ('Colleen Hoover', 'Colleen Hoover é uma escritora norte-americana que escreve principalmente romances nos gêneros romântico e ficção para jovens adultos. Muitos de seus trabalhos foram autopublicados antes de serem adquiridos por uma editora.');
-INSERT INTO autor (nome, biografia) VALUES ('Ali Hazelwood', 'Ali Hazelwood é uma autora italiana, que viveu em diversos países antes de se mudar para os Estados Unidos para se doutorar em Neurociência. Que conquistou o mundo da literatura com seus romances de ficção científica que combinam humor, inteligência e romance');
-INSERT INTO autor (nome, biografia) VALUES ('Augusto Cury', 'Augusto Jorge Cury é um psiquiatra, professor e escritor brasileiro. Augusto é autor da Teoria da Inteligência Multifocal e seus livros foram publicados em mais de 70 países, com mais de 25 milhões de livros vendidos somente no Brasil.');
-INSERT INTO autor (nome, biografia) VALUES ('Nicholas Sparks', 'Nicholas Charles Sparks é um escritor norte-americano. Ele é conhecido por suas novelas românticas, muitas das quais se passam em Carolina do Norte, onde Sparks cresceu. Suas obras incluem O Diário da Nossa Paixão, Um Amor Para Recordar e Querido John.');
-INSERT INTO autor (nome, biografia) VALUES ('J.K. Rowling', 'Joanne Rowling, mais conhecida pelo pseudônimo J.K. Rowling, é uma escritora, roteirista e produtora cinematográfica britânica, mundialmente famosa pela série de livros Harry Potter.');
-INSERT INTO autor (nome, biografia) VALUES ('George Orwell', 'George Orwell foi um escritor e jornalista inglês. Sua obra é marcada por uma inteligência perspicaz e uma consciência profunda da injustiça social. Suas obras mais famosas incluem 1984 e A Revolução dos Bichos.');
-INSERT INTO autor (nome, biografia) VALUES ('Virginia Woolf', 'Virginia Woolf foi uma escritora britânica e uma das figuras mais importantes do modernismo literário. Suas obras mais conhecidas incluem Mrs. Dalloway e Ao Farol.');
-INSERT INTO autor (nome, biografia) VALUES ('Isabel Allende', 'Isabel Allende é uma escritora chilena-americana conhecida por seus romances de realismo mágico. Entre suas obras mais famosas estão A Casa dos Espíritos e Eva Luna.');
-INSERT INTO autor (nome, biografia) VALUES ('J.R.R. Tolkien', 'J.R.R. Tolkien foi um escritor, professor e filólogo britânico, mundialmente conhecido por sua trilogia O Senhor dos Anéis e O Hobbit, que definiram o gênero de fantasia.');
-INSERT INTO autor (nome, biografia) VALUES ('Margaret Atwood', 'Margaret Atwood é uma escritora canadense conhecida por suas obras de ficção especulativa e distopia feminista. Suas obras mais notáveis incluem O Conto da Aia e Oryx e Crake.');
-INSERT INTO autor (nome, biografia) VALUES ('Machado de Assis', 'Machado de Assis foi um escritor brasileiro e é considerado um dos maiores nomes da literatura brasileira. Suas obras mais famosas incluem Memórias Póstumas de Brás Cubas e Dom Casmurro.');
-INSERT INTO autor (nome, biografia) VALUES ('Jane Austen', 'Jane Austen foi uma escritora inglesa cujas obras abordam a condição das mulheres na sociedade inglesa do século XVIII. Seus romances mais conhecidos incluem Orgulho e Preconceito, Razão e Sensibilidade e Emma.');
-INSERT INTO autor (nome, biografia) VALUES ('Gabriel García Márquez', 'Gabriel García Márquez foi um escritor, jornalista, editor e ativista colombiano. Recebeu o Prêmio Nobel de Literatura em 1982 e é autor de Cem Anos de Solidão e O Amor nos Tempos do Cólera.');
-INSERT INTO autor (nome, biografia) VALUES ('Stephen King', 'Stephen King é um escritor norte-americano conhecido por suas obras de terror, suspense e fantasia. Muitos de seus livros foram adaptados para o cinema, como O Iluminado, Carrie e A Espera de um Milagre.');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Colleen Hoover', 'Colleen Hoover é uma escritora norte-americana que escreve principalmente romances nos gêneros romântico e ficção para jovens adultos. Muitos de seus trabalhos foram autopublicados antes de serem adquiridos por uma editora.', 'colleen_hoover.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Ali Hazelwood', 'Ali Hazelwood é uma autora italiana, que viveu em diversos países antes de se mudar para os Estados Unidos para se doutorar em Neurociência. Que conquistou o mundo da literatura com seus romances de ficção científica que combinam humor, inteligência e romance', 'ali_hazelwood.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Augusto Cury', 'Augusto Jorge Cury é um psiquiatra, professor e escritor brasileiro. Augusto é autor da Teoria da Inteligência Multifocal e seus livros foram publicados em mais de 70 países, com mais de 25 milhões de livros vendidos somente no Brasil.', 'augusto_cury.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Nicholas Sparks', 'Nicholas Charles Sparks é um escritor norte-americano. Ele é conhecido por suas novelas românticas, muitas das quais se passam em Carolina do Norte, onde Sparks cresceu. Suas obras incluem O Diário da Nossa Paixão, Um Amor Para Recordar e Querido John.', 'nicholas_sparks.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('J.K. Rowling', 'Joanne Rowling, mais conhecida pelo pseudônimo J.K. Rowling, é uma escritora, roteirista e produtora cinematográfica britânica, mundialmente famosa pela série de livros Harry Potter.', 'jk_rowling.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('George Orwell', 'George Orwell foi um escritor e jornalista inglês. Sua obra é marcada por uma inteligência perspicaz e uma consciência profunda da injustiça social. Suas obras mais famosas incluem 1984 e A Revolução dos Bichos.', 'george_orwell.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Virginia Woolf', 'Virginia Woolf foi uma escritora britânica e uma das figuras mais importantes do modernismo literário. Suas obras mais conhecidas incluem Mrs. Dalloway e Ao Farol.', 'virginia_woolf.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Isabel Allende', 'Isabel Allende é uma escritora chilena-americana conhecida por seus romances de realismo mágico. Entre suas obras mais famosas estão A Casa dos Espíritos e Eva Luna.', 'isabel_allende.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('J.R.R. Tolkien', 'J.R.R. Tolkien foi um escritor, professor e filólogo britânico, mundialmente conhecido por sua trilogia O Senhor dos Anéis e O Hobbit, que definiram o gênero de fantasia.', 'jrr_tolkien.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Margaret Atwood', 'Margaret Atwood é uma escritora canadense conhecida por suas obras de ficção especulativa e distopia feminista. Suas obras mais notáveis incluem O Conto da Aia e Oryx e Crake.', 'margaret_atwood.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Machado de Assis', 'Machado de Assis foi um escritor brasileiro e é considerado um dos maiores nomes da literatura brasileira. Suas obras mais famosas incluem Memórias Póstumas de Brás Cubas e Dom Casmurro.', 'machado_de_assis.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Jane Austen', 'Jane Austen foi uma escritora inglesa cujas obras abordam a condição das mulheres na sociedade inglesa do século XVIII. Seus romances mais conhecidos incluem Orgulho e Preconceito, Razão e Sensibilidade e Emma.', 'jane_austen.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Gabriel García Márquez', 'Gabriel García Márquez foi um escritor, jornalista, editor e ativista colombiano. Recebeu o Prêmio Nobel de Literatura em 1982 e é autor de Cem Anos de Solidão e O Amor nos Tempos do Cólera.', 'gabriel_garcia_marquez.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Stephen King', 'Stephen King é um escritor norte-americano conhecido por suas obras de terror, suspense e fantasia. Muitos de seus livros foram adaptados para o cinema, como O Iluminado, Carrie e A Espera de um Milagre.', 'stephen_king.jpg');
 
 INSERT INTO autor (nome, biografia) VALUES ('Chimamanda Ngozi Adichie', 'Chimamanda Ngozi Adichie é uma escritora e feminista nigeriana. Suas obras abordam temas como identidade cultural e questões de gênero, sendo autora de obras como Hibisco Roxo e Americanah.');
 INSERT INTO autor (nome, biografia) VALUES ('Clarice Lispector', 'Clarice Lispector foi uma escritora e jornalista brasileira, conhecida por sua prosa introspectiva e poética. Entre suas obras mais aclamadas estão A Hora da Estrela e A Paixão Segundo G.H.');
@@ -293,9 +293,10 @@ VALUES ('A Zona Morta', 30.90, 28, '9781501192241', '01-08-1979', 'Um homem desp
 
 -- Inserir relacionamento entre livro e autor
 INSERT INTO livro_autor (idlivro, idautor) VALUES (1, 1);
+INSERT INTO livro_autor (idlivro, idautor) VALUES (1, 2);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (2, 2);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (3, 3);
-INSERT INTO livro_autor (idlivro, idautor) VALUES (4, 4);
+INSERT INTO livro_autor (idlivro, idautor) VALUES (4, 5);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (5, 5);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (6, 6);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (7, 1);
