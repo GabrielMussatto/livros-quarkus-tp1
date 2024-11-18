@@ -101,21 +101,38 @@ public class LivroResource {
     }
 
     @GET
+    @Path("/search/genero/{genero}")
+    //@RolesAllowed({"Funcionario", "Cliente"})
+    public Response findByGenero(
+        @PathParam("genero") String genero,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
+        LOG.info("Buscando livros por genero - Executando LivroResource_findByGenero");
+        return Response.ok(livroService.findByGenero(page, pageSize, genero)).build();
+    }
+
+    @GET
     @Path("/count")
     public Response count() {
         return Response.ok(livroService.count()).build();
     }
 
     @GET
-    @Path("/count/search/{titulo}")
+    @Path("/count/search/titulo/{titulo}")
     public Response countByTitulo(@PathParam("titulo") String titulo) {
         return Response.ok(livroService.countByTitulo(titulo)).build();
     }
 
     @GET
-    @Path("/count/search/{autor}")
+    @Path("/count/search/autor/{autor}")
     public Response countByAutor(@PathParam("autor") String autor) {
         return Response.ok(livroService.countByAutor(autor)).build();
+    }
+
+    @GET
+    @Path("/count/search/genero/{genero}")
+    public Response countByGenero(@PathParam("genero") String genero) {
+        return Response.ok(livroService.countByGenero(genero)).build();
     }
 
     @POST

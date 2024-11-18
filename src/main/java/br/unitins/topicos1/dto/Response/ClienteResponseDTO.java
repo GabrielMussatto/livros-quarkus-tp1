@@ -1,6 +1,9 @@
 package br.unitins.topicos1.dto.Response;
 
+import java.util.List;
+
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.livro.Livro;
 
 public record ClienteResponseDTO(
     Long id,
@@ -8,7 +11,9 @@ public record ClienteResponseDTO(
     String endereco,
     String estado,
     String cidade,
-    UsuarioResponseDTO usuario
+    UsuarioResponseDTO usuario,
+    List<Livro> listaFavorito
+
 ) {
     public static ClienteResponseDTO valueOf(Cliente cliente){
         return new ClienteResponseDTO(
@@ -17,6 +22,7 @@ public record ClienteResponseDTO(
             cliente.getEndereco(),
             cliente.getEstado(),
             cliente.getCidade(),
-            UsuarioResponseDTO.valueOf(cliente.getUsuario()));
+            UsuarioResponseDTO.valueOf(cliente.getUsuario()),
+            cliente.getListaFavorito());
     }
 }

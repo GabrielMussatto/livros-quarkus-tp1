@@ -89,15 +89,38 @@ public class CaixaLivroResource {
     }
 
     @GET
+    @Path("/search/genero/{genero}")
+    //@RolesAllowed({"Funcionario", "Cliente"})
+    public Response findByGenero(
+        @PathParam("genero") String genero,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize){
+        LOG.info("Buscando caixas de livros por genero - Executando CaixaLivroResource_findByGenero");
+        return Response.ok(caixaLivroService.findByGenero(page, pageSize, genero)).build();
+    }
+
+    @GET
     @Path("/count")
     public Response count() {
         return Response.ok(caixaLivroService.count()).build();
     }
 
     @GET
-    @Path("/count/search/{nome}")
+    @Path("/count/search/nome/{nome}")
     public Response countByNome(@PathParam("nome") String nome) {
         return Response.ok(caixaLivroService.countByNome(nome)).build();
+    }
+
+    @GET
+    @Path("/count/search/autor/{autor}")
+    public Response countByAutor(@PathParam("autor") String autor) {
+        return Response.ok(caixaLivroService.countByAutor(autor)).build();
+    }
+
+    @GET
+    @Path("/count/search/genero/{genero}")
+    public Response countByGenero(@PathParam("genero") String genero) {
+        return Response.ok(caixaLivroService.countByGenero(genero)).build();
     }
 
     @POST

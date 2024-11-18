@@ -22,6 +22,10 @@ public class CaixaLivroRepository implements PanacheRepository<CaixaLivro>{
         return find("SELECT c FROM CaixaLivro c JOIN c.listaAutores a WHERE UPPER (a.nome) LIKE ?1", autor.toUpperCase() + "%");
     }
 
+    public PanacheQuery<CaixaLivro> findByGenero(String genero){
+        return find("SELECT c FROM CaixaLivro c JOIN c.listaGeneros g WHERE UPPER (g.nome) LIKE ?1", genero.toUpperCase() + "%");
+    }
+
     public CaixaLivro findByNomeCaixaLivro(String nome) {
         return find("UPPER(nome) = ?1",  nome.toUpperCase() ).firstResult();
     }

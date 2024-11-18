@@ -11,6 +11,7 @@ import br.unitins.topicos1.model.genero.Genero;
 import br.unitins.topicos1.model.editora.Editora;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -50,14 +51,14 @@ public class Livro extends DefaultEntity {
     @JoinColumn(name = "id_editora", nullable = false)
     private Editora Editora;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "livro_autor", 
         joinColumns = @JoinColumn(name = "idlivro"), 
         inverseJoinColumns = @JoinColumn(name = "idautor")
         )
     private List<Autor> listaAutor;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "livro_genero", 
         joinColumns = @JoinColumn(name = "idlivro"), 
         inverseJoinColumns = @JoinColumn(name = "idgenero")

@@ -98,9 +98,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findAll(int page, int pageSize) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findAll()
-                                            .page(page, pageSize)
-                                            .list();
+                .findAll()
+                .page(page, pageSize)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -110,8 +110,8 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByNome(String nome) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByNome(nome)
-                                            .list();
+                .findByNome(nome)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -121,8 +121,8 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByDescricao(descricao)
-                                            .list();
+                .findByDescricao(descricao)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -132,8 +132,19 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByAutor(String autor) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByAutor(autor)
-                                            .list();
+                .findByAutor(autor)
+                .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public List<CaixaLivroResponseDTO> findByGenero(String genero) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                .findByGenero(genero)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -143,9 +154,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByNome(int page, int pageSize, String nome) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByNome(nome)
-                                            .page(page, pageSize)
-                                            .list();
+                .findByNome(nome)
+                .page(page, pageSize)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -155,9 +166,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByDescricao(int page, int pageSize, String descricao) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByDescricao(descricao)
-                                            .page(page, pageSize)
-                                            .list();
+                .findByDescricao(descricao)
+                .page(page, pageSize)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -167,9 +178,9 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     @Override
     public List<CaixaLivroResponseDTO> findByAutor(int page, int pageSize, String autor) {
         List<CaixaLivro> listCaixaLivro = caixaLivroRepository
-                                            .findByAutor(autor)
-                                            .page(page, pageSize)
-                                            .list();
+                .findByAutor(autor)
+                .page(page, pageSize)
+                .list();
         return listCaixaLivro
                 .stream()
                 .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
@@ -177,13 +188,35 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
     }
 
     @Override
-    public long count(){
+    public List<CaixaLivroResponseDTO> findByGenero(int page, int pageSize, String genero) {
+        List<CaixaLivro> listCaixaLivro = caixaLivroRepository
+                .findByGenero(genero)
+                .page(page, pageSize)
+                .list();
+        return listCaixaLivro
+                .stream()
+                .map(cl -> CaixaLivroResponseDTO.valueOf(cl))
+                .toList();
+    }
+
+    @Override
+    public long count() {
         return caixaLivroRepository.count();
     }
 
     @Override
-    public long countByNome(String nome){
+    public long countByNome(String nome) {
         return caixaLivroRepository.findByNome(nome).count();
+    }
+
+    @Override
+    public long countByAutor(String autor){
+        return caixaLivroRepository.findByAutor(autor).count();
+    }
+
+    @Override
+    public long countByGenero(String genero) {
+        return caixaLivroRepository.findByGenero(genero).count();
     }
 
 }

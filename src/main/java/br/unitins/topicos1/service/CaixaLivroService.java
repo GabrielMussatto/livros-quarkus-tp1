@@ -16,11 +16,15 @@ public interface CaixaLivroService {
     public List<CaixaLivroResponseDTO> findByNome(String nome);
     public List<CaixaLivroResponseDTO> findByDescricao(String descricao);
     public List<CaixaLivroResponseDTO> findByAutor(String autor);
+    public List<CaixaLivroResponseDTO> findByGenero(String genero);
 
     public List<CaixaLivroResponseDTO> findByNome(int page, int pageSize, String nome);
     public List<CaixaLivroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
     public List<CaixaLivroResponseDTO> findByAutor(int page, int pageSize, String autor);
+    public List<CaixaLivroResponseDTO> findByGenero(int page, int pageSize, String genero);
     public long count();
     public long countByNome(String nome);
+    public long countByAutor (String autor);
+    public long countByGenero (String genero);
     
 }

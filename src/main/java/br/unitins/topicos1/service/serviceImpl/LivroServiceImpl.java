@@ -155,6 +155,17 @@ public class LivroServiceImpl implements LivroService{
     }
 
     @Override
+    public List<LivroResponseDTO> findByGenero(String genero) {
+        List<Livro> listLivro = livroRepository
+                                    .findByGenero(genero)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
     public List<LivroResponseDTO> findByTitulo(int page, int pageSize, String titulo) {
         List<Livro> listLivro = livroRepository
                                     .findByTitulo(titulo)
@@ -203,6 +214,18 @@ public class LivroServiceImpl implements LivroService{
     }
 
     @Override
+    public List<LivroResponseDTO> findByGenero(int page, int pageSize, String genero) {
+        List<Livro> listLivro = livroRepository
+                                    .findByGenero(genero)
+                                    .page(page, pageSize)
+                                    .list();
+        return listLivro
+                .stream()
+                .map(livro -> LivroResponseDTO.valueOf(livro))
+                .toList();
+    }
+
+    @Override
     public long count(){
         return livroRepository.count();
     }
@@ -216,4 +239,10 @@ public class LivroServiceImpl implements LivroService{
     public long countByAutor(String autor){
         return livroRepository.findByAutor(autor).count();
     }
+
+    @Override
+    public long countByGenero(String genero) {
+        return livroRepository.findByGenero(genero).count();
+    }
+
 }

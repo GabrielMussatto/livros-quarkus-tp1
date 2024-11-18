@@ -30,4 +30,8 @@ public class LivroRepository implements PanacheRepository<Livro>{
         return find("SELECT l FROM Livro l JOIN l.listaAutor a WHERE UPPER(a.nome) LIKE ?1",autor.toUpperCase() + "%");
     }
 
+    public PanacheQuery<Livro> findByGenero(String genero){
+        return find("SELECT l FROM Livro l JOIN l.listaGenero g WHERE UPPER (g.nome) LIKE ?1", genero.toUpperCase() + "%");
+    }
+
 }

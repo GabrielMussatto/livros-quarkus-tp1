@@ -17,12 +17,15 @@ public interface LivroService {
     public List<LivroResponseDTO> findByIsbn(String isbn);
     public List<LivroResponseDTO> findByDescricao(String descricao);
     public List<LivroResponseDTO> findByAutor(String autor);
+    public List<LivroResponseDTO> findByGenero(String genero);
 
     public List<LivroResponseDTO> findByTitulo(int page, int pageSize, String titulo);
     public List<LivroResponseDTO> findByIsbn(int page, int pageSize, String isbn);
     public List<LivroResponseDTO> findByDescricao(int page, int pageSize, String descricao);
     public List<LivroResponseDTO> findByAutor(int page, int pageSize, String autor);
+    public List<LivroResponseDTO> findByGenero(int page, int pageSize, String genero);
     public long count();
     public long countByTitulo(String titulo);
     public long countByAutor (String autor);
+    public long countByGenero (String genero);
 }
