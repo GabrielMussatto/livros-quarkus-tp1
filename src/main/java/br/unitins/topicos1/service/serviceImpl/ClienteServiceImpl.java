@@ -30,7 +30,7 @@ import jakarta.ws.rs.NotFoundException;
 
 @ApplicationScoped
 public class ClienteServiceImpl implements ClienteService {
-    
+
     @Inject
     public ClienteRepository clienteRepository;
 
@@ -55,7 +55,7 @@ public class ClienteServiceImpl implements ClienteService {
         Usuario usuario = new Usuario();
         usuario.setNome(dto.nome());
         usuario.setUsername(dto.username());
-        usuario.setSenha(hashService.getHashSenha(dto.senha())); 
+        usuario.setSenha(hashService.getHashSenha(dto.senha()));
         usuario.setDataNascimento(dto.dataNascimento());
         usuario.setEmail(dto.email());
         usuario.setCpf(dto.cpf());
@@ -80,16 +80,17 @@ public class ClienteServiceImpl implements ClienteService {
     public void update(Long id, ClienteDTO dto) {
         validarCpfCliente(dto.cpf());
         Cliente clienteBanco = clienteRepository.findById(id);
-        
+
         if (clienteBanco == null) {
-            throw new ValidationException("Update cliente","Cliente não encontrado - Executando ClienteServiceImpl_update");
+            throw new ValidationException("Update cliente",
+                    "Cliente não encontrado - Executando ClienteServiceImpl_update");
         }
-        
+
         clienteBanco.setEndereco(dto.endereco());
         clienteBanco.setCep(dto.cep());
         clienteBanco.setCidade(dto.cidade());
         clienteBanco.setEstado(dto.estado());
-        
+
         Usuario usuario = clienteBanco.getUsuario();
         usuario.setNome(dto.nome());
         usuario.setUsername(dto.username());
@@ -123,7 +124,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public ClienteResponseDTO findById(Long id) throws NotFoundException {
         Cliente cliente = clienteRepository.findById(id);
-        
+
         if (cliente == null) {
             throw new NotFoundException("Cliente não encontrado - Executando ClienteServiceImpl_findById");
         }
@@ -134,7 +135,7 @@ public class ClienteServiceImpl implements ClienteService {
     public List<ClienteResponseDTO> findAll() {
         return clienteRepository.listAll().stream().map(ClienteResponseDTO::valueOf).toList();
     }
-    
+
     @Override
     public List<ClienteResponseDTO> findByEstado(String estado) {
         return clienteRepository.findByEstado(estado).stream().map(ClienteResponseDTO::valueOf).toList();
@@ -144,7 +145,7 @@ public class ClienteServiceImpl implements ClienteService {
     public List<UsuarioResponseDTO> findByCpf(String cpf) {
         return usuarioRepository.findByCpf(cpf).stream().map(UsuarioResponseDTO::valueOf).toList();
     }
-    
+
     @Override
     public UsuarioResponseDTO login(String username, String senha) {
         Cliente cliente = clienteRepository.findByUsernameAndSenha(username, senha);
@@ -153,18 +154,20 @@ public class ClienteServiceImpl implements ClienteService {
         }
         return UsuarioResponseDTO.valueOf(cliente.getUsuario());
     }
-    
+
     public void validarCpfCliente(String cpf) {
         Usuario cliente = usuarioRepository.findByCpfUsuario(cpf);
         if (cliente != null) {
-            throw new ValidationException("cpf", "O CPF: '" + cpf + "' já existe. - Executando ClienteServiceImpl_validarCpfCliente");
+            throw new ValidationException("cpf",
+                    "O CPF: '" + cpf + "' já existe. - Executando ClienteServiceImpl_validarCpfCliente");
         }
     }
 
-    public void validarEmailCliente(String email){
+    public void validarEmailCliente(String email) {
         Usuario cliente = usuarioRepository.findByEmailUsuario(email);
         if (cliente != null) {
-            throw new ValidationException("email", "O Email: '" + email + "' já existe. - Executando ClienteServiceImpl_validarEmailCliente");
+            throw new ValidationException("email",
+                    "O Email: '" + email + "' já existe. - Executando ClienteServiceImpl_validarEmailCliente");
         }
     }
 
@@ -175,8 +178,9 @@ public class ClienteServiceImpl implements ClienteService {
 
         Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
 
-        if(cliente == null || !hashService.verificandoHash(dto.senhaAntiga(), cliente.getUsuario().getSenha())){
-            throw new ValidationException("senhaAntiga", "Senha antiga não confere - Executando ClienteServiceImpl_alterarSenha");
+        if (cliente == null || !hashService.verificandoHash(dto.senhaAntiga(), cliente.getUsuario().getSenha())) {
+            throw new ValidationException("senhaAntiga",
+                    "Senha antiga não confere - Executando ClienteServiceImpl_alterarSenha");
         }
 
         cliente.getUsuario().setSenha(hashService.getHashSenha(dto.novaSenha()));
@@ -186,13 +190,14 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     @Transactional
     public void alterarUsername(AlterarUsernameDTO dto) {
-        
+
         Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
 
         Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
 
         if (cliente == null || !hashService.verificandoHash(dto.senha(), cliente.getUsuario().getSenha())) {
-            throw new ValidationException("senhaAntiga", "Senha incorreta - Executando ClienteServiceImpl_alterarUsername");
+            throw new ValidationException("senhaAntiga",
+                    "Senha incorreta - Executando ClienteServiceImpl_alterarUsername");
         }
 
         cliente.getUsuario().setUsername(dto.usernameNovo());
@@ -207,7 +212,8 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
 
         if (cliente == null || !hashService.verificandoHash(dto.senha(), cliente.getUsuario().getSenha())) {
-            throw new ValidationException("senhaAntiga", "Senha incorreta - Executando ClienteServiceImpl_alterarEmail");
+            throw new ValidationException("senhaAntiga",
+                    "Senha incorreta - Executando ClienteServiceImpl_alterarEmail");
         }
 
         cliente.getUsuario().setEmail(dto.emailNovo());
@@ -222,8 +228,13 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
 
         if (cliente == null) {
-            throw new ValidationException("Perfil","Cliente não encontrado - Executando ClienteServiceImpl_findMeuPerfil");
+            throw new ValidationException("Perfil",
+                    "Cliente não encontrado - Executando ClienteServiceImpl_findMeuPerfil");
         }
+
+        // Garante que a lista seja inicializada antes de retornar
+        cliente.getListaFavorito().size();
+
         return ClienteResponseDTO.valueOf(cliente);
     }
 
@@ -241,7 +252,18 @@ public class ClienteServiceImpl implements ClienteService {
             listaFavorito = cliente.getListaFavorito();
         }
 
-        listaFavorito.add(livroRepository.findById(idLivro));
+        Livro livro = livroRepository.findById(idLivro);
+        if (livro == null) {
+            throw new ValidationException("Livro", "Livro não encontrado - Executando ClienteServiceImpl");
+        }
+        if (listaFavorito.contains(livro)){
+            throw new ValidationException("Lista de favoritos", "Este livro já esta na sua lista de favoritos!!");
+        }
+        listaFavorito.add(livro);
+        cliente.setListaFavorito(listaFavorito);
+        clienteRepository.persist(cliente);
+
+        // listaFavorito.add(livroRepository.findById(idLivro));
     }
 
     @Override
@@ -255,8 +277,15 @@ public class ClienteServiceImpl implements ClienteService {
         if (listaFavorito == null) {
             throw new ValidationException("listaFavorito", "Não há livro para ser removido!");
         }
-                
-        listaFavorito.remove(livroRepository.findById(idLivro));
+
+        Livro livro = livroRepository.findById(idLivro);
+        if (!listaFavorito.remove(livro)) {
+            throw new ValidationException("listaFavorito", "Livro não encontrado na lista de favoritos!");
+        }
+
+        // listaFavorito.remove(livroRepository.findById(idLivro));
+        cliente.setListaFavorito(listaFavorito); // Atualiza a lista no cliente
+        clienteRepository.persist(cliente); // Persiste o cliente com a lista atualizada
     }
 
 }

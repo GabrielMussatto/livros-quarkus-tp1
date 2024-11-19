@@ -7,6 +7,7 @@ import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.service.ClienteService;
+import br.unitins.topicos1.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -162,13 +163,16 @@ public class ClienteResource {
 
     @PATCH
     @RolesAllowed({"Cliente"})
-    @Path("/search/incluir-livro-favorito/{id-livro}")
+    @Path("/search/adicionar-livro-favorito/{id-livro}")
     public Response adicionarLivroFavorito(@PathParam("id-livro") Long idLivro){
         try {
             LOG.infof("Inserindo item na lista de favoritos");
             clienteService.adicionarListaLivroFavorito(idLivro);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (Exception e) {
+        } catch (ValidationException ve) {
+            LOG.warnf("Erro de validação ao adicionar livro na lista de favoritos: %s", ve.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(ve.getMessage()).build(); 
+        }catch (Exception e) {
             LOG.error("Erro ao adicionar livro na lista de favoritos.", e);
             return Response.status(Status.NOT_FOUND).entity("Erro ao adicionar livro na lista de favoritos.").build();
         }
@@ -185,6 +189,6 @@ public class ClienteResource {
         } catch (Exception e) {
             LOG.error("Erro ao remover livro da lista de favoritos.", e);
             return Response.status(Status.NOT_FOUND).entity("Erro ao remover livro da lista de favoritos.").build();
-    }
+        }
     }
 }

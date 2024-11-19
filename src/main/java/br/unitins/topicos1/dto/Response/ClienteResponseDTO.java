@@ -12,7 +12,7 @@ public record ClienteResponseDTO(
     String estado,
     String cidade,
     UsuarioResponseDTO usuario,
-    List<Livro> listaFavorito
+    List<LivroResponseDTO> listaFavorito
 
 ) {
     public static ClienteResponseDTO valueOf(Cliente cliente){
@@ -23,6 +23,6 @@ public record ClienteResponseDTO(
             cliente.getEstado(),
             cliente.getCidade(),
             UsuarioResponseDTO.valueOf(cliente.getUsuario()),
-            cliente.getListaFavorito());
+            cliente.getListaFavorito().stream().map(LivroResponseDTO::valueOf).toList());
     }
 }
