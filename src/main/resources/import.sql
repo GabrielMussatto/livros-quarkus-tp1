@@ -57,14 +57,13 @@ INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Machado de Assis', 'Mac
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Jane Austen', 'Jane Austen foi uma escritora inglesa cujas obras abordam a condição das mulheres na sociedade inglesa do século XVIII. Seus romances mais conhecidos incluem Orgulho e Preconceito, Razão e Sensibilidade e Emma.', 'jane_austen.jpg');
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Gabriel García Márquez', 'Gabriel García Márquez foi um escritor, jornalista, editor e ativista colombiano. Recebeu o Prêmio Nobel de Literatura em 1982 e é autor de Cem Anos de Solidão e O Amor nos Tempos do Cólera.', 'gabriel_garcia_marquez.jpg');
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Stephen King', 'Stephen King é um escritor norte-americano conhecido por suas obras de terror, suspense e fantasia. Muitos de seus livros foram adaptados para o cinema, como O Iluminado, Carrie e A Espera de um Milagre.', 'stephen_king.jpg');
-
-INSERT INTO autor (nome, biografia) VALUES ('Chimamanda Ngozi Adichie', 'Chimamanda Ngozi Adichie é uma escritora e feminista nigeriana. Suas obras abordam temas como identidade cultural e questões de gênero, sendo autora de obras como Hibisco Roxo e Americanah.');
-INSERT INTO autor (nome, biografia) VALUES ('Clarice Lispector', 'Clarice Lispector foi uma escritora e jornalista brasileira, conhecida por sua prosa introspectiva e poética. Entre suas obras mais aclamadas estão A Hora da Estrela e A Paixão Segundo G.H.');
-INSERT INTO autor (nome, biografia) VALUES ('Leo Tolstoy', 'Leo Tolstoy foi um escritor russo amplamente considerado um dos maiores romancistas de todos os tempos. Suas obras mais conhecidas incluem Guerra e Paz e Anna Karenina.');
-INSERT INTO autor (nome, biografia) VALUES ('Ernest Hemingway', 'Ernest Hemingway foi um escritor e jornalista norte-americano, conhecido por seu estilo econômico e minimalista. Suas principais obras incluem O Velho e o Mar, Por Quem os Sinos Dobram e Adeus às Armas.');
-INSERT INTO autor (nome, biografia) VALUES ('Agatha Christie', 'Agatha Christie foi uma escritora britânica conhecida por seus romances policiais, especialmente aqueles estrelados por Hercule Poirot e Miss Marple. É uma das autoras mais vendidas de todos os tempos.');
-INSERT INTO autor (nome, biografia) VALUES ('Harper Lee', 'Harper Lee foi uma escritora norte-americana conhecida por seu romance clássico O Sol é Para Todos, que aborda temas de justiça social, racismo e infância no sul dos Estados Unidos.');
-INSERT INTO autor (nome, biografia) VALUES ('Fyodor Dostoevsky', 'Fyodor Dostoevsky foi um escritor e filósofo russo. Ele explorou temas complexos de psicologia e moralidade em seus livros, como Crime e Castigo e Os Irmãos Karamazov.');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Chimamanda Ngozi Adichie', 'Chimamanda Ngozi Adichie é uma escritora e feminista nigeriana. Suas obras abordam temas como identidade cultural e questões de gênero, sendo autora de obras como Hibisco Roxo e Americanah.', 'chimamanda_ngozi_adichie.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Clarice Lispector', 'Clarice Lispector foi uma escritora e jornalista brasileira, conhecida por sua prosa introspectiva e poética. Entre suas obras mais aclamadas estão A Hora da Estrela e A Paixão Segundo G.H.', 'clarice_lispector.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Leo Tolstoy', 'Leo Tolstoy foi um escritor russo amplamente considerado um dos maiores romancistas de todos os tempos. Suas obras mais conhecidas incluem Guerra e Paz e Anna Karenina.','Leo_Tolstoy.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Ernest Hemingway', 'Ernest Hemingway foi um escritor e jornalista norte-americano, conhecido por seu estilo econômico e minimalista. Suas principais obras incluem O Velho e o Mar, Por Quem os Sinos Dobram e Adeus às Armas.','Ernest_Hemingway.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Agatha Christie', 'Agatha Christie foi uma escritora britânica conhecida por seus romances policiais, especialmente aqueles estrelados por Hercule Poirot e Miss Marple. É uma das autoras mais vendidas de todos os tempos.','Agatha_Christie.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Harper Lee', 'Harper Lee foi uma escritora norte-americana conhecida por seu romance clássico O Sol é Para Todos, que aborda temas de justiça social, racismo e infância no sul dos Estados Unidos.','Harper_Lee.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Fyodor Dostoevsky', 'Fyodor Dostoevsky foi um escritor e filósofo russo. Ele explorou temas complexos de psicologia e moralidade em seus livros, como Crime e Castigo e Os Irmãos Karamazov.','Fyodor_Dostoevsky.jpg');
 
 -- Inserir gênero
 INSERT INTO genero (nome, descricao) VALUES ('Romance', 'Livros que enfocam em relacionamentos amorosos e desenvolvimento emocional dos personagens.');
@@ -297,8 +296,8 @@ INSERT INTO livro_autor (idlivro, idautor) VALUES (1, 2);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (2, 2);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (3, 3);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (4, 5);
-INSERT INTO livro_autor (idlivro, idautor) VALUES (5, 5);
-INSERT INTO livro_autor (idlivro, idautor) VALUES (6, 6);
+INSERT INTO livro_autor (idlivro, idautor) VALUES (5, 6);
+INSERT INTO livro_autor (idlivro, idautor) VALUES (6, 4);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (7, 1);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (8, 1);
 INSERT INTO livro_autor (idlivro, idautor) VALUES (9, 1);
@@ -503,42 +502,42 @@ INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 1
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('O Senhor dos Anéis - A Trilogia Completa', 
 'Contém a saga inteira de O Senhor dos Anéis, incluindo A Sociedade do Anel, As Duas Torres, e O Retorno do Rei.', 
-79.90, 10, 1, 1, 1, 'o_iluminado.jpg');
+79.90, 10, 1, 1, 1, 'box_O Senhor_dos_Aneis.jpg');
 
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('O Hobbit', 'Aventuras de Bilbo Bolseiro em busca do tesouro guardado por Smaug, o dragão.', 57.99, 22, 2, 2, 2, 'o_iluminado.jpg');
+VALUES ('O Hobbit + Senhor dos Aneis', 'Aventuras de Bilbo Bolseiro em busca do tesouro guardado por Smaug, o dragão.', 137.99, 22, 2, 2, 2, 'box_O_Hobbit.jpg');
 
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('O Silmarillion', 'A história do mundo criado por J.R.R. Tolkien antes dos eventos de O Senhor dos Anéis.', 80.80, 33, 3, 3, 3, 'o_iluminado.jpg');
+VALUES ('A História da Terra-média - Box 1', 'A história do mundo criado por J.R.R. Tolkien antes dos eventos de O Senhor dos Anéis.', 80.80, 33, 3, 3, 3, 'box_terra_media_1.jpg');
 
 -- Colleen Hoover - Romance
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção Colleen Hoover - Romance', 'Esta caixa contém os livros "É Assim que Acaba", "Verity" e "Um Caso Perdido", abordando temas profundos de amor, trauma e superação.', 129.90, 15, 2, 1, 1, 'o_iluminado.jpg');
+VALUES ('Coleção Colleen Hoover - Romance', 'Esta caixa contém os livros "É Assim que Acaba", "Verity" e "Um Caso Perdido", abordando temas profundos de amor, trauma e superação.', 129.90, 15, 2, 1, 1, 'box_colleenHover.jpg');
 
 -- Ali Hazelwood - Romance / Ficção Científica
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção Ali Hazelwood - Romance e Ficção Científica', 'Esta caixa inclui os livros "A Hipótese do Amor", "A Equação do Amor" e "Um Amor Científico", combinando romance com temas de ficção científica e acadêmicos.', 149.99, 18, 3, 2, 2, 'o_iluminado.jpg');
+VALUES ('Coleção Ali Hazelwood', 'Esta caixa inclui os livros "A Hipótese do Amor", "A Equação do Amor" e "Um Amor Científico", combinando romance com temas de ficção científica e acadêmicos.', 149.99, 18, 3, 2, 2, 'box_AliHazelwood.jpg');
 
 -- Augusto Cury - Desenvolvimento Pessoal / Ficção
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção Augusto Cury - Desenvolvimento Pessoal', 'Esta caixa contém os livros "O Vendedor de Sonhos", "Ansiedade - Como Enfrentar o Mal do Século" e "O Futuro da Humanidade", explorando temas de psicologia e superação pessoal.', 119.99, 25, 4, 3, 3, 'o_iluminado.jpg');
+VALUES ('Coleção Augusto Cury - Desenvolvimento Pessoal', 'Esta caixa contém os livros "O Vendedor de Sonhos", "Ansiedade - Como Enfrentar o Mal do Século" e "O Futuro da Humanidade", explorando temas de psicologia e superação pessoal.', 119.99, 25, 4, 3, 3, 'box_AugustoCury.jpg');
 
 -- Nicholas Sparks - Romance
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção Nicholas Sparks - Romance', 'Esta caixa inclui os livros "O Diário de Uma Paixão", "Um Amor para Recordar" e "Querido John", histórias emocionantes de amor e perda.', 139.90, 12, 1, 2, 1, 'o_iluminado.jpg');
+VALUES ('Coleção Nicholas Sparks - Romance', 'Esta caixa inclui os livros "O Diário de Uma Paixão", "Um Amor para Recordar" e "Querido John", histórias emocionantes de amor e perda.', 139.90, 12, 1, 2, 1, 'box_NicholasSparks_Romance.jpg');
 
 -- J.K. Rowling - Fantasia
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção Harry Potter - J.K. Rowling', 'Esta caixa inclui os três primeiros livros da série: "Harry Potter e a Pedra Filosofal", "Harry Potter e a Câmara Secreta" e "Harry Potter e o Prisioneiro de Azkaban".', 199.90, 30, 1, 1, 4, 'o_iluminado.jpg');
+VALUES ('Coleção Harry Potter - J.K. Rowling', 'Esta caixa inclui os três primeiros livros da série: "Harry Potter e a Pedra Filosofal", "Harry Potter e a Câmara Secreta" e "Harry Potter e o Prisioneiro de Azkaban".', 199.90, 30, 1, 1, 4, 'box_HarryPotter.jpg');
 
 -- George Orwell - Distopia / Ficção Científica
 INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
-VALUES ('Coleção George Orwell - Distopia', 'Esta caixa contém os livros "1984", "A Revolução dos Bichos" e "Dias na Birmânia", obras clássicas de Orwell que exploram temas de poder, controle e injustiça social.', 89.99, 20, 5, 3, 2, 'o_iluminado.jpg');
+VALUES ('Coleção George Orwell - Distopia', 'Esta caixa contém os livros "1984", "A Revolução dos Bichos" e "Dias na Birmânia", obras clássicas de Orwell que exploram temas de poder, controle e injustiça social.', 89.99, 20, 5, 3, 2, 'box_GeorgeOrwell_Distopia.jpg');
 
 -- Inserir relacionamento entre livro e autor
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (1, 1);
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (2, 2);
-INSERT INTO caixa_autor (idcaixa, idautor) VALUES (3, 3);
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (1, 9);
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (2, 9);
+INSERT INTO caixa_autor (idcaixa, idautor) VALUES (3, 9);
 INSERT INTO caixa_autor (idcaixa, idautor) VALUES (4, 1);
 INSERT INTO caixa_autor (idcaixa, idautor) VALUES (5, 2);
 INSERT INTO caixa_autor (idcaixa, idautor) VALUES (6, 3);
@@ -547,12 +546,42 @@ INSERT INTO caixa_autor (idcaixa, idautor) VALUES (8, 5);
 INSERT INTO caixa_autor (idcaixa, idautor) VALUES (9, 6);
 
 -- -- Inserir relacionamento entre livro e gênero
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 1);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 4);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 20);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (1, 6);
+
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (2, 2);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 3);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (2, 6);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (2, 16);
+
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 4);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 20);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 9);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (3, 6);
+
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (4, 1);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (5, 2);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (6, 3);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (4, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (4, 17);
+
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (5, 1);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (5, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (5, 17);
+
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (6, 11);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (6, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (6, 13);
+
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (7, 1);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (7, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (7, 6);
+
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (8, 4);
-INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 2);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (8, 6);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (8, 17);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (8, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (8, 5);
+
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 12);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 9);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 7);
+INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 11);
