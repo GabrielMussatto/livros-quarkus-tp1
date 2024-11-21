@@ -1,6 +1,10 @@
 package br.unitins.topicos1.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.Box;
 
 import br.unitins.topicos1.model.caixa.CaixaLivro;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -28,5 +32,33 @@ public class CaixaLivroRepository implements PanacheRepository<CaixaLivro>{
 
     public CaixaLivro findByNomeCaixaLivro(String nome) {
         return find("UPPER(nome) = ?1",  nome.toUpperCase() ).firstResult();
+    }
+
+    public PanacheQuery<CaixaLivro> findWithFilters(List<Long> autores, List<Long> editoras, List<Long> generos) {
+        StringBuilder query = new StringBuilder("SELECT DISTINCT b FROM CaixaLivro b ");
+        Map<String, Object> params = new HashMap<>();
+    
+        boolean whereAdded = false;
+    
+        if (autores != null && !autores.isEmpty()) {
+            query.append("JOIN b.listaAutor autor ");
+            query.append(whereAdded ? "AND " : "WHERE ").append("autor.id IN (:autores) ");
+            params.put("autores", autores);
+            whereAdded = true;
+        }
+    
+        if (editoras != null && !editoras.isEmpty()) {
+            query.append(whereAdded ? "AND " : "WHERE ").append("b.editora.id IN (:editoras) ");
+            params.put("editoras", editoras);
+            whereAdded = true;
+        }
+    
+        if (generos != null && !generos.isEmpty()) {
+            query.append(whereAdded ? "AND " : "WHERE ")
+                 .append("EXISTS (SELECT 1 FROM b.listaGeneros genero WHERE genero.id IN (:generos)) ");
+            params.put("generos", generos);
+        }
+    
+        return find(query.toString(), params);
     }
 }

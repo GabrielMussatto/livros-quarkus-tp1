@@ -219,4 +219,16 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         return caixaLivroRepository.findByGenero(genero).count();
     }
 
+    @Override
+    public List<CaixaLivroResponseDTO> findWithFilters(List<Long> autores, List<Long> editoras, List<Long> generos) {
+        List<CaixaLivro> caixaLivros = caixaLivroRepository.findWithFilters(autores, editoras, generos).list();
+
+        if (caixaLivros.isEmpty()) {
+            throw new ValidationException("filters","Sem Caixa de Livros encontrados com os filtros aplicados."+autores + editoras + generos);
+        }
+
+        return caixaLivros.stream()
+                .map(CaixaLivroResponseDTO::valueOf)
+                .toList();
+    }
 }

@@ -26,5 +26,7 @@ public interface CaixaLivroService {
     public long countByNome(String nome);
     public long countByAutor (String autor);
     public long countByGenero (String genero);
+
+    public List<CaixaLivroResponseDTO> findWithFilters(List<Long> autores, List<Long> editoras, List<Long> generos);
     
 }

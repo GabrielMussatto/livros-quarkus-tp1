@@ -1,5 +1,7 @@
 package br.unitins.topicos1.resource;
 
+import java.util.List;
+
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
@@ -121,6 +123,24 @@ public class CaixaLivroResource {
     @Path("/count/search/genero/{genero}")
     public Response countByGenero(@PathParam("genero") String genero) {
         return Response.ok(caixaLivroService.countByGenero(genero)).build();
+    }
+
+    @GET
+    @Path("/search/filters")
+    public Response findWithFilters(
+            @QueryParam("autores") List<Long> autores,
+            @QueryParam("editoras") List<Long> editoras,
+            @QueryParam("generos") List<Long> generos
+    ) {
+        LOG.info("Buscando livros com filtros:");
+        LOG.info("Autores: " + autores);
+        LOG.info("Editoras: " + editoras);
+        LOG.info("Gêneros: " + generos);
+    
+        Response response = Response.ok(caixaLivroService.findWithFilters(autores, editoras, generos)).build();
+        LOG.info("Resposta gerada: " + response.getEntity());
+    
+        return response;
     }
 
     @POST
