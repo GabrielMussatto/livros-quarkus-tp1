@@ -29,5 +29,13 @@ public class PedidoRepository implements PanacheRepository<Pedido> {
 
         return find("FROM Pedido p WHERE p.cliente = ?1 AND p.ifPedidoFeito = true", cliente).list();
     }
+
+    public List<Pedido> findAllWithItens() {
+        return find("SELECT p FROM Pedido p LEFT JOIN FETCH p.itens").list();
+    }
+
+    public Pedido findByIdWithItens(Long id) {
+        return find("SELECT p FROM Pedido p LEFT JOIN FETCH p.itens WHERE p.id = ?1", id).firstResult();
+    }
 }
 

@@ -1,16 +1,22 @@
 package br.unitins.topicos1.resource;
 
 import org.jboss.logging.Logger;
+
+import java.util.List;
+
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import br.unitins.topicos1.dto.CartaoCreditoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
+import br.unitins.topicos1.dto.Response.PedidoResponseDTO;
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.pedido.Pedido;
+import br.unitins.topicos1.repository.PedidoRepository;
 import br.unitins.topicos1.repository.pessoa.ClienteRepository;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.service.PedidoService;
 import br.unitins.topicos1.validation.ValidationException;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -22,6 +28,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -41,20 +48,23 @@ public class PedidoResource {
     ClienteRepository clienteRepository;
 
     @Inject
+    PedidoRepository pedidoRepository;
+
+    @Inject
     JsonWebToken tokenJwt;
 
     private static final Logger LOG = Logger.getLogger(PedidoResource.class);
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id){
         LOG.info("Buscando com id - Executando PedidoResource_FindById");
         return Response.ok(pedidoservice.findById(id)).build();
     }
 
     @GET
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findAll(){
         LOG.info("Buscando todos os pedidos - Executando PedidoResource_FindAll");
         return Response.ok(pedidoservice.findAll()).build();
@@ -62,14 +72,14 @@ public class PedidoResource {
 
     @GET
     @Path("/search/clientes/{idCliente}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findByCliente(@PathParam("idCliente") Long idCliente){
         LOG.info("Buscando com id do cliente - Executando PedidoResource_FindByCliente");
         return Response.ok(pedidoservice.findByCliente(idCliente)).build();
     }
 
     @POST
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response create(@Valid PedidoDTO dto) {
 
         try{
@@ -88,7 +98,7 @@ public class PedidoResource {
 
     @DELETE
     @Path("/search/cancelar-Pedido")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response cancelarPedido() {
 
         try {
@@ -109,7 +119,7 @@ public class PedidoResource {
 
     @GET
     @Path("/search/meus-Pedidos")
-    //@RolesAllowed({"Funcionario","Cliente"})
+    @RolesAllowed({"Funcionario","Cliente"})
     public Response meusPedidos(){
         try {
             LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");
@@ -128,7 +138,7 @@ public class PedidoResource {
 
     @PATCH
     @Path("/search/pagar-Boleto")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response pagarBoleto() {
 
         try {
@@ -151,7 +161,7 @@ public class PedidoResource {
 
     @PATCH
     @Path("/search/pagar-Pix")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response pagarPix() {
         try {
             String username = tokenJwt.getName();
@@ -173,7 +183,7 @@ public class PedidoResource {
 
     @PATCH
     @Path("/search/pagar-Cartao-Credito")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response pagarCartaoCredito(CartaoCreditoDTO cartao) {
         try {
             String username = tokenJwt.getSubject();
@@ -190,5 +200,29 @@ public class PedidoResource {
             LOG.error("Erro ao realizar pagamento com cartao de credito - Executando PedidoResource_pagarCartaoCredito");
             return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
         }
+    }
+
+    @GET
+    @Path("/carrinho/{idCliente}")
+    public PedidoResponseDTO getCarrinho(@PathParam("idCliente") Long idCliente) {
+        Cliente cliente = clienteRepository.findById(idCliente);
+        Pedido pedido = pedidoRepository.findByClienteNaoFinalizado(cliente);
+        if (pedido == null) {
+            throw new WebApplicationException("Nenhum carrinho encontrado para este cliente.", 404);
+        }
+        return PedidoResponseDTO.valueOf(pedido);
+    }
+
+    @GET
+    @Path("/pedidos-realizados/{idCliente}")
+    public List<PedidoResponseDTO> getPedidosRealizados(@PathParam("idCliente") Long idCliente) {
+        Cliente cliente = clienteRepository.findById(idCliente);
+        List<Pedido> pedidos = pedidoRepository.findByClienteFinalizado(cliente);
+        if (pedidos.isEmpty()) {
+            throw new WebApplicationException("Nenhum pedido realizado encontrado para este cliente.", 404);
+        }
+        return pedidos.stream()
+                    .map(PedidoResponseDTO::valueOf)
+                    .toList();
     }
 }

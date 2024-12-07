@@ -11,13 +11,16 @@ import br.unitins.topicos1.dto.ItemPedidoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.Response.PedidoResponseDTO;
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.caixa.CaixaLivro;
 import br.unitins.topicos1.model.formaPagamento.BandeiraCartao;
 import br.unitins.topicos1.model.formaPagamento.Boleto;
 import br.unitins.topicos1.model.formaPagamento.CartaoCredito;
 import br.unitins.topicos1.model.formaPagamento.Pix;
+import br.unitins.topicos1.model.livro.Livro;
 import br.unitins.topicos1.model.pedido.ItemPedido;
 import br.unitins.topicos1.model.pedido.Pedido;
 import br.unitins.topicos1.repository.BoletoRepository;
+import br.unitins.topicos1.repository.CaixaLivroRepository;
 import br.unitins.topicos1.repository.CartaoCreditoRepository;
 import br.unitins.topicos1.repository.ItemPedidoRepository;
 import br.unitins.topicos1.repository.LivroRepository;
@@ -46,6 +49,9 @@ public class PedidoServiceImpl implements PedidoService {
 
     @Inject
     public LivroRepository livroRepository;
+
+    @Inject
+    public CaixaLivroRepository caixaLivroRepository;
 
     @Inject
     public BoletoRepository boletoRepository;
@@ -90,13 +96,37 @@ public class PedidoServiceImpl implements PedidoService {
 
         for (ItemPedidoDTO itemDTO : dto.itens()) {
             ItemPedido item = new ItemPedido();
-            item.setLivro(livroRepository.findById(itemDTO.idLivro()));
             item.setQuantidade(itemDTO.quantidade());
-            if (item.getQuantidade() <= item.getLivro().getQuantidadeEstoque()) {
-                item.getLivro().diminuindoEstoque(item.getQuantidade());
+            
+            if(itemDTO.idLivro() != null){
+                Livro livro = livroRepository.findById(itemDTO.idLivro());
+                if (livro == null) {
+                    throw new ValidationException("Buscando Livro", "Livro não encontrado - Executando Pedido Create em PedidoServiceIMPL");
+                }
+                if(item.getQuantidade() > livro.getQuantidadeEstoque()){
+                    throw new ValidationException("Verificando Estoque", "Livro não tem estoque suficiente");
+                }
+
+                livro.diminuindoEstoque(item.getQuantidade());
+                item.setLivro(livro);
+                item.setSubTotal((livro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
+
+            if(itemDTO.idCaixaLivro() != null){
+                CaixaLivro caixaLivro = caixaLivroRepository.findById(itemDTO.idCaixaLivro());
+                if (caixaLivro == null) {
+                    throw new ValidationException("Buscando Caixa de Livro", "Caixa de Livro não encontrada - Executando Pedido Create em PedidoServiceIMPL");
+                }
+                if(item.getQuantidade() > caixaLivro.getQuantidadeEstoque()){
+                    throw new ValidationException("Verificando Estoque", "Caixa de Livro não tem estoque suficiente");
+                }
+
+                caixaLivro.diminuindoEstoque(item.getQuantidade());
+                item.setCaixaLivro(caixaLivro);
+                item.setSubTotal((caixaLivro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
+            }
+
             item.setDesconto(calcularDesconto(item));
-            item.setSubTotal((item.getLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade());
             itens.add(item);
 
             valorTotal += calcularValorTotal(item);
@@ -110,13 +140,26 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private Double calcularValorTotal(ItemPedido item) {
-        return (item.getLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade();
+        if(item.getLivro() != null){
+            return (item.getLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade();
+        } else if(item.getCaixaLivro() != null){
+            return (item.getCaixaLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade();
+        }
+        throw new ValidationException("calcularValorTotal", "Não há Livro ou Caixa de Livro em Item");
     }
 
     private Double calcularDesconto(ItemPedido item) {
         Double desconto = 0.0;
-        if (item.getQuantidade() >= 3) {
-            desconto = (item.getLivro().getPreco() * 0.10);
+        if(item.getLivro() != null){   
+            if (item.getQuantidade() >= 3) {
+                desconto = (item.getLivro().getPreco() * 0.10);
+            }
+        } else if(item.getCaixaLivro() != null){
+            if (item.getQuantidade() >= 3) {
+                desconto = (item.getCaixaLivro().getPreco() * 0.20);
+            }
+        } else {
+            throw new ValidationException("calcularDesconto", "Não há Livro ou Caixa de Livro para calcular o desconto");
         }
         return desconto;
     }
