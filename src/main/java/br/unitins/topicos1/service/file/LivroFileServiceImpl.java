@@ -16,7 +16,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class LivroFileServiceImpl implements FileService{
+public class LivroFileServiceImpl implements LivroFileService{
     
     @Inject
     LivroRepository livroRepository;
@@ -29,16 +29,18 @@ public class LivroFileServiceImpl implements FileService{
  
     @Override
     @Transactional
-    public void salvar(Long id, String nomeImagem, byte[] imagem) {
+    public void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException{
         Livro livro = livroRepository.findById(id);
         try {
-            livro.setNomeImagem(salvarImagem(nomeImagem, imagem));
+            String novoNomeImagem = salvarImagem(imagem, nomeImagem);
+            livro.setNomeImagem(novoNomeImagem);
         } catch (IOException e) {
-            throw new ValidationException("imagem", e.getMessage());
+            //throw new ValidationException("imagem", e.getMessage());
+            throw e;
         }
     }
 
-    private String salvarImagem(String nomeImagem, byte[] imagem) throws IOException {
+    private String salvarImagem(byte[] imagem, String nomeImagem) throws IOException {
         // verificar o tipo da imagem
         String mimeType = Files.probeContentType(new File(nomeImagem).toPath());
         List<String> listMimeType = Arrays.asList("image/jpg", "image/gif", "image/png", "image/jpeg");
@@ -79,7 +81,8 @@ public class LivroFileServiceImpl implements FileService{
 
     @Override
     public File download(String nomeImagem) {
-        return new File(PATH_USER + nomeImagem);
+        File file = new File(PATH_USER + nomeImagem);
+        return file;
     }
     
 }

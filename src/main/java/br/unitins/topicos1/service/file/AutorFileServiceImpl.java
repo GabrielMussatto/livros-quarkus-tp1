@@ -10,13 +10,12 @@ import java.util.UUID;
 
 import br.unitins.topicos1.model.autor.Autor;
 import br.unitins.topicos1.repository.AutorRepository;
-import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class AutorFileServiceImpl implements FileService {
+public class AutorFileServiceImpl implements AutorFileService {
 
     @Inject
     AutorRepository autorRepository;
@@ -29,12 +28,12 @@ public class AutorFileServiceImpl implements FileService {
  
     @Override
     @Transactional
-    public void salvar(Long id, String nomeImagem, byte[] imagem) {
+    public void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException{
         Autor autor = autorRepository.findById(id);
         try {
             autor.setNomeImagem(salvarImagem(nomeImagem, imagem));
         } catch (IOException e) {
-            throw new ValidationException("imagem", e.getMessage());
+            throw e;
         }
     }
 

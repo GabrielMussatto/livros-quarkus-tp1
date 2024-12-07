@@ -10,13 +10,12 @@ import java.util.UUID;
 
 import br.unitins.topicos1.model.caixa.CaixaLivro;
 import br.unitins.topicos1.repository.CaixaLivroRepository;
-import br.unitins.topicos1.validation.ValidationException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
-public class CaixaLivroFileServiceImpl implements FileService{
+public class CaixaLivroFileServiceImpl implements CaixaLivroFileService{
     
     @Inject
     CaixaLivroRepository caixaLivroRepository;
@@ -29,12 +28,12 @@ public class CaixaLivroFileServiceImpl implements FileService{
  
     @Override
     @Transactional
-    public void salvar(Long id, String nomeImagem, byte[] imagem) {
+    public void salvar(Long id, String nomeImagem, byte[] imagem) throws IOException {
         CaixaLivro caixaLivro = caixaLivroRepository.findById(id);
         try {
             caixaLivro.setNomeImagem(salvarImagem(nomeImagem, imagem));
         } catch (IOException e) {
-            throw new ValidationException("imagem", e.getMessage());
+            throw e;
         }
     }
 
