@@ -29,4 +29,5 @@ public interface CaixaLivroService {
 
     public List<CaixaLivroResponseDTO> findWithFilters(List<Long> autores, List<Long> editoras, List<Long> generos);
     
+    CaixaLivroResponseDTO salveImage(Long id, String nomeImagem);
 }

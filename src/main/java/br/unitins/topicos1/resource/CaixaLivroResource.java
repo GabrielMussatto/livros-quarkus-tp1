@@ -1,14 +1,15 @@
 package br.unitins.topicos1.resource;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jboss.logging.Logger;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.unitins.topicos1.dto.CaixaLivroDTO;
-import br.unitins.topicos1.form.ImageForm;
+import br.unitins.topicos1.form.CaixaLivroImageForm;
 import br.unitins.topicos1.service.CaixaLivroService;
-import br.unitins.topicos1.service.file.CaixaLivroFileServiceImpl;
+import br.unitins.topicos1.service.file.CaixaLivroFileService;
 //import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -31,11 +32,12 @@ import jakarta.ws.rs.core.Response.Status;
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("/caixaLivros")
 public class CaixaLivroResource {
+
     @Inject
     public CaixaLivroService caixaLivroService;
 
     @Inject
-    public CaixaLivroFileServiceImpl fileService;
+    CaixaLivroFileService fileService;
 
     private static final Logger LOG = Logger.getLogger(CaixaLivroResource.class);
 
@@ -184,15 +186,15 @@ public class CaixaLivroResource {
     }  
     
     @PATCH
-    @Path("/{id}/image/upload")
+    @Path("/image/upload")
     //@RolesAllowed({"Funcionario"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response upload(@PathParam("id") Long id, @MultipartForm ImageForm form) {
+    public Response salvarImagem(@MultipartForm CaixaLivroImageForm form) {
         try {
-            fileService.salvar(id, form.getNomeImagem(), form.getImagem());
+            fileService.salvar(form.getId(), form.getNomeImagem(), form.getImagem());
             LOG.infof("Imagem salva com sucesso - Executando CaixaLivroResource_upload");
             return Response.noContent().build();
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOG.error("Erro ao salvar imagem da caixa livro - Executando CaixaLivroResource_upload", e);
             return Response.status(Status.CONFLICT).entity("Erro ao salvar imagem da caixa livro - Executando CaixaLivroResource_upload").build();
         }
@@ -203,17 +205,10 @@ public class CaixaLivroResource {
     //@RolesAllowed({"Funcionario"})
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response download(@PathParam("nomeImagem") String nomeImagem) {
-        try {
-            
-            ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
-            response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
-            LOG.infof("Download do arquivo %s concluído com sucesso. - Executando CaixaLivroResource_download", nomeImagem);
-            return response.build();
-        } catch (Exception e) {
-            LOG.errorf("Erro ao realizar o download do arquivo:- Executando CaixaLivroResource_download %s", nomeImagem, e);
-
-            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-        }
+        ResponseBuilder response = Response.ok(fileService.download(nomeImagem));
+        response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
+        LOG.infof("Download do arquivo %s concluído com sucesso. - Executando CaixaLivroResource_download", nomeImagem);
+        return response.build();
     }
 
 }

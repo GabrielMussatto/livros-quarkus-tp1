@@ -50,7 +50,7 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivro.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
         caixaLivro.setPreco(dto.preco());
         caixaLivro.setQuantidadeEstoque(dto.quantidadeEstoque());
-        caixaLivro.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        caixaLivro.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
 
         caixaLivroRepository.persist(caixaLivro);
         return CaixaLivroResponseDTO.valueOf(caixaLivro);
@@ -78,7 +78,7 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
         caixaLivroBanco.setPreco(dto.preco());
         caixaLivroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
-        caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
     }
 
     @Override
@@ -230,5 +230,14 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         return caixaLivros.stream()
                 .map(CaixaLivroResponseDTO::valueOf)
                 .toList();
+    }
+
+    @Override
+    @Transactional
+    public CaixaLivroResponseDTO salveImage(Long id, String nomeImagem){
+        CaixaLivro caixaLivro = caixaLivroRepository.findById(id);
+        caixaLivro.setNomeImagem(nomeImagem);
+        
+        return CaixaLivroResponseDTO.valueOf(caixaLivro);
     }
 }

@@ -34,5 +34,5 @@ public record CaixaLivroDTO(
     Integer quantidadeEstoque,
     
     @NotNull(message = "A classificação não pode ser nula ou vazia")
-    Integer classificacao
+    Integer idClassificacao
 ) { }

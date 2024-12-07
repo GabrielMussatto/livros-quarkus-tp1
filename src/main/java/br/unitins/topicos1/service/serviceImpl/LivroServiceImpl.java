@@ -47,7 +47,7 @@ public class LivroServiceImpl implements LivroService{
         livro.setQuantidadeEstoque(dto.quantidadeEstoque());
         livro.setIsbn(dto.isbn());
         livro.setPreco(dto.preco());
-        livro.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        livro.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
         livro.setDatalancamento(dto.datalancamento());
         livro.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
         livro.setEditora(editoraRepository.findById(dto.editora()));
@@ -77,7 +77,7 @@ public class LivroServiceImpl implements LivroService{
         livroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
         livroBanco.setIsbn(dto.isbn());
         livroBanco.setPreco(dto.preco());
-        livroBanco.setClassificacao(Classificacao.valueOf(dto.classificacao()));
+        livroBanco.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
         livroBanco.setDatalancamento(dto.datalancamento());
         livroBanco.setFornecedor(fornecedorRepository.findById(dto.fornecedor()));
         livroBanco.setEditora(editoraRepository.findById(dto.editora()));
@@ -243,6 +243,15 @@ public class LivroServiceImpl implements LivroService{
     @Override
     public long countByGenero(String genero) {
         return livroRepository.findByGenero(genero).count();
+    }
+
+    @Override
+    @Transactional
+    public LivroResponseDTO salveImage(Long id, String nomeImagem){
+        Livro livro = livroRepository.findById(id);
+        livro.setNomeImagem(nomeImagem);
+        
+        return LivroResponseDTO.valueOf(livro);
     }
 
     @Override

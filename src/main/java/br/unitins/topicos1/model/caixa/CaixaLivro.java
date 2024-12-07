@@ -56,6 +56,10 @@ public class CaixaLivro extends DefaultEntity {
 
     private Double preco;
 
+    public void diminuindoEstoque(Integer quantidadeEstoque) {
+        this.quantidadeEstoque -= quantidadeEstoque;
+    }
+
     public String getNome() {
         return nome;
     }

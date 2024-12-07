@@ -4,7 +4,9 @@ import java.util.List;
 
 import br.unitins.topicos1.dto.AutorDTO;
 import br.unitins.topicos1.dto.Response.AutorResponseDTO;
+import br.unitins.topicos1.dto.Response.LivroResponseDTO;
 import br.unitins.topicos1.model.autor.Autor;
+import br.unitins.topicos1.model.livro.Livro;
 import br.unitins.topicos1.repository.AutorRepository;
 import br.unitins.topicos1.service.AutorService;
 import br.unitins.topicos1.validation.ValidationException;
@@ -153,5 +155,14 @@ public class AutorServiceImpl implements AutorService{
     @Override
     public long countByNome(String nome){
         return autorRepository.findByNome(nome).count();
+    }
+
+    @Override
+    @Transactional
+    public AutorResponseDTO salveImage(Long id, String nomeImagem){
+        Autor autor = autorRepository.findById(id);
+        autor.setNomeImagem(nomeImagem);
+        
+        return AutorResponseDTO.valueOf(autor);
     }
 }

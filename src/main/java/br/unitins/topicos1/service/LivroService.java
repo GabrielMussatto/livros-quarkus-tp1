@@ -30,4 +30,6 @@ public interface LivroService {
     public long countByGenero (String genero);
 
     public List<LivroResponseDTO> findWithFilters(List<Long> autores, List<Long> editoras, List<Long> generos);
+
+    LivroResponseDTO salveImage(Long id, String nomeImagem);
 }

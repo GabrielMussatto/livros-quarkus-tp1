@@ -22,7 +22,7 @@ public record LivroDTO(
         @NotNull(message = "O preço não pode ser nulo ou vazio")
         Double preco,
         @NotNull(message = "A classificação não pode ser nula ou vazia")
-        Integer classificacao,
+        Integer idClassificacao,
         @NotNull(message = "A data de lançamento não pode ser nula ou vazia")
         LocalDate datalancamento,
         @NotNull(message = "O fornecedor não pode ser nulo ou vazio")

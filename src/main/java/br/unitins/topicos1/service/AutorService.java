@@ -20,4 +20,6 @@ public interface AutorService {
     public List<AutorResponseDTO> findByBiografia(int page, int pageSize, String biografia);
     public long count();
     public long countByNome(String nome);
+
+    AutorResponseDTO salveImage(Long id, String nomeImagem);
 }
