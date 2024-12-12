@@ -116,7 +116,7 @@ public class AvaliacaoServiceImpl implements AvaliacaoService{
     @Override
     @Transactional
     public void delete(Cliente cliente) {
-        List<Avaliacao> avaliacoes = avaliacaoRepository.findByCliente(cliente);
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByCliente(cliente).list()  ;
 
         for (Avaliacao avaliacao : avaliacoes) {
             avaliacaoRepository.delete(avaliacao);
@@ -133,15 +133,20 @@ public class AvaliacaoServiceImpl implements AvaliacaoService{
         return avaliacoes.stream().map(a -> AvaliacaoResponseDTO.valueOf(a)).toList();
     }
 
-    @Override
     public List<AvaliacaoResponseDTO> getByNomeCliente(String nome) {
-        List<Avaliacao> avaliacoes = avaliacaoRepository.findByCliente(clienteRepository.findByNome(nome).get(0));
-
-        if(avaliacoes == null){
+        Cliente cliente = clienteRepository.findByNome(nome).firstResult();
+        
+        if (cliente == null) {
+            throw new NullPointerException("Nenhum cliente encontrado com o nome " + nome);
+        }
+    
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByCliente(cliente).list();
+    
+        if (avaliacoes == null || avaliacoes.isEmpty()) {
             throw new NullPointerException("Nenhuma avaliação encontrada para o cliente " + nome);
         }
-
-        return avaliacoes.stream().map(a -> AvaliacaoResponseDTO.valueOf(a)).toList();
+    
+        return avaliacoes.stream().map(AvaliacaoResponseDTO::valueOf).toList();
     }
 
     private void validar(AvaliacaoDTO avaliacaoDTO) throws ConstraintViolationException{
