@@ -18,6 +18,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
@@ -42,26 +43,69 @@ public class ClienteResource {
 
     @GET
     @RolesAllowed({"Funcionario"})
-    public Response findAll() {
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando todos os clientes");
         LOG.debug("ERRO DE DEBUG.");
-        return Response.ok(clienteService.findAll()).build();
+        return Response.ok(clienteService.findAll(page, pageSize)).build();
     }
 
     @GET
     @RolesAllowed({"Funcionario"})
     @Path("/search/estado/{estado}")
-    public Response findByEstado(@PathParam("estado") String estado) {
+    public Response findByEstado(
+        @PathParam("estado") String estado,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando clientes por estados");
-        return Response.ok(clienteService.findByEstado(estado)).build();
+        return Response.ok(clienteService.findByEstado(page, pageSize, estado)).build();
     }
 
     @GET
     @RolesAllowed({"Funcionario"})
     @Path("/search/cpf/{cpf}")
-    public Response findByCpf(@PathParam("cpf") String cpf) {
+    public Response findByCpf(
+        @PathParam("cpf") String cpf,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando cpf do cliente");
-        return Response.ok(clienteService.findByCpf(cpf)).build();
+        return Response.ok(clienteService.findByCpf(page, pageSize, cpf)).build();
+    }
+
+    @GET
+    @RolesAllowed({"Funcionario"})
+    @Path("/search/nome/{nome}")
+    public Response findByNome(
+        @PathParam("nome") String nome,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
+        LOG.info("Buscando nome do cliente");
+        return Response.ok(clienteService.findByNome(page, pageSize, nome)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(clienteService.count()).build();
+    }
+
+    @GET
+    @Path("/count/search/{estado}")
+    public Response countByEstado(@PathParam("estado") String estado) {
+        return Response.ok(clienteService.countByEstado(estado)).build();
+    }
+
+    @GET
+    @Path("/count/search/{nome}")
+    public Response countByNome(@PathParam("nome") String nome) {
+        return Response.ok(clienteService.countByNome(nome)).build();
+    }
+
+    @GET
+    @Path("/count/search/{cpf}")
+    public Response countByCpf(@PathParam("cpf") String cpf) {
+        return Response.ok(clienteService.countByCpf(cpf)).build();
     }
 
     @GET

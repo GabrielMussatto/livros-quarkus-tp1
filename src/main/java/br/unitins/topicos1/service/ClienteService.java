@@ -18,9 +18,15 @@ public interface ClienteService {
     public void update(Long id, ClienteDTO dto);
     public void delete(Long id);
     public ClienteResponseDTO findById(Long id);
-    public List<ClienteResponseDTO> findAll();
+    public List<ClienteResponseDTO> findAll(int page, int pageSize);
     public List<ClienteResponseDTO> findByEstado(String estado);
     public List<UsuarioResponseDTO> findByCpf(String cpf);
+    public List<UsuarioResponseDTO> findByNome(String nome);
+
+    public List<ClienteResponseDTO> findByEstado(int page, int pageSize, String estado);
+    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf);
+    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome);
+
     public UsuarioResponseDTO login(String username, String senha);
 
     public void alterarSenha(AlterarSenhaDTO dto);
@@ -34,4 +40,9 @@ public interface ClienteService {
 
     public SugestaoResponseDTO adicionarSugestao(@Valid SugestaoDTO sugestaoDTO);
     public List<SugestaoResponseDTO> findMinhasSugestoes();
+
+    public long count();
+    public long countByNome(String nome);
+    public long countByCpf(String cpf);
+    public long countByEstado(String estado);
 }

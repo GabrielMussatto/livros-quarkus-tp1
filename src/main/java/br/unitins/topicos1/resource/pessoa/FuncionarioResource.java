@@ -15,6 +15,7 @@ import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
+import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PATCH;
 import jakarta.ws.rs.POST;
@@ -22,6 +23,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -38,26 +40,69 @@ public class FuncionarioResource {
 
     @GET
     @RolesAllowed({ "Funcionario" })
-    public Response findAll() {
+    public Response findAll(
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando todos os Funcionarios");
         LOG.debug("ERRO DE DEBUG.");
-        return Response.ok(funcionarioService.findAll()).build();
+        return Response.ok(funcionarioService.findAll(page, pageSize)).build();
     }
 
     @GET
     @RolesAllowed({ "Funcionario" })
     @Path("/search/cargo/{cargo}")
-    public Response findByCargo(@PathParam("cargo") String cargo) {
+    public Response findByCargo(
+        @PathParam("cargo") String cargo,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando Funcionarios pelo cargo: " + cargo);
-        return Response.ok(funcionarioService.findByCargo(cargo)).build();
+        return Response.ok(funcionarioService.findByCargo(page, pageSize, cargo)).build();
     }
 
     @GET
     @RolesAllowed({ "Funcionario" })
     @Path("/search/cpf/{cpf}")
-    public Response findByCpf(@PathParam("cpf") String cpf) {
+    public Response findByCpf(
+        @PathParam("cpf") String cpf,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
         LOG.info("Buscando Funcionario pelo cpf: " + cpf);
-        return Response.ok(funcionarioService.findByCpf(cpf)).build();
+        return Response.ok(funcionarioService.findByCpf(page, pageSize, cpf)).build();
+    }
+
+    @GET
+    @RolesAllowed({"Funcionario"})
+    @Path("/search/nome/{nome}")
+    public Response findByNome(
+        @PathParam("nome") String nome,
+        @DefaultValue("0") @QueryParam("page") int page,
+        @DefaultValue("100") @QueryParam("pageSize") int pageSize) {
+        LOG.info("Buscando nome do funcionario");
+        return Response.ok(funcionarioService.findByNome(page, pageSize, nome)).build();
+    }
+
+    @GET
+    @Path("/count")
+    public Response count() {
+        return Response.ok(funcionarioService.count()).build();
+    }
+
+    @GET
+    @Path("/count/search/{cargo}")
+    public Response countByCargo(@PathParam("cargo") String cargo) {
+        return Response.ok(funcionarioService.countByCargo(cargo)).build();
+    }
+
+    @GET
+    @Path("/count/search/{nome}")
+    public Response countByNome(@PathParam("nome") String nome) {
+        return Response.ok(funcionarioService.countByNome(nome)).build();
+    }
+
+    @GET
+    @Path("/count/search/{cpf}")
+    public Response countByCpf(@PathParam("cpf") String cpf) {
+        return Response.ok(funcionarioService.countByCpf(cpf)).build();
     }
 
     @GET
