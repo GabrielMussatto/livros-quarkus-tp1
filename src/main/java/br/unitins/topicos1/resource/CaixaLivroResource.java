@@ -8,6 +8,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import br.unitins.topicos1.dto.CaixaLivroDTO;
 import br.unitins.topicos1.form.CaixaLivroImageForm;
+import br.unitins.topicos1.model.Enum.Classificacao;
 import br.unitins.topicos1.service.CaixaLivroService;
 import br.unitins.topicos1.service.file.CaixaLivroFileService;
 import jakarta.annotation.security.RolesAllowed;
@@ -209,6 +210,12 @@ public class CaixaLivroResource {
         response.header("Content-Disposition", "attachment;filename=" + nomeImagem);
         LOG.infof("Download do arquivo %s concluído com sucesso. - Executando CaixaLivroResource_download", nomeImagem);
         return response.build();
+    }
+
+    @GET
+    @Path("/classificacoes")
+    public Response getClassificacao(){
+        return Response.ok(Classificacao.values()).build();
     }
 
 }
