@@ -3,6 +3,7 @@ package br.unitins.topicos1.service.serviceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
@@ -71,24 +72,27 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     @Transactional
     public PedidoResponseDTO create(@Valid PedidoDTO dto) {
-        String username = securityIdentity.getPrincipal().getName();   
+        String username = securityIdentity.getPrincipal().getName();
 
         Cliente cliente = clienteRepository.findById(dto.idCliente());
         if (cliente == null) {
-            throw new ValidationException("Buscando Cliente", "Cliente não encontrado - Executando PedidoServiceImpl_create");
-        }     
-                
+            throw new ValidationException("Buscando Cliente",
+                    "Cliente não encontrado - Executando PedidoServiceImpl_create");
+        }
+
         if (!clienteAutenticado(username, dto.idCliente())) {
-            throw new ValidationException("Verificando...", "Você não tem autorização para realizar o pedido. - Executando PedidoServiceImpl_create");
-        }     
-        
+            throw new ValidationException("Verificando...",
+                    "Você não tem autorização para realizar o pedido. - Executando PedidoServiceImpl_create");
+        }
+
         Pedido pedidoExistente = pedidoRepository.findByClienteNaoFinalizado(cliente);
-        if(pedidoExistente != null){
-            throw new ValidationException("Buscando Pedido", "Já existe um pedido em aberto. Pague seu ultimo pedido ou delete para fazer um novo. - Executando PedidoServiceImpl_create");
+        if (pedidoExistente != null) {
+            throw new ValidationException("Buscando Pedido",
+                    "Já existe um pedido em aberto. Pague seu ultimo pedido ou delete para fazer um novo. - Executando PedidoServiceImpl_create");
         }
 
         Pedido pedido = new Pedido();
-                
+
         pedido.setCliente(cliente);
         pedido.setDataPedido(LocalDateTime.now());
         List<ItemPedido> itens = new ArrayList<>();
@@ -97,31 +101,31 @@ public class PedidoServiceImpl implements PedidoService {
         for (ItemPedidoDTO itemDTO : dto.itens()) {
             ItemPedido item = new ItemPedido();
             item.setQuantidade(itemDTO.quantidade());
-            
-            if(itemDTO.idLivro() != null){
+
+            if (itemDTO.idLivro() != null) {
                 Livro livro = livroRepository.findById(itemDTO.idLivro());
                 if (livro == null) {
-                    throw new ValidationException("Buscando Livro", "Livro não encontrado - Executando Pedido Create em PedidoServiceIMPL");
+                    throw new ValidationException("Buscando Livro",
+                            "Livro não encontrado - Executando Pedido Create em PedidoServiceIMPL");
                 }
-                if(item.getQuantidade() > livro.getQuantidadeEstoque()){
+                if (item.getQuantidade() > livro.getQuantidadeEstoque()) {
                     throw new ValidationException("Verificando Estoque", "Livro não tem estoque suficiente");
                 }
 
-                livro.diminuindoEstoque(item.getQuantidade());
                 item.setLivro(livro);
                 item.setSubTotal((livro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
 
-            if(itemDTO.idCaixaLivro() != null){
+            if (itemDTO.idCaixaLivro() != null) {
                 CaixaLivro caixaLivro = caixaLivroRepository.findById(itemDTO.idCaixaLivro());
                 if (caixaLivro == null) {
-                    throw new ValidationException("Buscando Caixa de Livro", "Caixa de Livro não encontrada - Executando Pedido Create em PedidoServiceIMPL");
+                    throw new ValidationException("Buscando Caixa de Livro",
+                            "Caixa de Livro não encontrada - Executando Pedido Create em PedidoServiceIMPL");
                 }
-                if(item.getQuantidade() > caixaLivro.getQuantidadeEstoque()){
+                if (item.getQuantidade() > caixaLivro.getQuantidadeEmEstoque()) {
                     throw new ValidationException("Verificando Estoque", "Caixa de Livro não tem estoque suficiente");
                 }
 
-                caixaLivro.diminuindoEstoque(item.getQuantidade());
                 item.setCaixaLivro(caixaLivro);
                 item.setSubTotal((caixaLivro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
@@ -140,9 +144,9 @@ public class PedidoServiceImpl implements PedidoService {
     }
 
     private Double calcularValorTotal(ItemPedido item) {
-        if(item.getLivro() != null){
+        if (item.getLivro() != null) {
             return (item.getLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade();
-        } else if(item.getCaixaLivro() != null){
+        } else if (item.getCaixaLivro() != null) {
             return (item.getCaixaLivro().getPreco() - calcularDesconto(item)) * item.getQuantidade();
         }
         throw new ValidationException("calcularValorTotal", "Não há Livro ou Caixa de Livro em Item");
@@ -150,16 +154,17 @@ public class PedidoServiceImpl implements PedidoService {
 
     private Double calcularDesconto(ItemPedido item) {
         Double desconto = 0.0;
-        if(item.getLivro() != null){   
+        if (item.getLivro() != null) {
             if (item.getQuantidade() >= 3) {
                 desconto = (item.getLivro().getPreco() * 0.10);
             }
-        } else if(item.getCaixaLivro() != null){
+        } else if (item.getCaixaLivro() != null) {
             if (item.getQuantidade() >= 3) {
                 desconto = (item.getCaixaLivro().getPreco() * 0.20);
             }
         } else {
-            throw new ValidationException("calcularDesconto", "Não há Livro ou Caixa de Livro para calcular o desconto");
+            throw new ValidationException("calcularDesconto",
+                    "Não há Livro ou Caixa de Livro para calcular o desconto");
         }
         return desconto;
     }
@@ -169,9 +174,14 @@ public class PedidoServiceImpl implements PedidoService {
     public void cancelarPedido(Long idCliente) {
         Pedido pedido = pedidoRepository.findByClienteNaoFinalizado(clienteRepository.findById(idCliente));
         if (pedido == null)
-            throw new ValidationException("cancelarPedido","Não há nenhuma compra em andamento");
+            throw new ValidationException("cancelarPedido", "Não há nenhuma compra em andamento");
         for (ItemPedido itemPedido : pedido.getItens()) {
             itemPedidoRepository.delete(itemPedido);
+            if (itemPedido.getLivro() != null) {
+                itemPedido.getLivro().aumentandoEstoque(itemPedido.getQuantidade());
+            } else if (itemPedido.getCaixaLivro() != null) {
+                itemPedido.getCaixaLivro().aumentandoEstoque(itemPedido.getQuantidade());
+            }
         }
         pedidoRepository.delete(pedido);
     }
@@ -180,28 +190,43 @@ public class PedidoServiceImpl implements PedidoService {
     public void finalizarPedido(Long idPedido) throws NullPointerException {
         Pedido pedido = pedidoRepository.findById(idPedido);
         if (pedido == null)
-            throw new ValidationException("finalizarPedido","Não há nenhuma compra em andamento");
+            throw new ValidationException("finalizarPedido", "Não há nenhuma compra em andamento");
         if (pedido.getItens().size() == 0)
-            throw new ValidationException("finalizarPedido","Não há nenhum item dentro do carrinho");
+            throw new ValidationException("finalizarPedido", "Não há nenhum item dentro do carrinho");
         pedido.setDataPedido(LocalDateTime.now());
         for (ItemPedido itemPedido : pedido.getItens()) {
-            if (itemPedido.getLivro().getQuantidadeEstoque() < itemPedido.getQuantidade()) {
-                throw new ValidationException("finalizarPedido","quantidade em estoque insuficiente para a quantidade requisitada. Não é possível finalizar a compra");
-            } else {
-                itemPedido.getLivro().diminuindoEstoque(itemPedido.getQuantidade());
+            if (itemPedido.getLivro() != null) {
+                if (itemPedido.getLivro().getQuantidadeEstoque() < itemPedido.getQuantidade()) {
+                    throw new ValidationException("finalizarPedido",
+                            "quantidade de livro em estoque insuficiente para a quantidade requisitada. Não é possível finalizar a compra");
+                } else {
+                    itemPedido.getLivro().diminuindoEstoque(itemPedido.getQuantidade());
+                }
             }
+
+            if (itemPedido.getCaixaLivro() != null) {
+                if (itemPedido.getCaixaLivro().getQuantidadeEmEstoque() < itemPedido.getQuantidade()) {
+                    throw new ValidationException("finalizarPedido",
+                            "quantidade de caixa livro em estoque insuficiente para a quantidade requisitada. Não é possível finalizar a compra");
+                } else {
+                    itemPedido.getCaixaLivro().diminuindoEstoque(itemPedido.getQuantidade());
+                }
+            }
+
         }
         pedido.setIfPedidoFeito(true);
     }
 
     @Override
     @Transactional
-    public List<PedidoResponseDTO> meusPedidos(){
+    public List<PedidoResponseDTO> meusPedidos() {
         String username = tokenJwt.getName();
-        List<PedidoResponseDTO> pedidos = pedidoRepository.find("cliente.usuario.username", username).stream().map(e -> PedidoResponseDTO.valueOf(e)).toList();
-        
-        if(pedidos.isEmpty()){
-            throw new ValidationException("Meus pedidos","Você ainda não fez nenhum pedido. - Executando PedidoServiceImpl_meusPedidos");
+        List<PedidoResponseDTO> pedidos = pedidoRepository.find("cliente.usuario.username", username).stream()
+                .map(e -> PedidoResponseDTO.valueOf(e)).toList();
+
+        if (pedidos.isEmpty()) {
+            throw new ValidationException("Meus pedidos",
+                    "Você ainda não fez nenhum pedido. - Executando PedidoServiceImpl_meusPedidos");
         }
 
         return pedidos;
@@ -218,18 +243,18 @@ public class PedidoServiceImpl implements PedidoService {
         Cliente cliente = clienteRepository.findById(idCliente);
         Pedido pedido = validar(cliente);
         CartaoCredito pagamento = new CartaoCredito(
-            pedido.getValorTotal(),
-            cartaoCreditoDTO.nomeImpressaoTitular(),
-            cartaoCreditoDTO.numeroCartao(),
-            cartaoCreditoDTO.cvc(),
-            cartaoCreditoDTO.cpfTitular(),
-            cartaoCreditoDTO.validade(),
-            BandeiraCartao.valueOf(cartaoCreditoDTO.bandeiraCartao())
-        );
+                pedido.getValorTotal(),
+                cartaoCreditoDTO.nomeImpressaoTitular(),
+                cartaoCreditoDTO.numeroCartao(),
+                cartaoCreditoDTO.cvc(),
+                cartaoCreditoDTO.cpfTitular(),
+                cartaoCreditoDTO.validade(),
+                BandeiraCartao.valueOf(cartaoCreditoDTO.bandeiraCartao()));
         cartaoCreditoRepository.persist(pagamento);
         pedido.setFormaPagamento(pagamento);
         if (pedido.getFormaPagamento() == null)
-            throw new ValidationException("PagamentoCartaoCredito","Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoCartao");
+            throw new ValidationException("PagamentoCartaoCredito",
+                    "Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoCartao");
         finalizarPedido(pedido.getId());
     }
 
@@ -238,11 +263,13 @@ public class PedidoServiceImpl implements PedidoService {
     public void pagamentoBoleto(Long idCliente) {
         Cliente cliente = clienteRepository.findById(idCliente);
         Pedido pedido = validar(cliente);
-        Boleto pagamento = new Boleto(pedido.getValorTotal(), pedido.getCliente().getUsuario().getNome(), pedido.getCliente().getUsuario().getCpf());
+        Boleto pagamento = new Boleto(pedido.getValorTotal(), pedido.getCliente().getUsuario().getNome(),
+                pedido.getCliente().getUsuario().getCpf());
         boletoRepository.persist(pagamento);
         pedido.setFormaPagamento(pagamento);
         if (pedido.getFormaPagamento() == null) {
-            throw new ValidationException("PagamentoBoleto","Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoBoleto");
+            throw new ValidationException("PagamentoBoleto",
+                    "Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoBoleto");
         }
         finalizarPedido(pedido.getId());
     }
@@ -252,24 +279,26 @@ public class PedidoServiceImpl implements PedidoService {
     public void pagamentoPix(Long idCliente) {
         Cliente cliente = clienteRepository.findById(idCliente);
         Pedido pedido = validar(cliente);
-        Pix pagamento = new Pix(pedido.getValorTotal(), pedido.getCliente().getUsuario().getNome(), pedido.getCliente().getUsuario().getCpf());
+        Pix pagamento = new Pix(pedido.getValorTotal(), pedido.getCliente().getUsuario().getNome(),
+                pedido.getCliente().getUsuario().getCpf());
         pixRepository.persist(pagamento);
         pedido.setFormaPagamento(pagamento);
         if (pedido.getFormaPagamento() == null) {
-            throw new ValidationException("PagamentoPix","Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoPix");
+            throw new ValidationException("PagamentoPix",
+                    "Não foi efetuado nenhum pagamento - Executando PedidoServiceImpl_pagamentoPix");
         }
         finalizarPedido(pedido.getId());
     }
-    
+
     private Pedido validar(Cliente cliente) {
-        
+
         Pedido pedido = pedidoRepository.findByClienteNaoFinalizado(cliente);
-        
-        if (pedido == null){
-            throw new ValidationException("ValidandoCliente","Não há nenhuma pedido em andamento");
+
+        if (pedido == null) {
+            throw new ValidationException("ValidandoCliente", "Não há nenhuma pedido em andamento");
         }
-        if (pedido.getItens().size() == 0){
-            throw new ValidationException("ValidandoCliente","Não há nenhum item dentro do carrinho");
+        if (pedido.getItens().size() == 0) {
+            throw new ValidationException("ValidandoCliente", "Não há nenhum item dentro do carrinho");
         }
         return pedido;
     }
@@ -278,19 +307,19 @@ public class PedidoServiceImpl implements PedidoService {
     public List<PedidoResponseDTO> findAll() {
 
         return pedidoRepository
-            .listAll()
-            .stream()
-            .map(e -> PedidoResponseDTO.valueOf(e)).toList();
+                .listAll()
+                .stream()
+                .map(e -> PedidoResponseDTO.valueOf(e)).toList();
     }
 
     public boolean clienteAutenticado(String username, Long idCliente) {
         Cliente clienteAutenticado = clienteRepository.findByUsername(username);
         return clienteAutenticado != null && clienteAutenticado.getId().equals(idCliente);
-    }    
+    }
 
     @Override
     public List<PedidoResponseDTO> findByCliente(Long idCliente) {
         return pedidoRepository.findByCliente(idCliente).stream().map(e -> PedidoResponseDTO.valueOf(e)).toList();
     }
-    
+
 }
