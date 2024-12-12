@@ -585,3 +585,9 @@ INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 12);
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 9);
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 7);
 INSERT INTO caixa_genero (idcaixa, idgenero) VALUES (9, 11);
+
+-- Inserir sugestões no banco de dados associadas aos clientes
+INSERT INTO Sugestao (sugestao, dataSugestao, id_cliente) VALUES
+('Sugestão 1 do Cliente 1', CURRENT_DATE, 1),
+('Sugestão 2 do Cliente 1', CURRENT_DATE, 1),
+('Sugestão 1 do Cliente 2', '2023-06-15', 2);
