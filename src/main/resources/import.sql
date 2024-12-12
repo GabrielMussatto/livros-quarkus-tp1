@@ -121,7 +121,7 @@ INSERT INTO editora (nome, email, endereco, estado, id_telefone) VALUES ('DarkSi
 
 -- Inserir livro
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
-VALUES ('Confess', 39.90, 50, '9781501176838', '10-03-2015', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1, 'confess.jpg');
+VALUES ('Confess', 1.00, 50, '9781501176838', '10-03-2015', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1, 'confess.jpg');
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
 VALUES ('A Hipotese do Amor', 29.99, 100, '9780593336823', '14-09-2021', 'The Love Hypothesis é um romance contemporâneo escrito por Ali Hazelwood. O livro narra a história de Olive Smith, uma estudante de pós-graduação determinada a provar uma teoria científica sobre o amor. Com a ajuda de seu charmoso professor, eles embarcam em uma jornada de descoberta científica e pessoal.', 5, 2, 2, 'a_hipotese_do_amor.jpg');
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
@@ -499,39 +499,39 @@ INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 2
 INSERT INTO itemPedido (desconto, quantidade, subtotal, id_livro) VALUES (0.0, 1, 140.25, 2);
 
 -- Inserindo dados corretos na tabela caixaLivro
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('O Senhor dos Anéis - A Trilogia Completa', 
 'Contém a saga inteira de O Senhor dos Anéis, incluindo A Sociedade do Anel, As Duas Torres, e O Retorno do Rei.', 
 79.90, 10, 1, 1, 1, 'box_O Senhor_dos_Aneis.jpg');
 
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('O Hobbit + Senhor dos Aneis', 'Aventuras de Bilbo Bolseiro em busca do tesouro guardado por Smaug, o dragão.', 137.99, 22, 2, 2, 2, 'box_O_Hobbit.jpg');
 
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('A História da Terra-média - Box 1', 'A história do mundo criado por J.R.R. Tolkien antes dos eventos de O Senhor dos Anéis.', 80.80, 33, 3, 3, 3, 'box_terra_media_1.jpg');
 
 -- Colleen Hoover - Romance
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção Colleen Hoover - Romance', 'Esta caixa contém os livros "É Assim que Acaba", "Verity" e "Um Caso Perdido", abordando temas profundos de amor, trauma e superação.', 129.90, 15, 2, 1, 1, 'box_colleenHover.jpg');
 
 -- Ali Hazelwood - Romance / Ficção Científica
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção Ali Hazelwood', 'Esta caixa inclui os livros "A Hipótese do Amor", "A Equação do Amor" e "Um Amor Científico", combinando romance com temas de ficção científica e acadêmicos.', 149.99, 18, 3, 2, 2, 'box_AliHazelwood.jpg');
 
 -- Augusto Cury - Desenvolvimento Pessoal / Ficção
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção Augusto Cury - Desenvolvimento Pessoal', 'Esta caixa contém os livros "O Vendedor de Sonhos", "Ansiedade - Como Enfrentar o Mal do Século" e "O Futuro da Humanidade", explorando temas de psicologia e superação pessoal.', 119.99, 25, 4, 3, 3, 'box_AugustoCury.jpg');
 
 -- Nicholas Sparks - Romance
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção Nicholas Sparks - Romance', 'Esta caixa inclui os livros "O Diário de Uma Paixão", "Um Amor para Recordar" e "Querido John", histórias emocionantes de amor e perda.', 139.90, 12, 1, 2, 1, 'box_NicholasSparks_Romance.jpg');
 
 -- J.K. Rowling - Fantasia
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção Harry Potter - J.K. Rowling', 'Esta caixa inclui os três primeiros livros da série: "Harry Potter e a Pedra Filosofal", "Harry Potter e a Câmara Secreta" e "Harry Potter e o Prisioneiro de Azkaban".', 199.90, 30, 1, 1, 4, 'box_HarryPotter.jpg');
 
 -- George Orwell - Distopia / Ficção Científica
-INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
+INSERT INTO caixaLivro (nome, descricao, preco, quantidadeEmEstoque, id_fornecedor, id_editora, classificacao, nomeImagem)
 VALUES ('Coleção George Orwell - Distopia', 'Esta caixa contém os livros "1984", "A Revolução dos Bichos" e "Dias na Birmânia", obras clássicas de Orwell que exploram temas de poder, controle e injustiça social.', 89.99, 20, 5, 3, 2, 'box_GeorgeOrwell_Distopia.jpg');
 
 -- Inserir relacionamento entre livro e autor
