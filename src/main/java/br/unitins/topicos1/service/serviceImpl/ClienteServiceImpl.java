@@ -11,11 +11,16 @@ import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
+import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.Pessoa.ItemFavorito;
 import br.unitins.topicos1.model.Pessoa.Usuario;
+import br.unitins.topicos1.model.caixa.CaixaLivro;
 import br.unitins.topicos1.model.livro.Livro;
+import br.unitins.topicos1.repository.CaixaLivroRepository;
+import br.unitins.topicos1.repository.ItemFavoritoRepository;
 import br.unitins.topicos1.repository.LivroRepository;
 import br.unitins.topicos1.repository.pessoa.ClienteRepository;
 import br.unitins.topicos1.repository.pessoa.UsuarioRepository;
@@ -39,6 +44,12 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Inject
     public LivroRepository livroRepository;
+
+    @Inject
+    public CaixaLivroRepository caixaLivroRepository;
+
+    @Inject
+    public ItemFavoritoRepository itemFavoritoRepository;
 
     @Inject
     public HashService hashService;
@@ -231,61 +242,58 @@ public class ClienteServiceImpl implements ClienteService {
             throw new ValidationException("Perfil",
                     "Cliente não encontrado - Executando ClienteServiceImpl_findMeuPerfil");
         }
-
-        // Garante que a lista seja inicializada antes de retornar
-        cliente.getListaFavorito().size();
-
         return ClienteResponseDTO.valueOf(cliente);
     }
 
     @Override
     @Transactional
-    public void adicionarListaLivroFavorito(Long idLivro) {
+    public void adicionarItemFavorito(Long idLivro, Long idCaixaLivro) {
         Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
 
         Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
 
-        List<Livro> listaFavorito = cliente.getListaFavorito();
-        if (listaFavorito == null) {
-            listaFavorito = new ArrayList<>();
+        if (cliente == null) {
+            throw new ValidationException("cliente", "Cliente não encontrado. Verifique os dados e tente novamente.");
+        }
+
+        ItemFavorito itemFavorito = new ItemFavorito();
+        itemFavorito.setCliente(cliente);
+
+        if (idLivro != null) {
+            Livro livro = livroRepository.findById(idLivro);
+            if (livro == null) {
+                throw new NotFoundException("O livro não foi encontrado. Tente novamente");
+            }
+            itemFavorito.setLivro(livro);
+        } else if (idCaixaLivro != null){
+            CaixaLivro caixaLivro = caixaLivroRepository.findById(idCaixaLivro);
+            if (caixaLivro == null) {
+                throw new NotFoundException("A caixa de livros não foi encontrada. Tente novamente");
+            }
+            itemFavorito.setCaixaLivro(caixaLivro);
         } else {
-            listaFavorito = cliente.getListaFavorito();
+            throw new ValidationException("itemFavorito", "É necessário informar um id de Livro ou CaixaLivro");
         }
-
-        Livro livro = livroRepository.findById(idLivro);
-        if (livro == null) {
-            throw new ValidationException("Livro", "Livro não encontrado - Executando ClienteServiceImpl");
-        }
-        if (listaFavorito.contains(livro)){
-            throw new ValidationException("Lista de favoritos", "Este livro já esta na sua lista de favoritos!!");
-        }
-        listaFavorito.add(livro);
-        cliente.setListaFavorito(listaFavorito);
-        clienteRepository.persist(cliente);
-
-        // listaFavorito.add(livroRepository.findById(idLivro));
+        itemFavoritoRepository.persist(itemFavorito);
     }
 
     @Override
     @Transactional
-    public void removerListaLivroFavorito(Long idLivro) {
-        Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
-
-        Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
-
-        List<Livro> listaFavorito = cliente.getListaFavorito();
-        if (listaFavorito == null) {
-            throw new ValidationException("listaFavorito", "Não há livro para ser removido!");
+    public void removerItemFavorito(Long idItem) {
+        ItemFavorito item = itemFavoritoRepository.findById(idItem);
+        if (item == null) {
+            throw new NotFoundException("Item não encontrado");
         }
-
-        Livro livro = livroRepository.findById(idLivro);
-        if (!listaFavorito.remove(livro)) {
-            throw new ValidationException("listaFavorito", "Livro não encontrado na lista de favoritos!");
-        }
-
-        // listaFavorito.remove(livroRepository.findById(idLivro));
-        cliente.setListaFavorito(listaFavorito); // Atualiza a lista no cliente
-        clienteRepository.persist(cliente); // Persiste o cliente com a lista atualizada
+        itemFavoritoRepository.delete(item);
     }
 
+    @Override
+    public List<ItemFavoritoResponseDTO> findMeusFavoritos(){
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
+        Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
+        if (cliente == null) {
+            throw new ValidationException("cliente", "Cliente não encontrado. Verifique os dados e tente novamente.");
+        }
+        return cliente.getListaFavorito().stream().map(ItemFavoritoResponseDTO::valueOf).toList();
+    }
 }

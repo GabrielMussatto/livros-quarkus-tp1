@@ -3,12 +3,10 @@ package br.unitins.topicos1.model.Pessoa;
 import java.util.List;
 
 import br.unitins.topicos1.model.defaultEntity.DefaultEntity;
-import br.unitins.topicos1.model.livro.Livro;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -23,12 +21,17 @@ public class Cliente extends DefaultEntity {
     private String estado; 
     private String cidade;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "lista_favorito",
-                joinColumns = @JoinColumn(name = "id_cliente"),
-                inverseJoinColumns = @JoinColumn(name = "id_livro"))
-    private List<Livro> listaFavorito;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemFavorito> listaFavorito;
 
+    public List<ItemFavorito> getListaFavorito() {
+        return listaFavorito;
+    }
+
+    public void setListaFavorito(List<ItemFavorito> listaFavorito) {
+        this.listaFavorito = listaFavorito;
+    }
+    
     public Usuario getUsuario() {
         return usuario;
     }
@@ -69,11 +72,4 @@ public class Cliente extends DefaultEntity {
         this.cidade = cidade;
     }
 
-    public List<Livro> getListaFavorito() {
-        return listaFavorito;
-    }
-
-    public void setListaFavorito(List<Livro> listaFavorito) {
-        this.listaFavorito = listaFavorito;
-    }
 }

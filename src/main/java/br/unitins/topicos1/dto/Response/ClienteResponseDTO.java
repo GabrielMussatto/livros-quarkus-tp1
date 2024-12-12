@@ -3,7 +3,6 @@ package br.unitins.topicos1.dto.Response;
 import java.util.List;
 
 import br.unitins.topicos1.model.Pessoa.Cliente;
-import br.unitins.topicos1.model.livro.Livro;
 
 public record ClienteResponseDTO(
     Long id,
@@ -12,7 +11,7 @@ public record ClienteResponseDTO(
     String estado,
     String cidade,
     UsuarioResponseDTO usuario,
-    List<LivroResponseDTO> listaFavorito
+    List<ItemFavoritoResponseDTO> listaFavorito
 
 ) {
     public static ClienteResponseDTO valueOf(Cliente cliente){
@@ -23,6 +22,6 @@ public record ClienteResponseDTO(
             cliente.getEstado(),
             cliente.getCidade(),
             UsuarioResponseDTO.valueOf(cliente.getUsuario()),
-            cliente.getListaFavorito().stream().map(LivroResponseDTO::valueOf).toList());
+            cliente.getListaFavorito().stream().map(ItemFavoritoResponseDTO::valueOf).toList());
     }
 }

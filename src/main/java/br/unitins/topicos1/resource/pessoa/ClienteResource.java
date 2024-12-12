@@ -1,11 +1,14 @@
 package br.unitins.topicos1.resource.pessoa;
 
+import java.util.List;
+
 import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.AlterarEmailDTO;
 import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
@@ -20,6 +23,7 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
@@ -35,7 +39,7 @@ public class ClienteResource {
     private static final Logger LOG = Logger.getLogger(ClienteResource.class);
 
     @GET
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findAll() {
         LOG.info("Buscando todos os clientes");
         LOG.debug("ERRO DE DEBUG.");
@@ -43,7 +47,7 @@ public class ClienteResource {
     }
 
     @GET
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     @Path("/search/estado/{estado}")
     public Response findByEstado(@PathParam("estado") String estado) {
         LOG.info("Buscando clientes por estados");
@@ -51,7 +55,7 @@ public class ClienteResource {
     }
 
     @GET
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     @Path("/search/cpf/{cpf}")
     public Response findByCpf(@PathParam("cpf") String cpf) {
         LOG.info("Buscando cpf do cliente");
@@ -60,14 +64,14 @@ public class ClienteResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o método findById. Id: %s", id.toString());
         return Response.ok(clienteService.findById(id)).build();
     }
 
     @POST
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response create(@Valid ClienteDTO dto) {
         try {
             LOG.info("Cliente criado com suceso");
@@ -79,7 +83,7 @@ public class ClienteResource {
     }
 
     @PUT
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, ClienteDTO dto) {
         try {
@@ -93,7 +97,7 @@ public class ClienteResource {
     }
 
     @DELETE
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
         try {
@@ -108,7 +112,7 @@ public class ClienteResource {
 
     @PATCH
     @Path("/search/alterar-senha")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response alterarSenha(AlterarSenhaDTO dto) {
         try {
             LOG.info("Senha alterada com sucesso");
@@ -122,7 +126,7 @@ public class ClienteResource {
 
     @PATCH
     @Path("/search/alterar-email")
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response alterarEmail(AlterarEmailDTO dto) {
         try {
             LOG.info("Email alterado com sucesso.");            
@@ -135,7 +139,7 @@ public class ClienteResource {
     }
 
     @PATCH
-    //@RolesAllowed({"Cliente"})
+    @RolesAllowed({"Cliente"})
     @Path("/search/alterar-username")
     public Response alterarUsername(AlterarUsernameDTO dto) {
         try {
@@ -163,32 +167,45 @@ public class ClienteResource {
 
     @PATCH
     @RolesAllowed({"Cliente"})
-    @Path("/search/adicionar-livro-favorito/{id-livro}")
-    public Response adicionarLivroFavorito(@PathParam("id-livro") Long idLivro){
+    @Path("/favoritos/adicionar")
+    public Response adicionarItemFavorito(
+        @QueryParam("idLivro") Long idLivro,
+        @QueryParam("idCaixaLivro") Long idCaixaLivro){
         try {
             LOG.infof("Inserindo item na lista de favoritos");
-            clienteService.adicionarListaLivroFavorito(idLivro);
+            clienteService.adicionarItemFavorito(idLivro, idCaixaLivro);
             return Response.status(Status.NO_CONTENT).build();
-        } catch (ValidationException ve) {
-            LOG.warnf("Erro de validação ao adicionar livro na lista de favoritos: %s", ve.getMessage());
-            return Response.status(Status.BAD_REQUEST).entity(ve.getMessage()).build(); 
         }catch (Exception e) {
-            LOG.error("Erro ao adicionar livro na lista de favoritos.", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao adicionar livro na lista de favoritos.").build();
+            LOG.error("Erro ao adicionar item na lista de favoritos.", e);
+            return Response.status(Status.NOT_FOUND).entity("Erro ao adicionar item na lista de favoritos.").build();
         }
     }
 
     @PATCH
     @RolesAllowed({"Cliente"})
-    @Path("/search/remover-livro-favorito/{id-livro}")
-    public Response removendoLivroFavorito(@PathParam("id-livro") Long idLivro){
+    @Path("/favoritos/remover/{id}")
+    public Response removerItemFavorito(@PathParam("id") Long idItem){
         try {
-            LOG.infof("Inserindo item na lista de favoritos");
-            clienteService.removerListaLivroFavorito(idLivro);
+            LOG.infof("Removendo item da lista de favoritos");
+            clienteService.removerItemFavorito(idItem);
             return Response.status(Status.NO_CONTENT).build();
         } catch (Exception e) {
-            LOG.error("Erro ao remover livro da lista de favoritos.", e);
-            return Response.status(Status.NOT_FOUND).entity("Erro ao remover livro da lista de favoritos.").build();
+            LOG.error("Erro ao remover item da lista de favoritos.", e);
+            return Response.status(Status.NOT_FOUND).entity("Erro ao remover item da lista de favoritos.").build();
+        }
+    }
+
+    @GET
+    @RolesAllowed({"Cliente"})
+    @Path("/favoritos")
+    public Response listarMeusFavoritos(){
+        try {
+            LOG.info("Listando itens favoritos do cliente");
+            List<ItemFavoritoResponseDTO> lista = clienteService.findMeusFavoritos();
+            return Response.ok(lista).build();
+        } catch (Exception e) {
+            LOG.error("Erro ao listar os itens favoritos", e);
+            return Response.status(Status.NOT_FOUND).entity("Erro ao listar os itens favoritos.").build();
         }
     }
 }

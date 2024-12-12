@@ -49,7 +49,7 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivro.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
         caixaLivro.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
         caixaLivro.setPreco(dto.preco());
-        caixaLivro.setQuantidadeEstoque(dto.quantidadeEstoque());
+        caixaLivro.setQuantidadeEmEstoque(dto.quantidadeEmEstoque());
         caixaLivro.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
 
         caixaLivroRepository.persist(caixaLivro);
@@ -77,7 +77,7 @@ public class CaixaLivroServiceImpl implements CaixaLivroService {
         caixaLivroBanco.setListaAutores((dto.autores()).stream().map(a -> autorRepository.findById(a)).toList());
         caixaLivroBanco.setListaGeneros((dto.generos()).stream().map(g -> generoRepository.findById(g)).toList());
         caixaLivroBanco.setPreco(dto.preco());
-        caixaLivroBanco.setQuantidadeEstoque(dto.quantidadeEstoque());
+        caixaLivroBanco.setQuantidadeEmEstoque(dto.quantidadeEmEstoque());
         caixaLivroBanco.setClassificacao(Classificacao.valueOf(dto.idClassificacao()));
     }
 
