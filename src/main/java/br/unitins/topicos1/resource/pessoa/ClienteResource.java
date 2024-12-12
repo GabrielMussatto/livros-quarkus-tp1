@@ -8,7 +8,9 @@ import br.unitins.topicos1.dto.AlterarEmailDTO;
 import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.SugestaoDTO;
 import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
+import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
@@ -206,6 +208,34 @@ public class ClienteResource {
         } catch (Exception e) {
             LOG.error("Erro ao listar os itens favoritos", e);
             return Response.status(Status.NOT_FOUND).entity("Erro ao listar os itens favoritos.").build();
+        }
+    }
+
+    @POST 
+    @RolesAllowed({"Cliente"}) 
+    @Path("/sugestoes/adicionarSugestao") 
+    public Response adicionarSugestao(@Valid SugestaoDTO sugestaoDTO) { 
+        try { 
+            LOG.info("Adicionando nova sugestão"); 
+            SugestaoResponseDTO resposta = clienteService.adicionarSugestao(sugestaoDTO); 
+            return Response.status(Status.CREATED).entity(resposta).build(); 
+        } catch (Exception e) { 
+            LOG.error("Erro ao adicionar sugestão.", e); 
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao adicionar sugestão.").build(); 
+        } 
+    } 
+    
+    @GET 
+    @RolesAllowed({"Cliente"}) 
+    @Path("/sugestoes/minhasSugestoes") 
+    public Response findMinhasSugestoes() { 
+        try { 
+            LOG.info("Buscando sugestões do cliente logado"); 
+            List<SugestaoResponseDTO> sugestoes = clienteService.findMinhasSugestoes(); 
+            return Response.ok(sugestoes).build(); 
+        } catch (Exception e) { 
+            LOG.error("Erro ao buscar sugestões do cliente.", e); 
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar sugestões do cliente.").build(); 
         }
     }
 }

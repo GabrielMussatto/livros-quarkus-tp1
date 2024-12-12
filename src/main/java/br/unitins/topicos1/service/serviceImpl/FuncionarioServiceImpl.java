@@ -10,10 +10,12 @@ import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.Response.FuncionarioResponseDTO;
+import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.model.Pessoa.Funcionario;
 import br.unitins.topicos1.model.Pessoa.Usuario;
+import br.unitins.topicos1.repository.SugestaoRepository;
 import br.unitins.topicos1.repository.pessoa.FuncionarioRepository;
 import br.unitins.topicos1.repository.pessoa.UsuarioRepository;
 import br.unitins.topicos1.service.FuncionarioService;
@@ -40,6 +42,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Inject
     public HashService hashService;
+
+    @Inject
+    private SugestaoRepository sugestaoRepository;
 
     @Override
     @Transactional
@@ -192,5 +197,10 @@ public class FuncionarioServiceImpl implements FuncionarioService {
             throw new ValidationException("Perfil","Cliente não encontrado");
         }
         return FuncionarioResponseDTO.valueOf(funcionario);
+    }
+
+    @Override
+    public List<SugestaoResponseDTO> findSugestoes() {
+        return sugestaoRepository.findAll().stream().map(SugestaoResponseDTO::valueOf).toList();
     }
 }

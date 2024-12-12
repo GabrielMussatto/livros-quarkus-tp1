@@ -1,5 +1,6 @@
 package br.unitins.topicos1.service.serviceImpl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,11 @@ import br.unitins.topicos1.dto.AlterarEmailDTO;
 import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
+import br.unitins.topicos1.dto.SugestaoDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
 import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
+import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.model.Pessoa.Cliente;
@@ -19,9 +22,11 @@ import br.unitins.topicos1.model.Pessoa.ItemFavorito;
 import br.unitins.topicos1.model.Pessoa.Usuario;
 import br.unitins.topicos1.model.caixa.CaixaLivro;
 import br.unitins.topicos1.model.livro.Livro;
+import br.unitins.topicos1.model.sugestao.Sugestao;
 import br.unitins.topicos1.repository.CaixaLivroRepository;
 import br.unitins.topicos1.repository.ItemFavoritoRepository;
 import br.unitins.topicos1.repository.LivroRepository;
+import br.unitins.topicos1.repository.SugestaoRepository;
 import br.unitins.topicos1.repository.pessoa.ClienteRepository;
 import br.unitins.topicos1.repository.pessoa.UsuarioRepository;
 import br.unitins.topicos1.service.ClienteService;
@@ -56,6 +61,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Inject
     private JsonWebToken tokenJwt;
+
+    @Inject
+    private SugestaoRepository sugestaoRepository;
 
     @Override
     @Transactional
@@ -295,5 +303,34 @@ public class ClienteServiceImpl implements ClienteService {
             throw new ValidationException("cliente", "Cliente não encontrado. Verifique os dados e tente novamente.");
         }
         return cliente.getListaFavorito().stream().map(ItemFavoritoResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    @Transactional
+    public SugestaoResponseDTO adicionarSugestao(@Valid SugestaoDTO sugestaoDTO) {
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
+        Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
+        if (cliente == null) {
+            throw new ValidationException("cliente", "Cliente não encontrado. Verifique os dados e tente novamente.");
+        }
+
+        Sugestao sugestao = new Sugestao();
+        sugestao.setSugestao(sugestaoDTO.sugestao());
+        sugestao.setDataSugestao(LocalDate.now());
+        sugestao.setCliente(cliente);
+
+        sugestaoRepository.persist(sugestao);
+        return SugestaoResponseDTO.valueOf(sugestao);
+    }
+
+    @Override
+    public List<SugestaoResponseDTO> findMinhasSugestoes() {
+        Usuario usuario = usuarioRepository.findById(Long.valueOf(tokenJwt.getClaim("id").toString()));
+        Cliente cliente = clienteRepository.findByIdUsuario(usuario.getId());
+        if (cliente == null) {
+            throw new ValidationException("cliente", "Cliente não encontrado. Verifique os dados e tente novamente.");
+        }
+
+        return cliente.getListaSugestao().stream().map(SugestaoResponseDTO::valueOf).toList();
     }
 }

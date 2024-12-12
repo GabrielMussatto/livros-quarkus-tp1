@@ -7,6 +7,7 @@ import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.Response.FuncionarioResponseDTO;
+import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import jakarta.validation.Valid;
 
@@ -25,4 +26,6 @@ public interface FuncionarioService {
     public void alterarEmail(AlterarEmailDTO dto);
 
     public FuncionarioResponseDTO findMeuPerfil();
+
+    public List<SugestaoResponseDTO> findSugestoes();
 }

@@ -3,6 +3,7 @@ package br.unitins.topicos1.model.Pessoa;
 import java.util.List;
 
 import br.unitins.topicos1.model.defaultEntity.DefaultEntity;
+import br.unitins.topicos1.model.sugestao.Sugestao;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -23,6 +24,9 @@ public class Cliente extends DefaultEntity {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemFavorito> listaFavorito;
+
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Sugestao> listaSugestao;
 
     public List<ItemFavorito> getListaFavorito() {
         return listaFavorito;
@@ -70,6 +74,14 @@ public class Cliente extends DefaultEntity {
 
     public void setCidade(String cidade) {
         this.cidade = cidade;
+    }
+
+    public List<Sugestao> getListaSugestao() {
+        return listaSugestao;
+    }
+
+    public void setListaSugestao(List<Sugestao> listaSugestao) {
+        this.listaSugestao = listaSugestao;
     }
 
 }
