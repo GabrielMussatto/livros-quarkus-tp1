@@ -14,7 +14,7 @@ public record CaixaLivroResponseDTO(
         List<AutorResponseDTO> autores,
         List<GeneroResponseDTO> generos,
         Double preco,
-        Integer quantidadeEstoque,
+        Integer quantidadeEmEstoque,
         Classificacao classificacao,
         String nomeImagem) {
     public static CaixaLivroResponseDTO valueOf(CaixaLivro caixaLivro) {
@@ -43,7 +43,7 @@ public record CaixaLivroResponseDTO(
                 listaAutor,
                 listaGenero,
                 caixaLivro.getPreco(),
-                caixaLivro.getQuantidadeEstoque(),
+                caixaLivro.getQuantidadeEmEstoque(),
                 // statusEstoque,
                 caixaLivro.getClassificacao(),
                 caixaLivro.getNomeImagem());

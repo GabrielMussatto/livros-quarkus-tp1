@@ -25,7 +25,7 @@ public class CaixaLivro extends DefaultEntity {
     private String descricao;
 
     @Column(nullable = false)
-    private Integer quantidadeEstoque;
+    private Integer quantidadeEmEstoque;
 
     @ManyToOne
     @JoinColumn(name = "id_fornecedor", nullable = false)
@@ -56,8 +56,12 @@ public class CaixaLivro extends DefaultEntity {
 
     private Double preco;
 
-    public void diminuindoEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque -= quantidadeEstoque;
+    public void diminuindoEstoque(Integer quantidadeEmEstoque) {
+        this.quantidadeEmEstoque -= quantidadeEmEstoque;
+    }
+
+    public void aumentandoEstoque(Integer quantidadeEmEstoque) {
+        this.quantidadeEmEstoque += quantidadeEmEstoque;
     }
 
     public String getNome() {
@@ -76,12 +80,12 @@ public class CaixaLivro extends DefaultEntity {
         this.descricao = descricao;
     }
 
-    public Integer getQuantidadeEstoque() {
-        return quantidadeEstoque;
+    public Integer getQuantidadeEmEstoque() {
+        return quantidadeEmEstoque;
     }
 
-    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
+    public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {
+        this.quantidadeEmEstoque = quantidadeEmEstoque;
     }
 
     public Fornecedor getFornecedor() {

@@ -10,7 +10,7 @@ import br.unitins.topicos1.dto.CaixaLivroDTO;
 import br.unitins.topicos1.form.CaixaLivroImageForm;
 import br.unitins.topicos1.service.CaixaLivroService;
 import br.unitins.topicos1.service.file.CaixaLivroFileService;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -43,7 +43,7 @@ public class CaixaLivroResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id) {
         LOG.info("Executando o findById - CaixaLivroResource");
         LOG.infof("Executando o método findById. Id: %s", id.toString());
@@ -146,7 +146,7 @@ public class CaixaLivroResource {
     }
 
     @POST
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response create (CaixaLivroDTO dto){
         // try {
         //     LOG.info("Criando uma nova caixa livro - Executando CaixaLivroResource_create");
@@ -159,7 +159,7 @@ public class CaixaLivroResource {
 
     @PUT
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, CaixaLivroDTO dto){
         // try {
         //     LOG.info("Atualizando uma caixa livro- Executando CaixaLivroResource_update");
@@ -173,7 +173,7 @@ public class CaixaLivroResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response delete(@PathParam("id") Long id){
         try {
             LOG.info("Deletando uma caixa livro - Executando CaixaLivroResource_delete");
@@ -187,7 +187,7 @@ public class CaixaLivroResource {
     
     @PATCH
     @Path("/image/upload")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm CaixaLivroImageForm form) {
         try {
