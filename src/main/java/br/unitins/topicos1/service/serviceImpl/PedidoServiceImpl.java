@@ -8,11 +8,13 @@ import java.util.Map;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import br.unitins.topicos1.dto.CartaoCreditoDTO;
+import br.unitins.topicos1.dto.CupomDTO;
 import br.unitins.topicos1.dto.ItemPedidoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.Response.PedidoResponseDTO;
 import br.unitins.topicos1.model.Pessoa.Cliente;
 import br.unitins.topicos1.model.caixa.CaixaLivro;
+import br.unitins.topicos1.model.cupom.Cupom;
 import br.unitins.topicos1.model.formaPagamento.BandeiraCartao;
 import br.unitins.topicos1.model.formaPagamento.Boleto;
 import br.unitins.topicos1.model.formaPagamento.CartaoCredito;
@@ -23,6 +25,7 @@ import br.unitins.topicos1.model.pedido.Pedido;
 import br.unitins.topicos1.repository.BoletoRepository;
 import br.unitins.topicos1.repository.CaixaLivroRepository;
 import br.unitins.topicos1.repository.CartaoCreditoRepository;
+import br.unitins.topicos1.repository.CupomRepository;
 import br.unitins.topicos1.repository.ItemPedidoRepository;
 import br.unitins.topicos1.repository.LivroRepository;
 import br.unitins.topicos1.repository.PedidoRepository;
@@ -64,6 +67,9 @@ public class PedidoServiceImpl implements PedidoService {
     public CartaoCreditoRepository cartaoCreditoRepository;
 
     @Inject
+    public CupomRepository cupomRepository;
+
+    @Inject
     SecurityIdentity securityIdentity;
 
     @Inject
@@ -95,6 +101,9 @@ public class PedidoServiceImpl implements PedidoService {
 
         pedido.setCliente(cliente);
         pedido.setDataPedido(LocalDateTime.now());
+
+        // Aqui, você pode aplicar o cupom, se houver
+        
         List<ItemPedido> itens = new ArrayList<>();
         Double valorTotal = 0.0;
 
@@ -115,7 +124,7 @@ public class PedidoServiceImpl implements PedidoService {
                 item.setLivro(livro);
                 item.setSubTotal((livro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
-
+            
             if (itemDTO.idCaixaLivro() != null) {
                 CaixaLivro caixaLivro = caixaLivroRepository.findById(itemDTO.idCaixaLivro());
                 if (caixaLivro == null) {
@@ -129,11 +138,26 @@ public class PedidoServiceImpl implements PedidoService {
                 item.setCaixaLivro(caixaLivro);
                 item.setSubTotal((caixaLivro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
-
+            
             item.setDesconto(calcularDesconto(item));
             itens.add(item);
-
+            
             valorTotal += calcularValorTotal(item);
+        }
+
+        if (dto.nomeCupom() != null && !dto.nomeCupom().isEmpty()) {
+            // Buscando o cupom pelo nome
+            Cupom cupom = cupomRepository.find("nomeCupom", dto.nomeCupom()).firstResult();  // ou singleResult()
+            if (cupom != null) {
+                pedido.setCupom(cupom);  // Associar o cupom ao pedido
+            } else {
+                throw new ValidationException("Verificando Cupom", "Cupom não encontrado.");
+            }
+        }
+
+        // Aplicando o desconto do cupom, se existir
+        if (pedido.getCupom() != null) {
+            valorTotal -= valorTotal * (pedido.getCupom().getDesconto()); // Aplicar o desconto do cupom
         }
 
         pedido.setItens(itens);

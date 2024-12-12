@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.cupom.Cupom;
 import br.unitins.topicos1.model.defaultEntity.DefaultEntity;
 import br.unitins.topicos1.model.formaPagamento.FormaPagamento;
 import jakarta.persistence.Entity;
@@ -15,25 +16,29 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class Pedido extends DefaultEntity {
-    
+
     private LocalDateTime dataPedido;
 
     private Double valorTotal = 0.0;
-    
+
     private Boolean ifPedidoFeito = false;
-    
+
+    @ManyToOne(optional = true) // O campo é opcional
+    @JoinColumn(name = "id_cupom") // Relacionamento com a tabela de cupom
+    private Cupom cupom;
+
     @OneToOne
     @JoinColumn(name = "id_formaPagamento", unique = true)
     private FormaPagamento formaPagamento;
-    
+
     @ManyToOne
     @JoinColumn(name = "id_cliente")
     private Cliente cliente;
-    
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_pedido")
     private List<ItemPedido> itens;
-    
+
     public LocalDateTime getDataPedido() {
         return dataPedido;
     }
@@ -82,4 +87,11 @@ public class Pedido extends DefaultEntity {
         this.itens = itens;
     }
 
+    public Cupom getCupom() {
+        return cupom;
+    }
+
+    public void setCupom(Cupom cupom) {
+        this.cupom = cupom;
+    }
 }
