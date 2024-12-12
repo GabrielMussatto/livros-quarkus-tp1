@@ -15,7 +15,7 @@ import br.unitins.topicos1.model.genero.Genero;
 import br.unitins.topicos1.service.LivroService;
 import br.unitins.topicos1.service.file.LivroFileService;
 import br.unitins.topicos1.service.file.LivroFileServiceImpl;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -48,7 +48,7 @@ public class LivroResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id){
         LOG.info("Executando o findById");
         LOG.infof("Executando o método findById. Id: %s", id.toString());
@@ -162,7 +162,7 @@ public class LivroResource {
     }
 
     @POST
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response create (LivroDTO dto){
         // try {
         //     LOG.info("Criando um novo livro - Executando LivroResource_create");
@@ -175,7 +175,7 @@ public class LivroResource {
 
     @PUT
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, LivroDTO dto){
         // try {
         //     LOG.info("Atualizando um livro- Executando LivroResource_update");
@@ -189,7 +189,7 @@ public class LivroResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response delete(@PathParam("id") Long id){
         try {
             LOG.info("Deletando um livro - Executando LivroResource_delete");
@@ -203,21 +203,21 @@ public class LivroResource {
     
     // @PATCH
     // @Path("/{id}/image/upload")
-    // //@RolesAllowed({"Funcionario"})
     // @Consumes(MediaType.MULTIPART_FORM_DATA)
     // public Response upload(@PathParam("id") Long id, @MultipartForm ImageForm form) {
-    //     try {
-    //         fileService.salvar(id, form.getNomeImagem(), form.getImagem());
-    //         LOG.infof("Imagem salva com sucesso - Executando LivroResource_upload");
-    //         return Response.noContent().build();
-    //     } catch (Exception e) {
-    //         LOG.error("Erro ao salvar imagem do livro - Executando LivroResource_upload", e);
-    //         return Response.status(Status.CONFLICT).entity("Erro ao salvar imagem do livro - Executando LivroResource_upload").build();
-    //     }
-    // }
-
+        //     try {
+            //         fileService.salvar(id, form.getNomeImagem(), form.getImagem());
+            //         LOG.infof("Imagem salva com sucesso - Executando LivroResource_upload");
+            //         return Response.noContent().build();
+            //     } catch (Exception e) {
+                //         LOG.error("Erro ao salvar imagem do livro - Executando LivroResource_upload", e);
+                //         return Response.status(Status.CONFLICT).entity("Erro ao salvar imagem do livro - Executando LivroResource_upload").build();
+                //     }
+                // }
+                
     @PATCH
     @Path("/image/upload")
+    @RolesAllowed({"Funcionario"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm LivroImageForm form) {
 

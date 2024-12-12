@@ -3,6 +3,7 @@ package br.unitins.topicos1.resource;
 import org.jboss.logging.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
@@ -10,6 +11,7 @@ import br.unitins.topicos1.dto.CartaoCreditoDTO;
 import br.unitins.topicos1.dto.PedidoDTO;
 import br.unitins.topicos1.dto.Response.PedidoResponseDTO;
 import br.unitins.topicos1.model.Pessoa.Cliente;
+import br.unitins.topicos1.model.formaPagamento.Pix;
 import br.unitins.topicos1.model.pedido.Pedido;
 import br.unitins.topicos1.repository.PedidoRepository;
 import br.unitins.topicos1.repository.pessoa.ClienteRepository;
@@ -119,7 +121,7 @@ public class PedidoResource {
 
     @GET
     @Path("/search/meus-Pedidos")
-    @RolesAllowed({"Funcionario","Cliente"})
+    @RolesAllowed({"Cliente"})
     public Response meusPedidos(){
         try {
             LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");

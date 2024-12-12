@@ -7,6 +7,7 @@ import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
+import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import jakarta.validation.Valid;
 
@@ -25,7 +26,8 @@ public interface ClienteService {
     public void alterarEmail(AlterarEmailDTO dto);
 
     public ClienteResponseDTO findMeuPerfil();
-    public void adicionarListaLivroFavorito(Long idLivro);
-    public void removerListaLivroFavorito(Long idLivro);
+    public void adicionarItemFavorito(Long idLivro, Long idCaixaLivro);
+    public void removerItemFavorito(Long idItem);
+    public List<ItemFavoritoResponseDTO> findMeusFavoritos();
 
 }

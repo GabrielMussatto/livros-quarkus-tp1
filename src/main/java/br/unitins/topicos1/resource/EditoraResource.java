@@ -4,7 +4,7 @@ import org.jboss.logging.Logger;
 
 import br.unitins.topicos1.dto.EditoraDTO;
 import br.unitins.topicos1.service.EditoraService;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -32,14 +32,14 @@ public class EditoraResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id){
         LOG.info("Buscando editora por id: - Executando EditoraResource_FindById" + id);
         return Response.ok(editoraService.findById(id)).build();
     }
 
     @GET
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findAll(
         @DefaultValue("0") @QueryParam("page") int page,
         @DefaultValue("100") @QueryParam("pageSize") int pageSize){
@@ -49,7 +49,7 @@ public class EditoraResource {
 
     @GET
     @Path("/search/nome/{nome}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findByNome(
         @PathParam("nome") String nome,
         @DefaultValue("0") @QueryParam("page") int page,
@@ -60,7 +60,7 @@ public class EditoraResource {
 
     @GET
     @Path("/search/estado/{estado}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findByEstado(
         @PathParam("estado") String estado,
         @DefaultValue("0") @QueryParam("page") int page,
@@ -82,7 +82,7 @@ public class EditoraResource {
     }
 
     @POST
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response create (EditoraDTO dto){
         // try {
         //     LOG.info("Editora criado com sucesso - Executando EditoraResource_create");
@@ -95,7 +95,7 @@ public class EditoraResource {
 
     @PUT
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response update(@PathParam("id") Long id, EditoraDTO dto){
         // try {
         //     LOG.info("Editora atualizado com sucesso - Executando EditoraResource_update");
@@ -109,7 +109,7 @@ public class EditoraResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response delete(@PathParam("id") Long id){
         try {
             LOG.info("Editora deletado com sucesso - Executando EditoraResource_delete");

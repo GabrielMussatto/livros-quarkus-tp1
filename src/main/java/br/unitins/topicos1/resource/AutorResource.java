@@ -9,7 +9,7 @@ import br.unitins.topicos1.dto.AutorDTO;
 import br.unitins.topicos1.form.AutorImageForm;
 import br.unitins.topicos1.service.AutorService;
 import br.unitins.topicos1.service.file.AutorFileService;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -43,7 +43,7 @@ public class AutorResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id) {
         LOG.infof("Executando o método findById. Id: %s", id.toString());
         return Response.ok(autorService.findById(id)).build();
@@ -93,7 +93,7 @@ public class AutorResource {
     }
 
     @POST
-    //@RolesAllowed({"Funcionario"}) 
+    @RolesAllowed({"Funcionario"}) 
     public Response create(@Valid AutorDTO dto) {
         // try {
         //     LOG.info("Criando novo autor: - Executando AutorResource_create");
@@ -106,7 +106,7 @@ public class AutorResource {
 
     @PUT
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"}) 
+    @RolesAllowed({"Funcionario"}) 
     public Response update(@PathParam("id") Long id, AutorDTO dto) {
         // try {
         //     LOG.info("Atualizando autor: - Executando AutorResource_update" + id);
@@ -120,7 +120,7 @@ public class AutorResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({"Funcionario"}) 
+    @RolesAllowed({"Funcionario"}) 
     public Response delete(@PathParam("id") Long id) {
         try {
             LOG.info("Removendo autor: - Executando AutorResource_delete" + id);
@@ -134,7 +134,7 @@ public class AutorResource {
 
     @PATCH
     @Path("/image/upload")
-    //@RolesAllowed({"Funcionario"})
+    @RolesAllowed({"Funcionario"})
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response salvarImagem(@MultipartForm AutorImageForm form) {
         try {

@@ -7,7 +7,7 @@ import org.jboss.logging.Logger;
 import br.unitins.topicos1.dto.AvaliacaoDTO;
 import br.unitins.topicos1.dto.Response.AvaliacaoResponseDTO;
 import br.unitins.topicos1.service.AvaliacaoService;
-//import jakarta.annotation.security.RolesAllowed;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -33,7 +33,7 @@ public class AvaliacaoResource {
     private static final Logger LOG = Logger.getLogger(AvaliacaoResource.class);
 
     @GET
-    //@RolesAllowed({ "Funcionario", "Cliente" })
+    @RolesAllowed({ "Funcionario", "Cliente" })
     public List<AvaliacaoResponseDTO> findAll() {
         LOG.info("Buscando todas as avaliações - Executando AvaliacaoResource_FindAll");
         LOG.debug("ERRO DE DEBUG. - Executando AvaliacaoResource_FindAll");
@@ -42,7 +42,7 @@ public class AvaliacaoResource {
 
     @GET
     @Path("/{id}")
-    //@RolesAllowed({ "Funcionario" })
+    @RolesAllowed({ "Funcionario" })
     public AvaliacaoResponseDTO findById(@PathParam("id") Long id) throws NotFoundException {
         LOG.infof("Buscando avaliações por ID. ", id);
         LOG.debug("ERRO DE DEBUG. - Executando AvaliacaoResource_FindById");
@@ -50,7 +50,7 @@ public class AvaliacaoResource {
     }
 
     @POST
-    //@RolesAllowed({ "Cliente"})
+    @RolesAllowed({ "Cliente"})
     public Response create(AvaliacaoDTO avaliacaoDto) {
         try {
             AvaliacaoResponseDTO avaliacao = avaliacaoService.create(avaliacaoDto);
@@ -66,7 +66,7 @@ public class AvaliacaoResource {
 
     @PUT
     @Path("/{id}")
-    //@RolesAllowed({ "Cliente" })
+    @RolesAllowed({ "Cliente" })
     public Response update(@PathParam("id") Long id, AvaliacaoDTO avaliacaoDto) {
         try {
             avaliacaoService.update(id, avaliacaoDto);
@@ -84,7 +84,7 @@ public class AvaliacaoResource {
 
     @DELETE
     @Path("/{id}")
-    //@RolesAllowed({ "Funcionario", "Cliente"})
+    @RolesAllowed({ "Funcionario", "Cliente"})
     public Response delete(@PathParam("id") Long id) throws IllegalArgumentException {
 
         try {
