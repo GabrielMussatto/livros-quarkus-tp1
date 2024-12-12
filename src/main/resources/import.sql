@@ -121,7 +121,7 @@ INSERT INTO editora (nome, email, endereco, estado, id_telefone) VALUES ('DarkSi
 
 -- Inserir livro
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
-VALUES ('Confess', 1.00, 50, '9781501176838', '10-03-2015', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1, 'confess.jpg');
+VALUES ('Confess', 100.00, 50, '9781501176838', '10-03-2015', 'Confess é um romance contemporâneo escrito por Colleen Hoover. O livro foi publicado em 2015 e é centrado em Auburn Reed e Owen Gentry. Auburn tem um passado difícil e encontra Owen, um artista misterioso, enquanto trabalha em uma galeria de arte. Juntos, eles embarcam em uma jornada emocional, desvendando segredos e enfrentando desafios que testam seu amor.', 6, 1, 1, 'confess.jpg');
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
 VALUES ('A Hipotese do Amor', 29.99, 100, '9780593336823', '14-09-2021', 'The Love Hypothesis é um romance contemporâneo escrito por Ali Hazelwood. O livro narra a história de Olive Smith, uma estudante de pós-graduação determinada a provar uma teoria científica sobre o amor. Com a ajuda de seu charmoso professor, eles embarcam em uma jornada de descoberta científica e pessoal.', 5, 2, 2, 'a_hipotese_do_amor.jpg');
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem) 
@@ -591,3 +591,8 @@ INSERT INTO Sugestao (sugestao, dataSugestao, id_cliente) VALUES
 ('Sugestão 1 do Cliente 1', '2023-06-15', 1),
 ('Sugestão 2 do Cliente 1', '2023-06-15', 1),
 ('Sugestão 1 do Cliente 2', '2023-06-15', 2);
+
+
+INSERT INTO cupom (nomeCupom, desconto) VALUES ('CUPOM10', 0.90);
+INSERT INTO cupom (nomeCupom, desconto) VALUES ('CUPOM20', 0.80);
+INSERT INTO cupom (nomeCupom, desconto) VALUES ('CUPOM50', 0.50);
