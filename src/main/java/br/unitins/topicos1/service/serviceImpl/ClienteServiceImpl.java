@@ -13,6 +13,7 @@ import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.SugestaoDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
+import br.unitins.topicos1.dto.Response.FornecedorResponseDTO;
 import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
 import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
@@ -21,6 +22,7 @@ import br.unitins.topicos1.model.Pessoa.Cliente;
 import br.unitins.topicos1.model.Pessoa.ItemFavorito;
 import br.unitins.topicos1.model.Pessoa.Usuario;
 import br.unitins.topicos1.model.caixa.CaixaLivro;
+import br.unitins.topicos1.model.fornecedor.Fornecedor;
 import br.unitins.topicos1.model.livro.Livro;
 import br.unitins.topicos1.model.sugestao.Sugestao;
 import br.unitins.topicos1.repository.CaixaLivroRepository;
@@ -151,18 +153,51 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<ClienteResponseDTO> findAll() {
-        return clienteRepository.listAll().stream().map(ClienteResponseDTO::valueOf).toList();
+    public List<ClienteResponseDTO> findAll(int page, int pageSize) {
+        List<Cliente> listCliente = clienteRepository
+                .findAll()
+                .page(page, pageSize)
+                .list();
+        return listCliente
+                .stream()
+                .map(ClienteResponseDTO::valueOf)
+                .toList();
     }
 
     @Override
     public List<ClienteResponseDTO> findByEstado(String estado) {
-        return clienteRepository.findByEstado(estado).stream().map(ClienteResponseDTO::valueOf).toList();
+        List<Cliente> listCliente = clienteRepository.findByEstado(estado).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
     }
 
     @Override
     public List<UsuarioResponseDTO> findByCpf(String cpf) {
-        return usuarioRepository.findByCpf(cpf).stream().map(UsuarioResponseDTO::valueOf).toList();
+        List<Usuario> listCliente = usuarioRepository.findByCpf(cpf).list();
+        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByNome(String nome) {
+        List<Usuario> listCliente = usuarioRepository.findByNome(nome).list();
+        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<ClienteResponseDTO> findByEstado(int page, int pageSize, String estado) {
+        List<Cliente> listCliente = clienteRepository.findByEstado(estado).page(page, pageSize).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf) {
+        List<Usuario> listCliente = usuarioRepository.findByCpf(cpf).page(page, pageSize).list();
+        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Usuario> listCliente = usuarioRepository.findByNome(nome).page(page, pageSize).list();
+        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
     }
 
     @Override
@@ -332,5 +367,25 @@ public class ClienteServiceImpl implements ClienteService {
         }
 
         return cliente.getListaSugestao().stream().map(SugestaoResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public long count() {
+        return clienteRepository.count();
+    }
+
+    @Override
+    public long countByNome(String nome){
+        return clienteRepository.findByNome(nome).count();
+    }
+
+    @Override
+    public long countByCpf(String cpf){
+        return usuarioRepository.findByCpf(cpf).count();
+    }
+
+    @Override
+    public long countByEstado(String estado){
+        return clienteRepository.findByEstado(estado).count();
     }
 }

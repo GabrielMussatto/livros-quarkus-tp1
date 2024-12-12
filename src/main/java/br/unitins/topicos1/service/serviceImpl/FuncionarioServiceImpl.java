@@ -9,10 +9,12 @@ import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.TelefoneDTO;
+import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
 import br.unitins.topicos1.dto.Response.FuncionarioResponseDTO;
 import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
 import br.unitins.topicos1.dto.Response.UsuarioResponseDTO;
 import br.unitins.topicos1.model.Enum.Sexo;
+import br.unitins.topicos1.model.Pessoa.Cliente;
 import br.unitins.topicos1.model.Pessoa.Funcionario;
 import br.unitins.topicos1.model.Pessoa.Usuario;
 import br.unitins.topicos1.repository.SugestaoRepository;
@@ -120,19 +122,51 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @GET
-    public List<FuncionarioResponseDTO> findAll() {
-        return funcionarioRepository.listAll().stream().map(a -> FuncionarioResponseDTO.valueOf(a)).toList();
+    public List<FuncionarioResponseDTO> findAll(int page, int pageSize) {
+        List<Funcionario> listFuncionario = funcionarioRepository
+                .findAll()
+                .page(page, pageSize)
+                .list();
+        return listFuncionario
+                .stream()
+                .map(FuncionarioResponseDTO::valueOf)
+                .toList();    
     }
 
     @Override
     public List<FuncionarioResponseDTO> findByCargo(String cargo) {
-        return funcionarioRepository.findByCargo(cargo).stream()
-                .map(funcionario -> FuncionarioResponseDTO.valueOf(funcionario)).toList();
+        List<Funcionario> listFuncionario = funcionarioRepository.findByCargo(cargo).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
     }
 
     @Override
     public List<UsuarioResponseDTO> findByCpf(String cpf) {
-        return usuarioRepository.findByCpf(cpf).stream().map(c -> UsuarioResponseDTO.valueOf(c)).toList();
+        List<Usuario> listFuncionario = usuarioRepository.findByCpf(cpf).list();
+        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByNome(String nome) {
+        List<Usuario> listFuncionario = usuarioRepository.findByNome(nome).list();
+        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<FuncionarioResponseDTO> findByCargo(int page, int pageSize, String cargo) {
+        List<Funcionario> listFuncionario = funcionarioRepository.findByCargo(cargo).page(page, pageSize).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf) {
+        List<Usuario> listFuncionario = usuarioRepository.findByCpf(cpf).page(page, pageSize).list();
+        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Usuario> listFuncionario = usuarioRepository.findByNome(nome).page(page, pageSize).list();
+        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
     }
 
     @Override
@@ -202,5 +236,25 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     public List<SugestaoResponseDTO> findSugestoes() {
         return sugestaoRepository.findAll().stream().map(SugestaoResponseDTO::valueOf).toList();
+    }
+
+    @Override
+    public long count() {
+        return funcionarioRepository.count();
+    }
+
+    @Override
+    public long countByNome(String nome){
+        return funcionarioRepository.findByNomeFuncionario(nome).count();
+    }
+
+    @Override
+    public long countByCpf(String cpf){
+        return usuarioRepository.findByCpf(cpf).count();
+    }
+
+    @Override
+    public long countByCargo(String cargo){
+        return funcionarioRepository.findByCargo(cargo).count();
     }
 }

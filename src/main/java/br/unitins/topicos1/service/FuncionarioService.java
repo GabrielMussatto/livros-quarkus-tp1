@@ -16,9 +16,15 @@ public interface FuncionarioService {
     public void update(Long id, FuncionarioDTO dto);
     public void delete(Long id);
     public FuncionarioResponseDTO findById(Long id);
-    public List<FuncionarioResponseDTO> findAll();
+    public List<FuncionarioResponseDTO> findAll(int page, int pageSize);
     public List<FuncionarioResponseDTO> findByCargo(String cargo);
     public List<UsuarioResponseDTO> findByCpf(String cpf);
+    public List<UsuarioResponseDTO> findByNome(String nome);
+
+    public List<FuncionarioResponseDTO> findByCargo(int page, int pageSize, String cargo);
+    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf);
+    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome);
+
     public UsuarioResponseDTO login(String username, String senha);  
 
     public void alterarSenha(AlterarSenhaDTO dto);
@@ -28,4 +34,9 @@ public interface FuncionarioService {
     public FuncionarioResponseDTO findMeuPerfil();
 
     public List<SugestaoResponseDTO> findSugestoes();
+
+    public long count();
+    public long countByNome(String nome);
+    public long countByCpf(String cpf);
+    public long countByCargo(String cargo);
 }

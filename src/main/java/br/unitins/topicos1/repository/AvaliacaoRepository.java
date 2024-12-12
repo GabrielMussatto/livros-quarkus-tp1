@@ -5,6 +5,7 @@ import java.util.List;
 import br.unitins.topicos1.model.Pessoa.Cliente;
 import br.unitins.topicos1.model.avaliacao.Avaliacao;
 import br.unitins.topicos1.model.livro.Livro;
+import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -19,11 +20,11 @@ public class AvaliacaoRepository implements PanacheRepository<Avaliacao>{
         return find("FROM Avaliacao WHERE livro = ?1", livro).list();
     }
 
-    public List<Avaliacao> findByCliente(Cliente cliente){
+    public PanacheQuery<Avaliacao> findByCliente(Cliente cliente){
         if(cliente == null){
             return null;
         }
 
-        return find("FROM Avaliacao WHERE cliente = ?1", cliente).list();
+        return find("FROM Avaliacao WHERE cliente = ?1", cliente);
     }
 }
