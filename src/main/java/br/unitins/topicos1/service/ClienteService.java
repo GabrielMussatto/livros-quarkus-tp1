@@ -20,12 +20,12 @@ public interface ClienteService {
     public ClienteResponseDTO findById(Long id);
     public List<ClienteResponseDTO> findAll(int page, int pageSize);
     public List<ClienteResponseDTO> findByEstado(String estado);
-    public List<UsuarioResponseDTO> findByCpf(String cpf);
-    public List<UsuarioResponseDTO> findByNome(String nome);
+    public List<ClienteResponseDTO> findByCpf(String cpf);
+    public List<ClienteResponseDTO> findByNome(String nome);
 
     public List<ClienteResponseDTO> findByEstado(int page, int pageSize, String estado);
-    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf);
-    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome);
+    public List<ClienteResponseDTO> findByCpf(int page, int pageSize, String cpf);
+    public List<ClienteResponseDTO> findByNome(int page, int pageSize, String nome);
 
     public UsuarioResponseDTO login(String username, String senha);
 

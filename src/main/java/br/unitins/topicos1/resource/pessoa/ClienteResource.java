@@ -91,19 +91,19 @@ public class ClienteResource {
     }
 
     @GET
-    @Path("/count/search/{estado}")
+    @Path("/count/search/estado/{estado}")
     public Response countByEstado(@PathParam("estado") String estado) {
         return Response.ok(clienteService.countByEstado(estado)).build();
     }
 
     @GET
-    @Path("/count/search/{nome}")
+    @Path("/count/search/nome/{nome}")
     public Response countByNome(@PathParam("nome") String nome) {
         return Response.ok(clienteService.countByNome(nome)).build();
     }
 
     @GET
-    @Path("/count/search/{cpf}")
+    @Path("/count/search/cpf/{cpf}")
     public Response countByCpf(@PathParam("cpf") String cpf) {
         return Response.ok(clienteService.countByCpf(cpf)).build();
     }

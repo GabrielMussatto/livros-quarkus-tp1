@@ -171,15 +171,15 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByCpf(String cpf) {
-        List<Usuario> listCliente = usuarioRepository.findByCpf(cpf).list();
-        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<ClienteResponseDTO> findByCpf(String cpf) {
+        List<Cliente> listCliente = clienteRepository.findByCpf(cpf).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByNome(String nome) {
-        List<Usuario> listCliente = usuarioRepository.findByNome(nome).list();
-        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<ClienteResponseDTO> findByNome(String nome) {
+        List<Cliente> listCliente = clienteRepository.findByNome(nome).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
     }
 
     @Override
@@ -189,15 +189,15 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf) {
-        List<Usuario> listCliente = usuarioRepository.findByCpf(cpf).page(page, pageSize).list();
-        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<ClienteResponseDTO> findByCpf(int page, int pageSize, String cpf) {
+        List<Cliente> listCliente = clienteRepository.findByCpf(cpf).page(page, pageSize).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome) {
-        List<Usuario> listCliente = usuarioRepository.findByNome(nome).page(page, pageSize).list();
-        return listCliente.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<ClienteResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Cliente> listCliente = clienteRepository.findByNome(nome).page(page, pageSize).list();
+        return listCliente.stream().map(ClienteResponseDTO::valueOf).toList();
     }
 
     @Override
