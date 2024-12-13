@@ -26,12 +26,12 @@ VALUES
 ('Isabela Santos', 'Belinha60', '1997-04-30', 'isabela.santos@gmail.com', 'TRwn0XU29Gwl2sagG00bvjrNJvLuYo+dbOBJ7R3xFpU4m/FAUc5q8OoGbVNwPF7F5713RaYkN4qyufNCDHm/mA==', 10, 2, '25874196385');
 
 
-INSERT INTO cliente (endereco, cep, cidade, estado, id_usuario) 
-VALUES ('Av. Paulista, 1000', '01310-100', 'São Paulo', 'SP', 1),
-       ('Rua da Lapa, 200', '20021-180', 'Rio de Janeiro', 'RJ', 2),
-       ('Rua Augusta, 300', '01305-001', 'São Paulo', 'SP', 3),
-       ('Rua das Flores, 400', '78010-000', 'Cuiabá', 'MT', 4),
-       ('Av. Tocantins, 500', '77015-002', 'Palmas', 'TO', 5);
+INSERT INTO cliente (endereco, cep, cidade, estado, sigla, id_usuario) 
+VALUES ('Av. Paulista, 1000', '01310-100', 'São Paulo', 'São Paulo', 'SP', 1),
+       ('Rua da Lapa, 200', '20021-180', 'Rio de Janeiro', 'Rio de Janeiro', 'RJ', 2),
+       ('Rua Augusta, 300', '01305-001', 'São Paulo', 'São Paulo', 'SP', 3),
+       ('Rua das Flores, 400', '78010-000', 'Cuiabá', 'Mato Grosso', 'MT', 4),
+       ('Av. Tocantins, 500', '77015-002', 'Palmas', 'Tocantins', 'TO', 5);
 
 INSERT INTO funcionario (cargo, salario, id_usuario) 
 VALUES ('Analista de Sistemas', 6000.00, 6), 
