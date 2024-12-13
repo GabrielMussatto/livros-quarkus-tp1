@@ -88,19 +88,19 @@ public class FuncionarioResource {
     }
 
     @GET
-    @Path("/count/search/{cargo}")
+    @Path("/count/search/cargo/{cargo}")
     public Response countByCargo(@PathParam("cargo") String cargo) {
         return Response.ok(funcionarioService.countByCargo(cargo)).build();
     }
 
     @GET
-    @Path("/count/search/{nome}")
+    @Path("/count/search/nome/{nome}")
     public Response countByNome(@PathParam("nome") String nome) {
         return Response.ok(funcionarioService.countByNome(nome)).build();
     }
 
     @GET
-    @Path("/count/search/{cpf}")
+    @Path("/count/search/cpf/{cpf}")
     public Response countByCpf(@PathParam("cpf") String cpf) {
         return Response.ok(funcionarioService.countByCpf(cpf)).build();
     }

@@ -140,15 +140,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByCpf(String cpf) {
-        List<Usuario> listFuncionario = usuarioRepository.findByCpf(cpf).list();
-        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<FuncionarioResponseDTO> findByCpf(String cpf) {
+        List<Funcionario> listFuncionario = funcionarioRepository.findByCpfFuncionario(cpf).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByNome(String nome) {
-        List<Usuario> listFuncionario = usuarioRepository.findByNome(nome).list();
-        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<FuncionarioResponseDTO> findByNome(String nome) {
+        List<Funcionario> listFuncionario = funcionarioRepository.findByNomeFuncionario(nome).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
     }
 
     @Override
@@ -158,15 +158,15 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf) {
-        List<Usuario> listFuncionario = usuarioRepository.findByCpf(cpf).page(page, pageSize).list();
-        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<FuncionarioResponseDTO> findByCpf(int page, int pageSize, String cpf) {
+        List<Funcionario> listFuncionario = funcionarioRepository.findByCpfFuncionario(cpf).page(page, pageSize).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
     }
 
     @Override
-    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome) {
-        List<Usuario> listFuncionario = usuarioRepository.findByNome(nome).page(page, pageSize).list();
-        return listFuncionario.stream().map(UsuarioResponseDTO::valueOf).toList();
+    public List<FuncionarioResponseDTO> findByNome(int page, int pageSize, String nome) {
+        List<Funcionario> listFuncionario = funcionarioRepository.findByNomeFuncionario(nome).page(page, pageSize).list();
+        return listFuncionario.stream().map(FuncionarioResponseDTO::valueOf).toList();
     }
 
     @Override
@@ -250,7 +250,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
     @Override
     public long countByCpf(String cpf){
-        return usuarioRepository.findByCpf(cpf).count();
+        return funcionarioRepository.findByCpfFuncionario(cpf).count();
     }
 
     @Override

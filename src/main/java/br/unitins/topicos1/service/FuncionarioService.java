@@ -18,12 +18,12 @@ public interface FuncionarioService {
     public FuncionarioResponseDTO findById(Long id);
     public List<FuncionarioResponseDTO> findAll(int page, int pageSize);
     public List<FuncionarioResponseDTO> findByCargo(String cargo);
-    public List<UsuarioResponseDTO> findByCpf(String cpf);
-    public List<UsuarioResponseDTO> findByNome(String nome);
+    public List<FuncionarioResponseDTO> findByCpf(String cpf);
+    public List<FuncionarioResponseDTO> findByNome(String nome);
 
     public List<FuncionarioResponseDTO> findByCargo(int page, int pageSize, String cargo);
-    public List<UsuarioResponseDTO> findByCpf(int page, int pageSize, String cpf);
-    public List<UsuarioResponseDTO> findByNome(int page, int pageSize, String nome);
+    public List<FuncionarioResponseDTO> findByCpf(int page, int pageSize, String cpf);
+    public List<FuncionarioResponseDTO> findByNome(int page, int pageSize, String nome);
 
     public UsuarioResponseDTO login(String username, String senha);  
 
