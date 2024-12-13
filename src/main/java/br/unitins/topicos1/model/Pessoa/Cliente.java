@@ -19,7 +19,8 @@ public class Cliente extends DefaultEntity {
 
     private String cep;
     private String endereco;
-    private String estado; 
+    private String estado;
+    private String sigla;
     private String cidade;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -82,6 +83,14 @@ public class Cliente extends DefaultEntity {
 
     public void setListaSugestao(List<Sugestao> listaSugestao) {
         this.listaSugestao = listaSugestao;
+    }
+
+    public String getSigla() {
+        return sigla;
+    }
+
+    public void setSigla(String sigla) {
+        this.sigla = sigla;
     }
 
 }

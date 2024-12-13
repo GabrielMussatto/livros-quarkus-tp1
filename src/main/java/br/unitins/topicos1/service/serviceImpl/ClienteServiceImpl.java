@@ -90,6 +90,7 @@ public class ClienteServiceImpl implements ClienteService {
         cliente.setCep(dto.cep());
         cliente.setCidade(dto.cidade());
         cliente.setEstado(dto.estado());
+        cliente.setSigla(dto.sigla());
         cliente.setUsuario(usuario);
 
         clienteRepository.persist(cliente);
@@ -111,6 +112,7 @@ public class ClienteServiceImpl implements ClienteService {
         clienteBanco.setCep(dto.cep());
         clienteBanco.setCidade(dto.cidade());
         clienteBanco.setEstado(dto.estado());
+        clienteBanco.setSigla(dto.sigla());
 
         Usuario usuario = clienteBanco.getUsuario();
         usuario.setNome(dto.nome());

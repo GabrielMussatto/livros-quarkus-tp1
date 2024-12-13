@@ -9,6 +9,7 @@ public record ClienteResponseDTO(
     String cep,
     String endereco,
     String estado,
+    String sigla,
     String cidade,
     UsuarioResponseDTO usuario,
     List<ItemFavoritoResponseDTO> listaFavorito
@@ -20,6 +21,7 @@ public record ClienteResponseDTO(
             cliente.getCep(),
             cliente.getEndereco(),
             cliente.getEstado(),
+            cliente.getSigla(),
             cliente.getCidade(),
             UsuarioResponseDTO.valueOf(cliente.getUsuario()),
             cliente.getListaFavorito().stream().map(ItemFavoritoResponseDTO::valueOf).toList());

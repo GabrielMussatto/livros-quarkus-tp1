@@ -6,6 +6,7 @@ public record ClienteDTO(
     String cep,
     String endereco,
     String estado,
+    String sigla,
     String cidade, 
     String nome,
     String username,
