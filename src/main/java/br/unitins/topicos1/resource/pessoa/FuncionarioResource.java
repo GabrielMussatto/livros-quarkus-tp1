@@ -9,6 +9,8 @@ import br.unitins.topicos1.dto.AlterarSenhaDTO;
 import br.unitins.topicos1.dto.AlterarUsernameDTO;
 import br.unitins.topicos1.dto.FuncionarioDTO;
 import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
+import br.unitins.topicos1.model.Enum.Classificacao;
+import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.service.FuncionarioService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
@@ -222,6 +224,12 @@ public class FuncionarioResource {
             LOG.error("Erro ao listar todas as sugestões.", e); 
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao listar todas as sugestões.").build();
         }
+    }
+
+    @GET
+    @Path("/sexos")
+    public Response getSexos(){
+        return Response.ok(Sexo.values()).build();
     }
 
 }
