@@ -9,7 +9,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class CupomRepository implements PanacheRepository <Cupom>{
 
     public PanacheQuery<Cupom> findByNomeCupom(String nomeCupom){
-        return find("UPPER(nome) LIKE ?1", "%" + nomeCupom.toUpperCase() + "%");
+        return find("UPPER(nomeCupom) LIKE ?1", "%" + nomeCupom.toUpperCase() + "%");
     }
 
 }

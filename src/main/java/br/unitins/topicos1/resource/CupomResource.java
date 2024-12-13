@@ -52,11 +52,11 @@ public class CupomResource {
     @Path("/search/nomeCupom/{nomeCupom}")
     @RolesAllowed({"Funcionario"})
     public Response findByNomeCupom(
-        @PathParam("nomeCupomCupom") String nomeCupomCupom,
+        @PathParam("nomeCupom") String nomeCupom,
         @DefaultValue("0") @QueryParam("page") int page,
         @DefaultValue("100") @QueryParam("pageSize") int pageSize){
         LOG.info("Buscando os cupoms pelo nomeCupomCupom - Executando CupomResource_FindByNomeCupom");
-        return Response.ok(cupomService.findByNomeCupom(page, pageSize, nomeCupomCupom)).build();
+        return Response.ok(cupomService.findByNomeCupom(page, pageSize, nomeCupom)).build();
     }
 
     @GET
