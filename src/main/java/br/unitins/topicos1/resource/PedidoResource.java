@@ -59,14 +59,12 @@ public class PedidoResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id){
         LOG.info("Buscando com id - Executando PedidoResource_FindById");
         return Response.ok(pedidoservice.findById(id)).build();
     }
 
     @GET
-    @RolesAllowed({"Funcionario"})
     public Response findAll(){
         LOG.info("Buscando todos os pedidos - Executando PedidoResource_FindAll");
         return Response.ok(pedidoservice.findAll()).build();
@@ -74,7 +72,6 @@ public class PedidoResource {
 
     @GET
     @Path("/search/clientes/{idCliente}")
-    @RolesAllowed({"Funcionario"})
     public Response findByCliente(@PathParam("idCliente") Long idCliente){
         LOG.info("Buscando com id do cliente - Executando PedidoResource_FindByCliente");
         return Response.ok(pedidoservice.findByCliente(idCliente)).build();
@@ -120,23 +117,23 @@ public class PedidoResource {
     }
 
     @GET
-    @Path("/search/meus-Pedidos")
-    @RolesAllowed({"Cliente"})
-    public Response meusPedidos(){
-        try {
-            LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");
-            String username = tokenJwt.getName();
-            Cliente cliente = clienteRepository.findByUsername(username);
+@Path("/search/meus-Pedidos")
+@RolesAllowed({"Cliente"})
+public Response meusPedidos() {
+    try {
+        LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");
+        String username = tokenJwt.getName();
+        Cliente cliente = clienteRepository.findByUsername(username);
 
-            if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-                throw new ValidationException("Validando cliente para visualiar pedidos", "Você não tem permissão para vê os pedidos - Executando PedidoResource_meusPedidos");
+        if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
+            throw new ValidationException("Validando cliente para visualizar pedidos", "Você não tem permissão para ver os pedidos");
 
-            return Response.ok(pedidoservice.meusPedidos()).build();
-        } catch (NotFoundException e) {
-            LOG.error("Erro ao visualizar meus pedidos - Executando PedidoResource_meusPedidos", e);
-            return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
-        }
+        return Response.ok(pedidoservice.meusPedidos()).build(); // Correção aqui
+    } catch (Exception e) {
+        LOG.error("Erro ao visualizar meus pedidos", e);
+        return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
     }
+}
 
     @PATCH
     @Path("/search/pagar-Boleto")
