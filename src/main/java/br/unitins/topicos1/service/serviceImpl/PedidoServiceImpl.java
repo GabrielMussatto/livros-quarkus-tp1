@@ -157,7 +157,7 @@ public class PedidoServiceImpl implements PedidoService {
 
         // Aplicando o desconto do cupom, se existir
         if (pedido.getCupom() != null) {
-            valorTotal -= valorTotal * (pedido.getCupom().getDesconto()); // Aplicar o desconto do cupom
+            valorTotal = valorTotal * (pedido.getCupom().getDesconto()); // Aplicar o desconto do cupom
         }
 
         pedido.setItens(itens);

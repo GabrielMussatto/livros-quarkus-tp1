@@ -231,5 +231,4 @@ public class FuncionarioResource {
     public Response getSexos(){
         return Response.ok(Sexo.values()).build();
     }
-
 }
