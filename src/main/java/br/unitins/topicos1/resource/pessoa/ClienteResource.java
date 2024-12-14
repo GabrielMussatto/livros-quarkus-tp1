@@ -11,6 +11,7 @@ import br.unitins.topicos1.dto.ClienteDTO;
 import br.unitins.topicos1.dto.SugestaoDTO;
 import br.unitins.topicos1.dto.Response.ItemFavoritoResponseDTO;
 import br.unitins.topicos1.dto.Response.SugestaoResponseDTO;
+import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.service.ClienteService;
 import br.unitins.topicos1.validation.ValidationException;
 import jakarta.annotation.security.RolesAllowed;
@@ -281,5 +282,11 @@ public class ClienteResource {
             LOG.error("Erro ao buscar sugestões do cliente.", e); 
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity("Erro ao buscar sugestões do cliente.").build(); 
         }
+    }
+
+    @GET
+    @Path("/sexos")
+    public Response getSexos(){
+        return Response.ok(Sexo.values()).build();
     }
 }
