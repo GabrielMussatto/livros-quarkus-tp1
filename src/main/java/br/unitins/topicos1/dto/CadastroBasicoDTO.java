@@ -1,5 +1,7 @@
 package br.unitins.topicos1.dto;
 
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.NotEmpty;
 
 public record CadastroBasicoDTO(
@@ -9,7 +11,16 @@ public record CadastroBasicoDTO(
     @NotEmpty(message = "Já existe este username.")
     String username,
     String senha,
-    Integer idSexo
+    Integer idSexo,
+    String cpf,
+    String endereco,
+    String estado,
+    String sigla,
+    String cidade,
+    String cep,
+    LocalDate dataNascimento,
+    TelefoneDTO telefone
+
 ) {
     
 }

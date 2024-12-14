@@ -1,7 +1,9 @@
 package br.unitins.topicos1.service.serviceImpl;
 
 import br.unitins.topicos1.dto.CadastroBasicoDTO;
+import br.unitins.topicos1.dto.TelefoneDTO;
 import br.unitins.topicos1.dto.Response.CadastroBasicoResponseDTO;
+import br.unitins.topicos1.dto.Response.ClienteResponseDTO;
 import br.unitins.topicos1.model.Enum.Sexo;
 import br.unitins.topicos1.model.Pessoa.Cliente;
 import br.unitins.topicos1.model.Pessoa.Usuario;
@@ -36,13 +38,21 @@ public class CadastroBasicoServiceImpl implements CadastroBasicoService {
         validarEmailCliente(dto.email());
 
         usuario.setNome(dto.nome());
-        usuario.setEmail(dto.email());
         usuario.setUsername(dto.username());
         usuario.setSenha(hashService.getHashSenha(dto.senha()));
+        usuario.setDataNascimento(dto.dataNascimento());
+        usuario.setEmail(dto.email());
+        usuario.setCpf(dto.cpf());
         usuario.setSexo(Sexo.valueOf(dto.idSexo()));
+        usuario.setTelefone(TelefoneDTO.convertToTelefone(dto.telefone()));
 
         usuarioRepository.persist(usuario);
 
+        cliente.setEndereco(dto.endereco());
+        cliente.setCep(dto.cep());
+        cliente.setCidade(dto.cidade());
+        cliente.setEstado(dto.estado());
+        cliente.setSigla(dto.sigla());
         cliente.setUsuario(usuario);
 
         clienteRepository.persist(cliente);
