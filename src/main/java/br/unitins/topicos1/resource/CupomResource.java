@@ -32,7 +32,6 @@ public class CupomResource {
 
     @GET
     @Path("/{id}")
-    @RolesAllowed({"Funcionario"})
     public Response findById(@PathParam("id") Long id){
         LOG.info("Executando o findById - Executando CupomResource_FindById");
         LOG.infof("Executando o método findById. Id: %s", id.toString());
@@ -40,7 +39,6 @@ public class CupomResource {
     }
 
     @GET
-    @RolesAllowed({"Funcionario"})
     public Response findAll(
         @DefaultValue("0") @QueryParam("page") int page,
         @DefaultValue("100") @QueryParam("pageSize") int pageSize){
@@ -50,7 +48,6 @@ public class CupomResource {
 
     @GET
     @Path("/search/nomeCupom/{nomeCupom}")
-    @RolesAllowed({"Funcionario"})
     public Response findByNomeCupom(
         @PathParam("nomeCupom") String nomeCupom,
         @DefaultValue("0") @QueryParam("page") int page,
