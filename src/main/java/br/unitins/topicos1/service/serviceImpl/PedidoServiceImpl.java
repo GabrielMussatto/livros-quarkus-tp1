@@ -101,8 +101,6 @@ public class PedidoServiceImpl implements PedidoService {
 
         pedido.setCliente(cliente);
         pedido.setDataPedido(LocalDateTime.now());
-
-        // Aqui, você pode aplicar o cupom, se houver
         
         List<ItemPedido> itens = new ArrayList<>();
         Double valorTotal = 0.0;
