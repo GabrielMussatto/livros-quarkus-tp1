@@ -64,6 +64,7 @@ INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Ernest Hemingway', 'Ern
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Agatha Christie', 'Agatha Christie foi uma escritora britânica conhecida por seus romances policiais, especialmente aqueles estrelados por Hercule Poirot e Miss Marple. É uma das autoras mais vendidas de todos os tempos.','Agatha_Christie.jpg');
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Harper Lee', 'Harper Lee foi uma escritora norte-americana conhecida por seu romance clássico O Sol é Para Todos, que aborda temas de justiça social, racismo e infância no sul dos Estados Unidos.','Harper_Lee.jpg');
 INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Fyodor Dostoevsky', 'Fyodor Dostoevsky foi um escritor e filósofo russo. Ele explorou temas complexos de psicologia e moralidade em seus livros, como Crime e Castigo e Os Irmãos Karamazov.','Fyodor_Dostoevsky.jpg');
+INSERT INTO autor (nome, biografia, nomeImagem) VALUES ('Jânio Elias Teixeira Júnior', 'Jânio Elias Teixeira Júnior também conhecido como JJ. Professor na Universidade Estadual do Tocantins - Unitins, e também sendo faixa preta em Jui Jitsu.', 'janio.jpeg');
 
 -- Inserir gênero
 INSERT INTO genero (nome, descricao) VALUES ('Romance', 'Livros que enfocam em relacionamentos amorosos e desenvolvimento emocional dos personagens.');
@@ -289,6 +290,11 @@ VALUES ('It: A Coisa', 39.90, 30, '9781501182099', '15-09-1986', 'Um grupo de cr
 INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem)
 VALUES ('A Zona Morta', 30.90, 28, '9781501192241', '01-08-1979', 'Um homem desperta de um coma e descobre que tem poderes premonitórios, o que o coloca em dilemas morais.', 5, 1, 1, 'a_zona_morta.jpg');
 
+-- Livro do Janio
+INSERT INTO livro (titulo, preco, quantidadeEstoque, isbn, dataLancamento, descricao, classificacao, id_fornecedor, id_editora, nomeImagem)
+VALUES ('Fale não ao Front End', 25.90, 40, '9781593548472', '12-12-2024', 'Este livro contém relatos do Programador Jânio em variás formas de não gostar do Front-End.', 1, 2, 5, 'fale_nao_ao_front_end.jpg');
+INSERT INTO livro_autor (idlivro, idautor) values (71, 22);
+INSERT INTO livro_genero (idlivro, idgenero) VALUES (71, 19);
 
 -- Inserir relacionamento entre livro e autor
 INSERT INTO livro_autor (idlivro, idautor) VALUES (1, 1);
