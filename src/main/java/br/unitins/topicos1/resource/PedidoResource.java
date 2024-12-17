@@ -30,6 +30,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -59,37 +60,38 @@ public class PedidoResource {
 
     @GET
     @Path("/{id}")
-    public Response findById(@PathParam("id") Long id){
+    public Response findById(@PathParam("id") Long id) {
         LOG.info("Buscando com id - Executando PedidoResource_FindById");
         return Response.ok(pedidoservice.findById(id)).build();
     }
 
     @GET
-    public Response findAll(){
+    public Response findAll() {
         LOG.info("Buscando todos os pedidos - Executando PedidoResource_FindAll");
         return Response.ok(pedidoservice.findAll()).build();
     }
 
     @GET
     @Path("/search/clientes/{idCliente}")
-    public Response findByCliente(@PathParam("idCliente") Long idCliente){
+    public Response findByCliente(@PathParam("idCliente") Long idCliente) {
         LOG.info("Buscando com id do cliente - Executando PedidoResource_FindByCliente");
         return Response.ok(pedidoservice.findByCliente(idCliente)).build();
     }
 
     @POST
-    @RolesAllowed({"Cliente"})
+    @RolesAllowed({ "Cliente" })
     public Response create(@Valid PedidoDTO dto) {
 
-        try{
+        try {
             String username = tokenJwt.getName();
 
-            if(!pedidoservice.clienteAutenticado(username, dto.idCliente()))
-                throw new ValidationException("Valificando cliente para criacao de pedido", "você não tem permissão para realizar pedido. - Executando PedidoResource_create");
-                
+            if (!pedidoservice.clienteAutenticado(username, dto.idCliente()))
+                throw new ValidationException("Valificando cliente para criacao de pedido",
+                        "você não tem permissão para realizar pedido. - Executando PedidoResource_create");
+
             LOG.info("Executando PedidoResource_create");
             return Response.status(Status.CREATED).entity(pedidoservice.create(dto)).build();
-        }catch (Exception e){
+        } catch (Exception e) {
             LOG.error("Erro ao criar pedido - Executando PedidoResource_create", e);
             return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
         }
@@ -97,16 +99,17 @@ public class PedidoResource {
 
     @DELETE
     @Path("/search/cancelar-Pedido")
-    @RolesAllowed({"Cliente"})
+    @RolesAllowed({ "Cliente" })
     public Response cancelarPedido() {
 
         try {
             String username = tokenJwt.getName();
             Cliente cliente = clienteRepository.findByUsername(username);
 
-            if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-                throw new ValidationException("Validando cliente para cancelamento de pedido", "Você não tem permissão para cancelar pedido. - Executando PedidoResource_cancelarPedido");
-        
+            if (!pedidoservice.clienteAutenticado(username, cliente.getId()))
+                throw new ValidationException("Validando cliente para cancelamento de pedido",
+                        "Você não tem permissão para cancelar pedido. - Executando PedidoResource_cancelarPedido");
+
             pedidoservice.cancelarPedido(cliente.getId());
             LOG.info("Pedido cancelada com sucesso. - Executando PedidoResource_cancelarPedido");
             return Response.status(Status.NO_CONTENT).build();
@@ -116,38 +119,41 @@ public class PedidoResource {
         }
     }
 
+
     @GET
-@Path("/search/meus-Pedidos")
-@RolesAllowed({"Cliente"})
-public Response meusPedidos() {
-    try {
-        LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");
-        String username = tokenJwt.getName();
-        Cliente cliente = clienteRepository.findByUsername(username);
-
-        if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-            throw new ValidationException("Validando cliente para visualizar pedidos", "Você não tem permissão para ver os pedidos");
-
-        return Response.ok(pedidoservice.meusPedidos()).build(); // Correção aqui
-    } catch (Exception e) {
-        LOG.error("Erro ao visualizar meus pedidos", e);
-        return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
-    }
-}
-
-    @PATCH
-    @Path("/search/pagar-Boleto")
-    @RolesAllowed({"Cliente"})
-    public Response pagarBoleto() {
-
+    @Path("/search/meus-Pedidos")
+    @RolesAllowed({ "Cliente" })
+    public Response meusPedidos() {
         try {
-            
+            LOG.info("Meus Pedido. - Executando PedidoResource_meusPedidos");
             String username = tokenJwt.getName();
             Cliente cliente = clienteRepository.findByUsername(username);
 
-            if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-                 throw new ValidationException("ValidandoPagamento", "Você não tem permissão para realizar pagamento via boleto de pedido. - Executando PedidoResource_pagarBoleto");
-        
+            if (!pedidoservice.clienteAutenticado(username, cliente.getId()))
+                throw new ValidationException("Validando cliente para visualizar pedidos",
+                        "Você não tem permissão para ver os pedidos");
+
+            return Response.ok(pedidoservice.meusPedidos()).build(); // Correção aqui
+        } catch (Exception e) {
+            LOG.error("Erro ao visualizar meus pedidos", e);
+            return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
+        }
+    }
+
+    @PATCH
+    @Path("/search/pagar-Boleto")
+    @RolesAllowed({ "Cliente" })
+    public Response pagarBoleto() {
+
+        try {
+
+            String username = tokenJwt.getName();
+            Cliente cliente = clienteRepository.findByUsername(username);
+
+            if (!pedidoservice.clienteAutenticado(username, cliente.getId()))
+                throw new ValidationException("ValidandoPagamento",
+                        "Você não tem permissão para realizar pagamento via boleto de pedido. - Executando PedidoResource_pagarBoleto");
+
             pedidoservice.pagamentoBoleto(cliente.getId());
 
             LOG.info("Pagamento com boleto realizado com sucesso. - Executando PedidoResource_pagarBoleto");
@@ -160,15 +166,15 @@ public Response meusPedidos() {
 
     @PATCH
     @Path("/search/pagar-Pix")
-    @RolesAllowed({"Cliente"})
+    @RolesAllowed({ "Cliente" })
     public Response pagarPix() {
         try {
             String username = tokenJwt.getName();
             Cliente cliente = clienteRepository.findByUsername(username);
-    
-            if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-                throw new ValidationException("ValidandoPagamento", "Você não tem permissão para realizar pagamento via pix de pedido. - Executando PedidoResource_pagarPix");
-            
+
+            if (!pedidoservice.clienteAutenticado(username, cliente.getId()))
+                throw new ValidationException("ValidandoPagamento",
+                        "Você não tem permissão para realizar pagamento via pix de pedido. - Executando PedidoResource_pagarPix");
 
             pedidoservice.pagamentoPix(cliente.getId());
 
@@ -182,21 +188,23 @@ public Response meusPedidos() {
 
     @PATCH
     @Path("/search/pagar-Cartao-Credito")
-    @RolesAllowed({"Cliente"})
+    @RolesAllowed({ "Cliente" })
     public Response pagarCartaoCredito(CartaoCreditoDTO cartao) {
         try {
             String username = tokenJwt.getSubject();
             Cliente cliente = clienteRepository.findByUsername(username);
-    
-            if(!pedidoservice.clienteAutenticado(username, cliente.getId()))
-                throw new ValidationException("ValidandoPagamento", "Você não tem permissão para realizar pagamento via pix de pedido. - Executando PedidoResource_pagarCartaoCredito");
-            
+
+            if (!pedidoservice.clienteAutenticado(username, cliente.getId()))
+                throw new ValidationException("ValidandoPagamento",
+                        "Você não tem permissão para realizar pagamento via pix de pedido. - Executando PedidoResource_pagarCartaoCredito");
+
             pedidoservice.pagamentoCartao(cliente.getId(), cartao);
 
             LOG.info("Pagamento com cartão realizado com sucesso. - Executando PedidoResource_pagarCartaoCredito");
             return Response.status(Status.ACCEPTED).build();
         } catch (Exception e) {
-            LOG.error("Erro ao realizar pagamento com cartao de credito - Executando PedidoResource_pagarCartaoCredito");
+            LOG.error(
+                    "Erro ao realizar pagamento com cartao de credito - Executando PedidoResource_pagarCartaoCredito");
             return Response.status(Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
@@ -221,7 +229,7 @@ public Response meusPedidos() {
             throw new WebApplicationException("Nenhum pedido realizado encontrado para este cliente.", 404);
         }
         return pedidos.stream()
-                    .map(PedidoResponseDTO::valueOf)
-                    .toList();
+                .map(PedidoResponseDTO::valueOf)
+                .toList();
     }
 }

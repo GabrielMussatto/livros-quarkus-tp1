@@ -82,29 +82,26 @@ public class PedidoServiceImpl implements PedidoService {
 
         Cliente cliente = clienteRepository.findById(dto.idCliente());
         if (cliente == null) {
-            throw new ValidationException("Buscando Cliente",
-                    "Cliente não encontrado - Executando PedidoServiceImpl_create");
+            throw new ValidationException("Buscando Cliente", "Cliente não encontrado.");
         }
 
         if (!clienteAutenticado(username, dto.idCliente())) {
-            throw new ValidationException("Verificando...",
-                    "Você não tem autorização para realizar o pedido. - Executando PedidoServiceImpl_create");
+            throw new ValidationException("Verificando", "Você não tem autorização para realizar o pedido.");
         }
 
         Pedido pedidoExistente = pedidoRepository.findByClienteNaoFinalizado(cliente);
         if (pedidoExistente != null) {
-            throw new ValidationException("Buscando Pedido",
-                    "Já existe um pedido em aberto. Pague seu ultimo pedido ou delete para fazer um novo. - Executando PedidoServiceImpl_create");
+            throw new ValidationException("Buscando Pedido", "Já existe um pedido em aberto.");
         }
 
         Pedido pedido = new Pedido();
-
         pedido.setCliente(cliente);
         pedido.setDataPedido(LocalDateTime.now());
-        
+
         List<ItemPedido> itens = new ArrayList<>();
         Double valorTotal = 0.0;
 
+        // Processando os itens
         for (ItemPedidoDTO itemDTO : dto.itens()) {
             ItemPedido item = new ItemPedido();
             item.setQuantidade(itemDTO.quantidade());
@@ -112,56 +109,52 @@ public class PedidoServiceImpl implements PedidoService {
             if (itemDTO.idLivro() != null) {
                 Livro livro = livroRepository.findById(itemDTO.idLivro());
                 if (livro == null) {
-                    throw new ValidationException("Buscando Livro",
-                            "Livro não encontrado - Executando Pedido Create em PedidoServiceIMPL");
+                    throw new ValidationException("Buscando Livro", "Livro não encontrado.");
                 }
                 if (item.getQuantidade() > livro.getQuantidadeEstoque()) {
-                    throw new ValidationException("Verificando Estoque", "Livro não tem estoque suficiente");
+                    throw new ValidationException("Verificando Estoque", "Livro não tem estoque suficiente.");
                 }
 
                 item.setLivro(livro);
                 item.setSubTotal((livro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
-            
+
             if (itemDTO.idCaixaLivro() != null) {
                 CaixaLivro caixaLivro = caixaLivroRepository.findById(itemDTO.idCaixaLivro());
                 if (caixaLivro == null) {
-                    throw new ValidationException("Buscando Caixa de Livro",
-                            "Caixa de Livro não encontrada - Executando Pedido Create em PedidoServiceIMPL");
+                    throw new ValidationException("Buscando Caixa de Livro", "Caixa de Livro não encontrada.");
                 }
                 if (item.getQuantidade() > caixaLivro.getQuantidadeEmEstoque()) {
-                    throw new ValidationException("Verificando Estoque", "Caixa de Livro não tem estoque suficiente");
+                    throw new ValidationException("Verificando Estoque", "Caixa de Livro não tem estoque suficiente.");
                 }
 
                 item.setCaixaLivro(caixaLivro);
                 item.setSubTotal((caixaLivro.getPreco() - calcularDesconto(item)) * item.getQuantidade());
             }
-            
+
             item.setDesconto(calcularDesconto(item));
             itens.add(item);
-            
+
             valorTotal += calcularValorTotal(item);
         }
 
+        // Validando e aplicando o cupom
         if (dto.nomeCupom() != null && !dto.nomeCupom().isEmpty()) {
-            // Buscando o cupom pelo nome
-            Cupom cupom = cupomRepository.find("nomeCupom", dto.nomeCupom()).firstResult();  // ou singleResult()
+            Cupom cupom = cupomRepository.find("nomeCupom", dto.nomeCupom()).firstResult();
             if (cupom != null) {
-                pedido.setCupom(cupom);  // Associar o cupom ao pedido
+                // Aplica o desconto do cupom no valor total do pedido
+                valorTotal -= valorTotal * cupom.getDesconto() / 100;
+                pedido.setCupom(cupom); // Associar o cupom ao pedido
             } else {
                 throw new ValidationException("Verificando Cupom", "Cupom não encontrado.");
             }
         }
 
-        // Aplicando o desconto do cupom, se existir
-        if (pedido.getCupom() != null) {
-            valorTotal = valorTotal * (pedido.getCupom().getDesconto()); // Aplicar o desconto do cupom
-        }
-
-        pedido.setItens(itens);
         pedido.setValorTotal(valorTotal);
+        pedido.setItens(itens);
 
         pedidoRepository.persist(pedido);
+
         return PedidoResponseDTO.valueOf(pedido);
     }
 
